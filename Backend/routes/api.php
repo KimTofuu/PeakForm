@@ -8,6 +8,7 @@ use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\BodyMetricsController;
 use App\Mail\MealReminder;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
@@ -43,4 +44,5 @@ Route::get('/glogin', function () {
     return view('login');
 });
 
- 
+// Add this route for storing body metrics
+Route::post('/body-metrics', [BodyMetricsController::class, 'store']);
