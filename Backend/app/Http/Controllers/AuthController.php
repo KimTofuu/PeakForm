@@ -37,37 +37,29 @@ class AuthController extends Controller
         ]);        
     }
     
+    public function showLoginForm() {
+        return view('login'); // This will return the login form.
+    }
 
     public function login(Request $request) {
+        // Validate input
         $request->validate([
-            'email' => 'required|email|exists:users',
-            'password' => 'required'
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required',
         ]);
 
         $credentials = $request->only('email', 'password');
 
+        // Check if credentials are correct
         if (Auth::attempt($credentials)) {
-
+            // Authentication was successful
+            return redirect()->intended('dashboard_1'); // or wherever you want to redirect the user
         }
 
-        //FOR WEB APP NA AUTHENTICATION
-        // Auth::attempt(['email' => $email, 'password' => $password]);
-
-        //FOR API
-        // $user = User::where('email', $request->email)->first();
-
-        // if(!$user || !Hash::check($request->password, $user->password)) {
-        //     return [
-        //         'message' => 'The provided credentials are incorrect.'
-        //     ];
-        // }
-
-        // $token = $user->createToken($user->Fname);
-
-        // return [
-        //     'user' => $user,
-        //     'token' => $token->plainTextToken
-        // ];
+        // If authentication fails
+        return back()->withErrors([
+            'email' => 'The provided credentials are incorrect.',
+        ]);
     }
 
     public function logout(Request $request) {
