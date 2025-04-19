@@ -12,7 +12,7 @@
     <aside class="sidebar">
       <div class="profile-section">
         <div class="avatar"></div>
-        <p class="name">FRANCIS EMIL ROSETE</p>
+        <p class="name">{{$user->Fname}}</p>
         <hr />
       </div>
       <nav class="nav-menu">

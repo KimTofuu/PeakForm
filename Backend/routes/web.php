@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\ChatbotController;
@@ -18,9 +17,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/login', function () {return view('login');})->name('login');
 
 Route::get('/register', function () {
     return view('register');
@@ -28,7 +25,7 @@ Route::get('/register', function () {
 
 Route::get('/dashboard_1', function () {
     return view('dashboard_1');
-})->name('dashboard_1');
+})->name('dashboard_1')->middleware('auth:sanctum');
 
 Route::get('/google-auth/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
 Route::get('/google-auth/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
@@ -44,8 +41,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Route::apiResource('posts', PostController::class);
-// Route::post('/register', [AuthController::class, 'register']);
-// Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::get('/mealRemind', function () {
