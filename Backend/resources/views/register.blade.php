@@ -14,7 +14,11 @@
     </div>
     <div class="signup-container">
         <div class="form-group">
-            <input type="text" placeholder="Name">
+            <input type="text" placeholder="First Name">
+        </div>
+
+        <div class="form-group">
+            <input type="text" placeholder="Last Name">
         </div>
         
         <div class="form-group">
