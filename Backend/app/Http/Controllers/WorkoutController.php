@@ -140,7 +140,7 @@ class WorkoutController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
-        $workoutPlan = $user->workoutPlans()->create([
+        $workoutPlan = $user->workSplits()->create([
             'PlanName' => $request->PlanName,
             'GoalType' => $request->GoalType,
             'SplitType' => $request->SplitType,

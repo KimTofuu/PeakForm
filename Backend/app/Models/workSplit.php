@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class workSplit extends Model
+class WorkSplit extends Model
 {
     use HasFactory;
 
     protected $primaryKey = 'id';
+    protected $table = 'work_splits';
 
     protected $fillable = [
         'UserID',

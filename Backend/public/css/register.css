@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #FAF9F6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.upper_register {
+    text-align: center;
+}
+
+.upper_register img {
+    width: 200px;
+    margin-top: -50px;
+    margin-bottom: 25px;
+}
+.signup-container {
+    background-color:  rgba(143, 176, 49, 0.4);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #333;
+}
+
+.form-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #aaa;
+}
+
+
+.lower_register {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+}
+
+.signup-btn {
+    padding: 12px 70px 12px 70px;
+    background-color: #8FB031;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.signup-btn:hover {
+    background-color: #7f9c2b;
+}
+
+
+.login-link {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.login-link a {
+    color: #8FB031;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+.divider {
+    display: flex;
+    align-items: center;
+    color: #999;
+    font-size: 14px;
+    text-align: center;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #7f9c2b;
+}
+
+.divider::before {
+    margin-right: 10px;
+}
+
+.divider::after {
+    margin-left: 10px;
+}
+
+
+.google-btn {
+    padding: 12px;
+    background-color: white;
+    color: #333;
+    border: 2px solid #7f9c2b;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.google-btn:hover {
+    background-color: #f5f5f5;
+}
+
