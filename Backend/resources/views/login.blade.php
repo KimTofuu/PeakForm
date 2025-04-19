@@ -2,48 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: grid;
-            place-items: center;
-            height: 100vh;
-            background-color: #f3f3f3;
-        }
-        .login-container {
-            background: white;
-            padding: 2rem 3rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .google-btn {
-            display: inline-flex;
-            align-items: center;
-            background-color: #4285F4;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .google-btn img {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PeakForm</title>
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <a href="{{ route('google.redirect') }}" class="google-btn">
-            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo">
-            Sign in with Google
-        </a>
+
+    <div class="upper_login">
+        <img src="images/login.png">
     </div>
+
+    <div class="login-container">
+        <form class="login-form">
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Email">
+            </div>
+            
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Password">
+            </div>
+            
+        </form>
+    </div>
+        <div class = "lower_login">
+            {{-- <a href="{{ route('dashboard_1') }}"> --}}
+              <button class="login-btn" type="submit"> Log in </button>
+            {{-- </a> --}}
+            
+            <div class="register-link">
+                <p>Don't have an account? 
+                    <a href="{{ route('register') }}">
+                    Register
+                    </a>
+                </p>
+            </div>
+        
+             <div class="divider">
+                <span>or</span>
+            </div>
+        
+            <button class="google-btn">
+                <i class="fab fa-google"></i>
+                Continue with Google
+            </button>
+        </div>
+    
 </body>
 </html>

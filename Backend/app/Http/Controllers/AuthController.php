@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AccountActivityMail;
+use Illuminate\Support\Facades\Auth;
 
 
 class AuthController extends Controller
@@ -43,24 +44,30 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+
+        }
+
         //FOR WEB APP NA AUTHENTICATION
         // Auth::attempt(['email' => $email, 'password' => $password]);
 
         //FOR API
-        $user = User::where('email', $request->email)->first();
+        // $user = User::where('email', $request->email)->first();
 
-        if(!$user || !Hash::check($request->password, $user->password)) {
-            return [
-                'message' => 'The provided credentials are incorrect.'
-            ];
-        }
+        // if(!$user || !Hash::check($request->password, $user->password)) {
+        //     return [
+        //         'message' => 'The provided credentials are incorrect.'
+        //     ];
+        // }
 
-        $token = $user->createToken($user->Fname);
+        // $token = $user->createToken($user->Fname);
 
-        return [
-            'user' => $user,
-            'token' => $token->plainTextToken
-        ];
+        // return [
+        //     'user' => $user,
+        //     'token' => $token->plainTextToken
+        // ];
     }
 
     public function logout(Request $request) {
