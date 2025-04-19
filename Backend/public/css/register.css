@@ -20,9 +20,9 @@ body {
 }
 
 .upper_register img {
-    width: 200px;
+    width: 180px;
     margin-top: -50px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 .signup-container {
     background-color:  rgba(143, 176, 49, 0.4);
