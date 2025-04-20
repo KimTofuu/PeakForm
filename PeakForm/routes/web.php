@@ -11,6 +11,7 @@ use App\Http\Controllers\BodyMetricsController;
 use App\Mail\MealReminder;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function () {
@@ -24,7 +25,8 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::get('/dashboard_1', function () {
-    return view('dashboard_1');
+$user = Auth::user();
+return view('dashboard_1', compact('user'));
 })->name('dashboard_1')->middleware('auth:sanctum');
 
 Route::get('/google-auth/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
