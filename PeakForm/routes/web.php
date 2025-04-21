@@ -25,8 +25,8 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::get('/dashboard_1', function () {
-$user = Auth::user();
-return view('dashboard_1', compact('user'));
+    $user = Auth::user();
+    return view('dashboard_1', compact('user'));
 })->name('dashboard_1')->middleware('auth:sanctum');
 
 Route::get('/google-auth/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
@@ -63,5 +63,4 @@ Route::get('/glogin', function () {
     return view('login');
 });
 
-// Add this route for storing body metrics
 Route::post('/body-metrics', [BodyMetricsController::class, 'store']);
