@@ -18,18 +18,23 @@ class GoogleAuthController extends Controller
 
     public function callback(){
         $google_account = Socialite::driver('google')->user();
-        if(!empty($google_account)){
+
+
+        if (!empty($google_account)) {
+            $fullName = explode(' ', $google_account->name, 2); // splits into [Fname, Lname]
+
             $user = User::updateOrCreate([
                 'google_id' => $google_account->id
-            ],[
-                'name' => $google_account->name,
+            ], [
+                'Fname' => $fullName[0] ?? '',
+                'Lname' => $fullName[1] ?? '',
                 'email' => $google_account->email,
                 'password' => Hash::make(Str::random(8)),
             ]);
 
             Auth::login($user);
 
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard_1');
         }
     }
 }

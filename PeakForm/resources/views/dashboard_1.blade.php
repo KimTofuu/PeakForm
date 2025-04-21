@@ -13,6 +13,7 @@
       <div class="profile-section">
         <div class="avatar"></div>
         <p class="name">{{$user->Fname}} {{$user->Lname}}</p>
+        {{-- <p class="name">diasdij</p> --}}
         <hr />
       </div>
       <nav class="nav-menu">
