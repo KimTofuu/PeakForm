@@ -64,3 +64,4 @@ Route::get('/glogin', function () {
 });
 
 Route::post('/body-metrics', [BodyMetricsController::class, 'store']);
+
