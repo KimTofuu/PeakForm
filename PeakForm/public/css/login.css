@@ -49,6 +49,7 @@ body {
 
 .form-group {
     margin: 17px 0px;
+    margin-bottom: 0px;
 }
 
 
@@ -70,7 +71,6 @@ body {
 .lower_login {
     display: flex;
     flex-direction: column;
-    margin-top: 25px;
 }
 
 .mid_login {
@@ -157,4 +157,13 @@ body {
 
 .google-btn:hover {
     background-color: #f5f5f5;
+}
+
+.fa {
+    margin-top: 20px; 
+    margin-bottom: -50px;
+    text-indent: 328px; 
+    transform: translateY(-50%); 
+    cursor: pointer;
+    color: #8FB031;
 }
