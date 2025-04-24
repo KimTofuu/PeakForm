@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::get('/', function () {
     return view('index');
@@ -43,7 +44,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Route::apiResource('posts', PostController::class);
-Route::post('/register', [AuthController::class, 'register']);
+// Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
@@ -65,3 +66,10 @@ Route::get('/glogin', function () {
 
 Route::post('/body-metrics', [BodyMetricsController::class, 'store']);
 
+Route::get('/personal-info', function () {
+    return view('personal_info'); 
+})->name('personal_info');
+
+Route::get('/workout_plan_1', function () {
+    return view('workout_plan_1');
+})->name('workout_plan_1');
