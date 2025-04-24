@@ -26,7 +26,7 @@ body {
   }
   
   .form-box {
-    background-color: #d1dda3;
+    background-color: rgba(143, 176, 49, 0.4);
     padding: 30px;
     border-radius: 10px;
     width: 400px;
@@ -80,7 +80,7 @@ body {
   }
   
   .proceed-button:hover {
-    background: #82b93a;
+    background: #7f9c2b;
   }
 
   .goal-button.active {

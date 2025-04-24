@@ -25,7 +25,7 @@ body {
   }
   
   .form-box {
-    background-color: #d1dda3;
+    background-color: rgba(143, 176, 49, 0.4);
     padding: 30px;
     border-radius: 10px;
     width: 350px;
@@ -79,5 +79,5 @@ body {
   }
   
   button:hover {
-    background: linear-gradient(to right, #7cae2d, #82b93a);
+    background: #7f9c2b;
   }
