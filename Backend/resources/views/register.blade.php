@@ -28,12 +28,19 @@
         <div class="form-group">
             <input type="password" placeholder="Password">
         </div>
+
+        <div class="form-group">
+            <input type="password" placeholder="Confirm Password">
+        </div>
+
     </div>
+    <div class="mid_register"> 
+        <a href="{{ route('personal_info') }}">
+            <button class="signup-btn"> Register </button>
+        </a>
+
+    </div>    
     <div class="lower_register"> 
-        <button class="signup-btn" onclick="window.location.href='personal_info_1.html'">
-            Sign Up
-          </button>
-        
         <div class="login-link">
             <p>Already have an account? 
                 <a href="{{ route('login') }}">
