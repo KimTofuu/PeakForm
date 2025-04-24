@@ -38,7 +38,7 @@ class GoogleAuthController extends Controller
             // dd(Auth::user());
             Mail::to($user->email)->send(new AccountActivityMail($user));
 
-            return redirect()->route('register');
+            return redirect()->route('workout_plan_1');
         }
     }
 }
