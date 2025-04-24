@@ -33,7 +33,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('login'); // Redirect to the dashboard after registration
+        return redirect()->route('workout_plan_1'); // Redirect to the dashboard after registration
         
         // return response()->json([
         //     'user' => $user,
