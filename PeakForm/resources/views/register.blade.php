@@ -12,34 +12,47 @@
     <div class="upper_register">
         <img src="images/register.png">
     </div>
-    <div class="signup-container">
+    <form action="{{ route('register') }}" method="POST" class="signup-container">
+        @csrf
         <div class="form-group">
-            <input type="text" placeholder="First Name">
+            <input type="text" name="Fname" placeholder="First Name" required>
+            @error('Fname')
+                <p class="error-message">{{ $message }}</p>
+            @enderror
         </div>
-
+    
         <div class="form-group">
-            <input type="text" placeholder="Last Name">
+            <input type="text" name="Lname" placeholder="Last Name" required>
+            @error('Lname')
+                <p class="error-message">{{ $message }}</p>
+            @enderror
         </div>
         
         <div class="form-group">
-            <input type="email" placeholder="Email">
+            <input type="email" name="email" placeholder="Email" required>
+            @error('email')
+                <p class="error-message">{{ $message }}</p>
+            @enderror
         </div>
         
         <div class="form-group">
-            <input type="password" placeholder="Password">
+            <input type="password" name="password" placeholder="Password" required>
+            @error('password')
+                <p class="error-message">{{ $message }}</p>
+            @enderror
         </div>
-
+    
         <div class="form-group">
-            <input type="password" placeholder="Confirm Password">
+            <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+            @error('password_confirmation')
+                <p class="error-message">{{ $message }}</p>
+            @enderror
         </div>
-
-    </div>
-    <div class="mid_register"> 
-        <a href="{{ route('personal_info') }}">
-            <button class="signup-btn"> Register </button>
-        </a>
-
-    </div>    
+    
+        <div class="mid_register"> 
+            <button type="submit" class="signup-btn"> Register </button>
+        </div>    
+    </form>   
     <div class="lower_register"> 
         <div class="login-link">
             <p>Already have an account? 
@@ -51,7 +64,7 @@
         
         <div class="divider">or</div>
         
-        <button class="google-btn">
+        <button class="google-btn" onclick="window.location.href='{{ route('google.redirect') }}'">
             <i class="fab fa-google"></i>
             Continue with Google
         </button>
