@@ -34,9 +34,6 @@
         </div>
        
     </div>
-    
-    <!-- Privacy Policy Checkbox -->
-<!-- Privacy Policy Checkbox -->
 
 <div class="priv_policy">
 <form method="GET" action="{{ route('personal_info') }}">
@@ -48,13 +45,12 @@
         </label>
     </div>
 
-    <!-- Submit Button -->
     <a href="{{ route('personal_info') }}">
         <button type="submit" class="signup-btn"> Register </button>
     </a>
 </form>
 </div>
-<!-- Privacy Policy Modal -->
+
 <div id="privacy-policy-modal" class="modal hidden">
     <div class="modal-content">
         <h2>Privacy Policy</h2>
@@ -87,15 +83,14 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Open the Privacy Policy Modal
+    
     document.getElementById('open-privacy-policy').addEventListener('click', function(event) {
         event.preventDefault();
-        document.getElementById('privacy-policy-modal').style.display = 'flex'; // Show modal
+        document.getElementById('privacy-policy-modal').style.display = 'flex';
     });
 
-    // Close the Privacy Policy Modal
     document.getElementById('close-privacy-policy').addEventListener('click', function() {
-        document.getElementById('privacy-policy-modal').style.display = 'none'; // Hide modal
+        document.getElementById('privacy-policy-modal').style.display = 'none'; 
     });
 });
 </script>
