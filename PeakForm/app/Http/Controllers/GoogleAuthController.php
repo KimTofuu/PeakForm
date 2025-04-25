@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AccountActivityMail;
 
 class GoogleAuthController extends Controller
 {
@@ -34,8 +36,9 @@ class GoogleAuthController extends Controller
             Auth::login($user);
 
             // dd(Auth::user());
+            Mail::to($user->email)->send(new AccountActivityMail($user));
 
-            return redirect()->route('dashboard_1');
+            return redirect()->route('workout_plan_1');
         }
     }
 }

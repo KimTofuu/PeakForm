@@ -50,7 +50,7 @@
                 <span>or</span>
             </div>
         
-            <button class="google-btn">
+            <button class="google-btn" onclick="window.location.href='{{ route('google.redirect') }}'">
                 <i class="fab fa-google"></i>
                 Continue with Google
             </button>

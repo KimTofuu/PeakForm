@@ -17,8 +17,8 @@ class AuthController extends Controller
         $fields = $request->validate([
             'Fname' => 'required|max:255',
             'Lname' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:8',
         ]);
     
         // Manually hash the password
@@ -30,11 +30,15 @@ class AuthController extends Controller
         Mail::to($user->email)->send(new AccountActivityMail($user));
 
         $token = $user->createToken($request->Fname);
-    
-        return response()->json([
-            'user' => $user,
-            'token' => $token->plainTextToken
-        ]);        
+
+        Auth::login($user);
+
+        return redirect()->route('workout_plan_1'); // Redirect to the dashboard after registration
+        
+        // return response()->json([
+        //     'user' => $user,
+        //     'token' => $token->plainTextToken
+        // ]);
     }
     
     public function showLoginForm() {
