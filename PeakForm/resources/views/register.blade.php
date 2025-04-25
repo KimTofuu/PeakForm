@@ -32,12 +32,39 @@
         <div class="form-group">
             <input type="password" placeholder="Confirm Password">
         </div>
-
+       
     </div>
-    <div class="mid_register"> 
-        <a href="{{ route('personal_info') }}">
-            <button class="signup-btn"> Register </button>
-        </a>
+    
+    <!-- Privacy Policy Checkbox -->
+<!-- Privacy Policy Checkbox -->
+
+<div class="priv_policy">
+<form method="GET" action="{{ route('personal_info') }}">
+    @csrf
+    <div class="mb-4">
+        <label for="privacy-policy" class="flex items-center">
+            <input type="checkbox" id="privacy-policy" name="privacy_policy" class="mr-2" required>
+            I agree to the <a href="#" id="open-privacy-policy" class="privacy-policy-link">Privacy Policy</a>
+        </label>
+    </div>
+
+    <!-- Submit Button -->
+    <a href="{{ route('personal_info') }}">
+        <button type="submit" class="signup-btn"> Register </button>
+    </a>
+</form>
+</div>
+<!-- Privacy Policy Modal -->
+<div id="privacy-policy-modal" class="modal hidden">
+    <div class="modal-content">
+        <h2>Privacy Policy</h2>
+        <p>
+            Your Privacy Policy content goes here.
+        </p>
+        <button id="close-privacy-policy" class="close-btn">Close</button>
+    </div>
+</div>
+</div>
 
     </div>    
     <div class="lower_register"> 
@@ -56,5 +83,22 @@
             Continue with Google
         </button>
     </div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Open the Privacy Policy Modal
+    document.getElementById('open-privacy-policy').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('privacy-policy-modal').style.display = 'flex'; // Show modal
+    });
+
+    // Close the Privacy Policy Modal
+    document.getElementById('close-privacy-policy').addEventListener('click', function() {
+        document.getElementById('privacy-policy-modal').style.display = 'none'; // Hide modal
+    });
+});
+</script>
+
 </body>
 </html>
