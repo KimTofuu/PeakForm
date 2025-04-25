@@ -61,13 +61,6 @@ body {
     border-color: #aaa;
 }
 
-.mid_register {
-    display: flex;
-    flex-direction: column;
-    margin-top: 25px;
-    align-items: center;
-}
-
 .lower_register {
     display: flex;
     flex-direction: column;
@@ -150,3 +143,59 @@ body {
     background-color: #f5f5f5;
 }
 
+/* Style for the Privacy Policy Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Make sure it's on top of other content */
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.privacy-policy-link {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.priv_policy {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.priv_policy button {
+    margin-top: 10px;
+    text-align: center;
+}
