@@ -25,7 +25,7 @@
         <a href="{{ route('dashboard_5') }}">Profile</a>
       </nav>
       <div class="logout">
-        <button class="logout-btn" href="/">
+        <button class="logout-btn">
           <img src="images/log_out.png">
         </button>
       </div>
@@ -35,24 +35,6 @@
       <div class="cards">
         <div class="card">
           <h2 style="font-family: 'Michroma', sans-serif;" >Monday</h2>
-          <div class="workout_checklist">
-            <label>
-                <input type="checkbox" name="items[]" value="item1" class="mr-2">
-                Warm-Up (5-10 minutes)
-            </label>
-            <label>
-                <input type="checkbox" name="items[]" value="item2" class="mr-2">
-                Push-Ups – 3 sets of 10-12 reps
-            </label>
-            <label>
-                <input type="checkbox" name="items[]" value="item3" class="mr-2">
-                Squats – 3 sets of 12-15 reps
-            </label>
-            <label>
-                <input type="checkbox" name="items[]" value="item4" class="mr-2">
-                Stretching (hamstrings, quads, shoulders)
-            </label>
-          </div>
         </div>
         <div class="card">
           <h2 style="font-family: 'Michroma', sans-serif;" >Progress</h2>
