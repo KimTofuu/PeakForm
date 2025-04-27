@@ -50,9 +50,10 @@ class User extends Authenticatable
         ];
     }
 
-    public function workoutPlans()
+
+    public function workSplits()
     {
-        return $this->hasMany(workSplit::class);
+        return $this->hasMany(WorkSplit::class);
     }
 
     public function mealPlans()
