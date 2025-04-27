@@ -11,18 +11,22 @@
     <h2>Let’s Build Your Personalized Plan!</h2>
     <img src="images/logo_4.png"  alt="Dumbbell Icon" class="icon" />
 
-    <div class="form-box">
-      <p class="question">What best describe your workout setup? <br><span>(Select one)</span></p>
-      <div class="goal-options">
-        <button class="goal-button" data-goal="Full Gym Setup">Full Gym Setup</button>
-        <button class="goal-button" data-goal="Home / Minal Setup">Home / Minal Setup</button>
-      </div>
+    <form action="{{ route('workout_plan_3') }}" method="POST">
+  @csrf
+  <div class="form-box">
+    <p class="question">What best describes your workout setup? <br><span>(Select one)</span></p>
+    <div class="goal-options">
+      <button type="button" class="goal-button" data-goal="Full Gym Setup">Full Gym Setup</button>
+      <button type="button" class="goal-button" data-goal="Home / Minimal Setup">Home / Minimal Setup</button>
     </div>
-
-    <a href="{{ route('workout_plan_3') }}">
-        <button class="proceed-button"> Proceed </button>
-    </a>
   </div>
+
+  <!-- Hidden input to store selected setup -->
+  <input type="hidden" name="goal" id="selected-goal" />
+
+  <button type="submit" class="proceed-button"> Proceed </button>
+  </form>
+</div>
 
   <script src="script.js"></script>
 </body>
