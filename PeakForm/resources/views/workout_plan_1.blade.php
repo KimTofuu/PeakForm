@@ -22,7 +22,7 @@
         </div>
       </div>
     
-      <!-- Hidden input to store selected goal -->
+      
       <input type="hidden" name="goal" id="selected-goal" />
     
       <button type="submit" class="proceed-button"> Proceed </button>
