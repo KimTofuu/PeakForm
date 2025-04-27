@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\MealPlan;
+use App\Models\WorkSplit;
 
 class WorkoutController extends Controller
 {
@@ -141,7 +141,7 @@ class WorkoutController extends Controller
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
         
-        $workSplit = "worksplitModel/table"::create([
+        $workSplit = WorkSplit::create([
             'PlanName' => $request->PlanName,
             'GoalType' => $request->GoalType,
             'SplitType' => $request->SplitType,
