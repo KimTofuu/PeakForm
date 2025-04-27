@@ -90,7 +90,7 @@ class MealController extends Controller
             'FatTarget' => 'required|numeric',
         ]);
 
-        $mealPlan = $user->mealPlans()->create([
+        $mealPlan = "MealPlanModel/table"::create([
             'PlanName' => $request->PlanName,
             'CalorieTarget' => $request->CalorieTarget,
             'ProteinTarget' => $request->ProteinTarget,
