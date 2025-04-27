@@ -30,6 +30,16 @@ class WorkoutController extends Controller
         // Generate workout split
         $workoutSplit = $this->createWorkoutPlan($goal, $intensity, $setup, $days, $level);
 
+        $user = Auth::user();
+        if ($user) {
+            WorkSplit::create([
+                'PlanName' => $goal . ' Plan', // or you can customize PlanName however you want
+                'GoalType' => $goal,
+                'SplitType' => json_encode($workoutSplit), // Save the split as JSON
+                'CreatedDate' => now(),
+            ]);
+        }
+
         // Return or save generated split
         return response()->json([
             'success' => true,

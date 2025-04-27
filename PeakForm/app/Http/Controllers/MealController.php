@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Models\MealPlan;
-
-
-
 
 class MealController extends Controller
 {
@@ -35,10 +31,36 @@ class MealController extends Controller
         // Calculate macros
         $macros = $this->calculateMacros($calories, $data['goal']);
 
+        // Generate meal plan
+        $mealPlan = [
+            'PlanName' => $data['goal'] . ' Meal Plan', // or something more customized
+            'CalorieTarget' => round($calories),
+            'ProteinTarget' => $macros['protein'],
+            'CarbTarget' => $macros['carbs'],
+            'FatTarget' => $macros['fat']
+        ];
+
+        // Store the generated meal plan in the database
+        $user = Auth::user();
+        if ($user) {
+            MealPlan::create([
+                'PlanName' => $mealPlan['PlanName'],
+                'CalorieTarget' => $mealPlan['CalorieTarget'],
+                'ProteinTarget' => $mealPlan['ProteinTarget'],
+                'CarbTarget' => $mealPlan['CarbTarget'],
+                'FatTarget' => $mealPlan['FatTarget'],
+                'CreatedDate' => now(),
+            ]);
+        }
+
         return response()->json([
             'success' => true,
-            'calories' => round($calories),
-            'macros' => $macros
+            'calories' => $mealPlan['CalorieTarget'],
+            'macros' => [
+                'protein' => $mealPlan['ProteinTarget'],
+                'carbs' => $mealPlan['CarbTarget'],
+                'fat' => $mealPlan['FatTarget']
+            ]
         ]);
     }
 
