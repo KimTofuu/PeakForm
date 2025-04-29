@@ -19,10 +19,10 @@
       </div>
       <nav class="nav-menu">
         <a href="{{ route('dashboard_1') }}">Overview</a>
-        <a class="active" href="{{ route('dashboard_2') }}">Progress</a>
+        <a href="{{ route('dashboard_2') }}">Progress</a>
         <a href="{{ route('dashboard_3') }}">Workouts</a>
         <a href="{{ route('dashboard_4') }}">Meal Plan</a>
-        <a href="{{ route('dashboard_5') }}">Profile</a>
+        <a class="active" href="{{ route('dashboard_5') }}">Profile</a>
       </nav>
       <div class="logout">
         <button class="logout-btn">
