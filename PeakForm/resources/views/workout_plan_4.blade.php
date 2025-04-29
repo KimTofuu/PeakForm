@@ -11,18 +11,18 @@
     <h2>Let’s Build Your Personalized Plan!</h2>
     <img src="images/logo_4.png"  alt="Dumbbell Icon" class="icon" />
 
-    <div class="form-box">
-      <p class="question">How many days a week do you want to work out?</p>
-      <div class="goal-options">
-            <input type="number" id="days" name="days" required />
-        </div>
-      </div>
+  <form action="{{ route('dashboard_1') }}" method="POST">
+  @csrf
+  <div class="form-box">
+    <p class="question">How many days a week do you want to work out?</p>
+    <div class="goal-options">
+      <input type="number" id="days" name="days" required />
     </div>
-
-    <a href="{{ route('dashboard_1') }}">
-        <button class="proceed-button"> Proceed </button>
-    </a>
   </div>
+
+  <button type="submit" class="proceed-button">Proceed</button>
+  </form>
+</div>
 
   <script src="script.js"></script>
 </body>
