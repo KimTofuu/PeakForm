@@ -18,11 +18,11 @@
         <hr />
       </div>
       <nav class="nav-menu">
-        <a class="active" href="{{ route('dashboard_1') }}">Overview</a>
-        <a href="{{ route('dashboard_2') }}">Progress</a>
-        <a href="{{ route('dashboard_3') }}">Workouts</a>
-        <a href="{{ route('dashboard_4') }}">Meal Plan</a>
-        <a href="{{ route('dashboard_5') }}">Profile</a>
+        <a class="active" href="{{ route('overview_tab') }}">Overview</a>
+        <a href="{{ route('progress_tab') }}">Progress</a>
+        <a href="{{ route('workouts_tab') }}">Workouts</a>
+        <a href="{{ route('mealplan_tab') }}">Meal Plan</a>
+        <a href="{{ route('profile_tab') }}">Profile</a>
       </nav>
       <div class="logout">
         <button class="logout-btn">
@@ -47,10 +47,10 @@
       <div class="actions">
         <div class = "actions_2">
             <div class = "actions_3">
-              <button class="btn play">▶ View Video Guide</button>
+              <a href="{{ route('workouts_tab') }}" class="btn play">▶ View Video Guide </a>
             </div>
             <div class = "actions_3">
-              <button class="btn edit">✎ Edit Workout Plan</button>
+              <a href="{{ route('workouts_tab') }}" class="btn edit"> ✎ Edit Workout Plan </a>
             </div>
             <div class = "actions_3">
               <button class="btn timer">⏱ Use Timer</button>

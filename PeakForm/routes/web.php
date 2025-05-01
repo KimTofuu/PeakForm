@@ -70,25 +70,25 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/dashboard_1', function () {
-    return view('dashboard_1');
-})->name('dashboard_1');
+Route::get('/overview_tab', function () {
+    return view('overview_tab');
+})->name('overview_tab');
 
-Route::get('/dashboard_2', function () {
-    return view('dashboard_2');
-})->name('dashboard_2');
+Route::get('/progress_tab', function () {
+    return view('progress_tab');
+})->name('progress_tab');
 
-Route::get('/dashboard_3', function () {
-    return view('dashboard_3');
-})->name('dashboard_3');
+Route::get('/workouts_tab', function () {
+    return view('workouts_tab');
+})->name('workouts_tab');
 
-Route::get('/dashboard_4', function () {
-    return view('dashboard_4');
-})->name('dashboard_4');
+Route::get('/mealplan_tab', function () {
+    return view('mealplan_tab');
+})->name('mealplan_tab');
 
-Route::get('/dashboard_5', function () {
-    return view('dashboard_5');
-})->name('dashboard_5');
+Route::get('/profile_tab', function () {
+    return view('profile_tab');
+})->name('profile_tab');
 
 Route::get('/personal_info', function () {
     return view('personal_info');
