@@ -19,16 +19,16 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/login', function () {return view('login');})->name('login');
+Route::get('/login', function () {return view('login');});
 
 Route::get('/register', function () {
     return view('register');
 })->name('register');
 
-Route::get('/dashboard_1', function () {
+Route::get('/overview_tab', function () {
     $user = Auth::user();
-    return view('dashboard_1', compact('user'));
-})->name('dashboard_1')->middleware('auth:sanctum');
+    return view('overview_tab', compact('user'));
+})->name('overview_tab')->middleware('auth:sanctum');
 
 Route::get('/google-auth/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
 Route::get('/google-auth/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
@@ -45,7 +45,7 @@ Route::get('/user', function (Request $request) {
 
 // Route::apiResource('posts', PostController::class);
 // Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::get('/mealRemind', function () {
@@ -69,10 +69,6 @@ Route::post('/body-metrics', [BodyMetricsController::class, 'store']);
 Route::get('/', function () {
     return view('index');
 })->name('index');
-
-Route::get('/overview_tab', function () {
-    return view('overview_tab');
-})->name('overview_tab');
 
 Route::get('/progress_tab', function () {
     return view('progress_tab');
