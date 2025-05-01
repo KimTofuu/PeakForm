@@ -14,7 +14,7 @@
     <aside class="sidebar">
       <div class="profile-section">
         <div class="avatar"></div>
-        <p class="name"  style="font-family: 'Michroma', sans-serif;" >FRANCIS EMIL ROSETE</p>
+        <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
         <hr />
       </div>
       <nav class="nav-menu">
