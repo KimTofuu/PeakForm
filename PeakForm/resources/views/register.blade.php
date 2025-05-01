@@ -14,7 +14,7 @@
         <img src="images/register.png">
     </div>
 
-    <form action="{{ route('personal_info') }}" method="POST" class="signup-container">
+    <form action="{{ route('register') }}" method="POST" class="signup-container">
         @csrf
         <div class="form-group">
             <input type="text" name="Fname" placeholder="First Name" required>
