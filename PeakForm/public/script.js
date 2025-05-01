@@ -18,3 +18,19 @@ document.querySelectorAll(".goal-button").forEach(button => {
     selectedGoal = goal;
   });
 });
+
+
+    function openPrivacyModal(e) {
+        e.preventDefault();
+        document.getElementById('privacyModal').style.display = 'block';
+    }
+
+    function closePrivacyModal() {
+        document.getElementById('privacyModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('privacyModal')) {
+            closePrivacyModal();
+        }
+    }
