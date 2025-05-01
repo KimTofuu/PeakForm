@@ -17,28 +17,39 @@ class GoogleAuthController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    public function callback(){
+    public function callback() {
         $google_account = Socialite::driver('google')->user();
-
-
+    
         if (!empty($google_account)) {
-            $fullName = explode(' ', $google_account->name, 2); // splits into [Fname, Lname]
-
-            $user = User::updateOrCreate([
-                'google_id' => $google_account->id
-            ], [
-                'Fname' => $fullName[0] ?? '',
-                'Lname' => $fullName[1] ?? '',
-                'email' => $google_account->email,
-                'password' => Hash::make(Str::random(8)),
-            ]);
-
+            $fullName = explode(' ', $google_account->name, 2); // [Fname, Lname]
+    
+            // Check if user already exists
+            $existingUser = User::where('google_id', $google_account->id)->first();
+    
+            // Create or update the user
+            $user = User::updateOrCreate(
+                ['google_id' => $google_account->id],
+                [
+                    'Fname' => $fullName[0] ?? '',
+                    'Lname' => $fullName[1] ?? '',
+                    'email' => $google_account->email,
+                    'password' => Hash::make(Str::random(8)),
+                ]
+            );
+    
             Auth::login($user);
-
-            // dd(Auth::user());
+    
             Mail::to($user->email)->send(new AccountActivityMail($user));
-
-            return redirect()->route('workout_plan_1');
+    
+            // Redirect based on whether user was newly created or already existed
+            if ($existingUser) {
+                return redirect()->route('overview_tab'); // Returning user
+            } else {
+                return redirect()->route('workout_plan_1'); // New user
+            }
         }
-    }
+    
+        // Optional: Redirect somewhere safe if Google data is missing
+        return redirect()->route('login')->withErrors(['email' => 'Google login failed.']);
+    }    
 }
