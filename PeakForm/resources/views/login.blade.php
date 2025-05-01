@@ -18,25 +18,31 @@
     </div>
 
     <div class="login-container">
-        <form class="login-form">
+        <form class="login-form" method="POST" action="{{ route('login') }}">
+            @csrf
             <div class="form-group">
-                <input type="email" id="email" placeholder="Email">
+                <input type="email" name="email" id="email" placeholder="Email" required>
             </div>
             
             <div class="form-group">
-                <input type="password" id="password" placeholder="Password">
+                <input type="password" name="password" id="password" placeholder="Password" required>
                 <span class="position-absolute" onclick="togglePassword()">
                     <i id="eyeIcon" class="fa fa-eye"></i>
                 </span>
             </div>
             
+            @if ($errors->any())
+                <div class="error-message">
+                    @foreach ($errors->all() as $error)
+                        <p style="color: red;">{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
+            </div>
+            <div class = "mid_login">
+                <button type="submit" class="login-btn">Log in</button>
+            </div>
         </form>
-    </div>
-        <div class = "mid_login">
-            <a href="{{ route('dashboard_1') }}">
-              <button class="login-btn"> Log in </button>
-            </a>
-        </div>
         <div class = "lower_login">    
             <div class="register-link">
                 <p>Doesn't have an account? 

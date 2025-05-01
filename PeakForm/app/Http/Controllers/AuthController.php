@@ -57,7 +57,7 @@ class AuthController extends Controller
         // Check if credentials are correct
         if (Auth::attempt($credentials)) {
             // Authentication was successful
-            return redirect()->intended('dashboard_1'); // or wherever you want to redirect the user
+            return redirect()->intended('overview_tab'); // or wherever you want to redirect the user
         }
 
         // If authentication fails
