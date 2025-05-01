@@ -18,11 +18,11 @@
         <hr />
       </div>
       <nav class="nav-menu">
-        <a href="{{ route('dashboard_1') }}">Overview</a>
-        <a href="{{ route('dashboard_2') }}">Progress</a>
-        <a href="{{ route('dashboard_3') }}">Workouts</a>
-        <a class="active" href="{{ route('dashboard_4') }}">Meal Plan</a>
-        <a href="{{ route('dashboard_5') }}">Profile</a>
+        <a href="{{ route('overview_tab') }}">Overview</a>
+        <a href="{{ route('progress_tab') }}">Progress</a>
+        <a href="{{ route('workouts_tab') }}">Workouts</a>
+        <a class="active" href="{{ route('mealplan_tab') }}">Meal Plan</a>
+        <a href="{{ route('profile_tab') }}">Profile</a>
       </nav>
       <div class="logout">
         <button class="logout-btn">
