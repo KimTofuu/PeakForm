@@ -143,7 +143,20 @@ class WorkoutController extends Controller
     
         return $split;
     }
-        
+    
+    public function storeGoal(Request $request)
+    {
+        $request->validate([
+            'goal' => 'required|string|in:gain_muscle,lose_fat,maintenance',
+        ]);
+
+        // Store the selected goal in session
+        session(['workout_goal' => $request->goal]);
+
+        // Redirect to the next step
+        return redirect()->route('workout_plan_3');
+    }
+
 
     public function store(Request $request)
     {
