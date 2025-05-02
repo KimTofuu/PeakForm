@@ -33,11 +33,12 @@ class WorkoutController extends Controller
         $user = Auth::user();
         if ($user) {
             WorkSplit::create([
-                'WorkplanName' => $goal . ' Plan', // or you can customize PlanName however you want
-                'GoalType' => $goal,
-                'splitType' => json_encode($workoutSplit), // Save the split as JSON
-                'created_at' => now(),
-            ]);
+                'user_id' => $user->id,
+                'WorkplanName' => ucfirst(str_replace('_', ' ', $goal)) . ' Plan',
+                // 'GoalType' => $goal,
+                'splitType' => json_encode($workoutSplit),
+                'CreatedDate' => now(),
+            ]);            
         }
 
         // Return or save generated split
