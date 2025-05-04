@@ -337,7 +337,7 @@ button {
 /*--------------------------------------FOOTER----------------------------*/
 
 footer {
-    background-color: #d6e0a3;
+    background-color: #FAF9F6;
     text-align: center;
     padding: 20px;
     color: black;
@@ -357,3 +357,56 @@ footer {
 }
 
 
+/*------------------------------------- FAQs -------------------------------*/
+
+
+#FAQs {
+	padding: 50px 0px;
+	align-items: center;
+	background-color: rgba(143, 176, 49, 0.4);
+}
+.faq-container {
+	max-width: 700px;
+	margin: 0 auto;
+	padding: 20px;
+	font-family: Arial, sans-serif;
+	color: black;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.faq-container h2 {
+	margin-bottom: 45px;
+	font-size: 50px;
+}
+.faq-item {
+	border-bottom: 1px solid #8FB031;
+	padding: 15px 0;
+	margin-bottom: 10px;
+}
+
+.faq-question {
+	cursor: pointer;
+	font-weight: bold;
+	position: relative;
+}
+
+.faq-question::after {
+	content: '+';
+	position: absolute;
+	right: 0;
+}
+
+.faq-question.active::after {
+	content: '-';
+}
+
+.faq-answer {
+	display: none;
+	margin-top: 10px;
+	color: black;
+}
+
+.faq-answer.show {
+	display: block;
+}

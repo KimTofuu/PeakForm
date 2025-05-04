@@ -34,3 +34,12 @@ document.querySelectorAll(".goal-button").forEach(button => {
             closePrivacyModal();
         }
     }
+
+
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+          question.classList.toggle('active');
+          const answer = question.nextElementSibling;
+          answer.classList.toggle('show');
+      });
+  });
