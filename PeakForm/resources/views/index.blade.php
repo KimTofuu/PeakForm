@@ -16,6 +16,7 @@
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#features">Features</a></li>
+                <li><a href="#FAQs">FAQs</a></li>
                 <li>
                     <a href="{{ route('login') }}">
                         <button>Log in</button>
@@ -131,6 +132,49 @@
         </div>
     </div>
     
+
+ <div id="FAQs">
+     <div class="faq-container">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">What is PeakForm?</div>
+            <div class="faq-answer">PeakForm is a web-based workout split and meal planner designed to help you achieve your fitness goals through customized plans.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Is PeakForm free to use?</div>
+            <div class="faq-answer">Yes, PeakForm offers a free version with core features. Premium features may be available with a subscription.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Do I need to create an account to use PeakForm? </div>
+            <div class="faq-answer">Yes, creating an account allows you to save your progress, access personalized plans, and sync across devices. </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How are the workout splits created? </div>
+            <div class="faq-answer">Workout splits are generated based on your selected goals, experience level, and available days for training.</div>
+        </div>
+
+
+        <div class="faq-item">
+            <div class="faq-question">Can I track my progress with PeakForm?</div>
+            <div class="faq-answer">Yes, you can log your workouts and meals, and monitor your progress over time through visual graphs and statistics.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Can I customize my workout split?</div>
+            <div class="faq-answer">Absolutely. PeakForm lets you create and edit workout splits to match your specific fitness goals and schedule.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How often should I update my plan?</div>
+            <div class="faq-answer">We recommend updating your workout and meal plan every 4–6 weeks to keep progressing and avoid plateaus.</div>
+        </div>
+    </div>
+</div>
+
     <footer>
         <div id="footer_things">
             <p>&copy; 2025 PeakForm. All rights reserved.</p>
@@ -141,5 +185,10 @@
             </div>
         </div>
     </footer>
+
+
+
+    <script src="script.js"></script>
+
 </body>
 </html>
