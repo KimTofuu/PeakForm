@@ -29,16 +29,15 @@ function mapGoalToBackend(label) {
 }
 
 
-    function openPrivacyModal(e) {
-      e.preventDefault();
-      document.getElementById('privacyModal').style.display = 'block';
-    }
+function openPrivacyModal(e) {
+  e.preventDefault();
+  document.getElementById('privacyModal').style.display = 'block';
+}
 
-    function closePrivacyModal() {
-      document.getElementById('privacyModal').style.display = 'none';
-    }
+function closePrivacyModal() {
+  document.getElementById('privacyModal').style.display = 'none';
+}
 
-<<<<<<< Updated upstream
 window.onclick = function(event) {
   if (event.target == document.getElementById('privacyModal')) {
     closePrivacyModal();
@@ -53,10 +52,3 @@ window.onclick = function(event) {
           answer.classList.toggle('show');
       });
   });
-=======
-    window.onclick = function(event) {
-      if (event.target == document.getElementById('privacyModal')) {
-        closePrivacyModal();
-      }
-    }
->>>>>>> Stashed changes
