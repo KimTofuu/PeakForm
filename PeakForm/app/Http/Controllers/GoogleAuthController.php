@@ -45,7 +45,7 @@ class GoogleAuthController extends Controller
             if ($existingUser) {
                 return redirect()->route('overview_tab'); // Returning user
             } else {
-                return redirect()->route('workout_plan_1'); // New user
+                return redirect()->route('welcome_page'); // New user
             }
         }
     

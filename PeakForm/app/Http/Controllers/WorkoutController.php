@@ -213,8 +213,6 @@ class WorkoutController extends Controller
         return redirect()->route('dashboard_1'); // adjust if you're adding more steps
     }
 
-
-
     public function store(Request $request)
     {
         $user = Auth::user();

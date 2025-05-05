@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\Auth;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
 
 Route::get('/login', function () {return view('login');});
 
 Route::get('/register', function () {
     return view('register');
-})->name('register');
+})->name('register.submit');
 
 Route::get('/overview_tab', function () {
     $user = Auth::user();
@@ -77,6 +77,10 @@ Route::get('/progress_tab', function () {
 Route::get('/workouts_tab', function () {
     return view('workouts_tab');
 })->name('workouts_tab');
+
+Route::get('/welcome_page', function () {
+    return view('welcome_page');
+})->name('welcome_page');
 
 Route::get('/mealplan_tab', function () {
     return view('mealplan_tab');

@@ -1,33 +1,52 @@
-let selectedGoal = null;
+let selectedValues = {}; // Tracks selected value per input field
 
 document.querySelectorAll(".goal-button").forEach(button => {
   button.addEventListener("click", () => {
-    const goal = button.getAttribute("data-goal");
+    const field = button.closest("form").querySelector("input[type='hidden']");
+    const fieldName = field.getAttribute("name");
+    const label = button.getAttribute("data-goal");
 
-    if (selectedGoal === goal) return;
+    if (selectedValues[fieldName] === label) return;
 
-    if (selectedGoal !== null) {
-      const prevButton = document.querySelector(`.goal-button[data-goal="${selectedGoal}"]`);
+    // Remove active class from previous
+    if (selectedValues[fieldName]) {
+      const prevButton = document.querySelector(`.goal-button[data-goal="${selectedValues[fieldName]}"]`);
       if (prevButton) prevButton.classList.remove("active");
     }
 
+    // Set active
     button.classList.add("active");
-    selectedGoal = goal;
+    selectedValues[fieldName] = label;
 
-    // 🔥 Set hidden input value based on selected goal
-    document.getElementById("selected-goal").value = mapGoalToBackend(goal);
+    // Set hidden input value
+    field.value = mapLabelToBackend(label);
   });
 });
 
-function mapGoalToBackend(label) {
-  const goalMap = {
+function mapLabelToBackend(label) {
+  const map = {
+    // Goal step
     "Lose Fat": "lose_fat",
     "Build Muscle": "gain_muscle",
-    "Get Toned": "maintenance"
-  };
-  return goalMap[label] || "";
-}
+    "Get Toned": "maintenance",
 
+    // Intensity step
+    "High Intensity": "high",
+    "Moderate": "moderate",
+    "Low Intensity": "low",
+
+    // Setup step (if any)
+    "Full Gym": "full_gym",
+    "Home": "home",
+
+    // Level step (if any)
+    "Beginner": "beginner",
+    "Intermediate": "intermediate",
+    "Advanced": "advanced",
+  };
+
+  return map[label] || label.toLowerCase().replace(" ", "_"); // fallback
+}
 
 function openPrivacyModal(e) {
   e.preventDefault();
@@ -52,3 +71,4 @@ window.onclick = function(event) {
           answer.classList.toggle('show');
       });
   });
+  
