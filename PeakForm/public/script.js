@@ -43,3 +43,12 @@ window.onclick = function(event) {
     closePrivacyModal();
   }
 }
+
+
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+          question.classList.toggle('active');
+          const answer = question.nextElementSibling;
+          answer.classList.toggle('show');
+      });
+  });
