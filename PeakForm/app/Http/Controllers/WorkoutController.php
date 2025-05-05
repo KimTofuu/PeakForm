@@ -30,7 +30,7 @@ class WorkoutController extends Controller
         $level = $data['level'];
 
         // Generate workout split
-        $workoutSplit = $this->createWorkoutPlan($goal, $intensity, $setup, $days, $level);
+        $workoutSplit = $this->createWorkoutPlan($goal, $intensity);
 
         $splitType = $this->determineSplitType($goal, $intensity, $setup, $days, $level);
         $splitDays = $this->createWorkoutPlan($splitType, $days);
