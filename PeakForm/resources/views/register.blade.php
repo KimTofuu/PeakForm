@@ -11,7 +11,7 @@
 <body>
 
     <div class="upper_register">
-        <img src="images/register.png">
+        <img src="images/signup.png">
     </div>
 
     <form action="{{ route('register') }}" method="POST" class="signup-container">
