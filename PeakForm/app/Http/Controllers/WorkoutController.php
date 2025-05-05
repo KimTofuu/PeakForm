@@ -29,8 +29,6 @@ class WorkoutController extends Controller
         $days = $data['days'];
         $level = $data['level'];
 
-        // Generate workout split
-        $workoutSplit = $this->createWorkoutPlan($goal, $intensity);
 
         $splitType = $this->determineSplitType($goal, $intensity, $setup, $days, $level);
         $splitDays = $this->createWorkoutPlan($splitType, $days);
@@ -39,8 +37,8 @@ class WorkoutController extends Controller
         if ($user) {
             WorkSplit::create([
                 'user_id' => $user->id,
-                'workplanName' => ucfirst(str_replace('_', ' ', $goal)) . ' Plan',
-                'splitType' => $splitType,
+                'PlanName' => ucfirst(str_replace('_', ' ', $goal)) . ' Plan',
+                'SplitType' => $splitType,
                 'day1' => $splitDays['Day 1'] ?? null,
                 'day2' => $splitDays['Day 2'] ?? null,
                 'day3' => $splitDays['Day 3'] ?? null,
@@ -55,7 +53,7 @@ class WorkoutController extends Controller
         // Return or save generated split
         return response()->json([
             'success' => true,
-            'split' => $workoutSplit
+            'split' => $splitDays
         ]);
     }
     
