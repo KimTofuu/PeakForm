@@ -32,16 +32,25 @@ class WorkoutController extends Controller
         // Generate workout split
         $workoutSplit = $this->createWorkoutPlan($goal, $intensity, $setup, $days, $level);
 
+        $splitType = $this->determineSplitType($goal, $intensity, $setup, $days, $level);
+        $splitDays = $this->createWorkoutPlan($splitType, $days);
+
         $user = Auth::user();
         if ($user) {
             WorkSplit::create([
                 'user_id' => $user->id,
-                'WorkplanName' => ucfirst(str_replace('_', ' ', $goal)) . ' Plan',
-                // 'GoalType' => $goal,
-                'splitType' => json_encode($workoutSplit),
-                'CreatedDate' => now(),
-            ]);            
+                'workplanName' => ucfirst(str_replace('_', ' ', $goal)) . ' Plan',
+                'splitType' => $splitType,
+                'day1' => $splitDays['Day 1'] ?? null,
+                'day2' => $splitDays['Day 2'] ?? null,
+                'day3' => $splitDays['Day 3'] ?? null,
+                'day4' => $splitDays['Day 4'] ?? null,
+                'day5' => $splitDays['Day 5'] ?? null,
+                'day6' => $splitDays['Day 6'] ?? null,
+                'day7' => $splitDays['Day 7'] ?? null,
+            ]);
         }
+
 
         // Return or save generated split
         return response()->json([
@@ -50,100 +59,57 @@ class WorkoutController extends Controller
         ]);
     }
     
-    private function createWorkoutPlan($goal, $intensity, $setup, $days, $level){
+    private function determineSplitType($goal, $intensity, $setup, $days, $level)
+    {
+        if ($level === 'beginner') {
+            return $days <= 3 ? 'Full Body' : 'Upper Lower';
+        }
+    
+        if ($goal === 'gain_muscle' && $days >= 5) {
+            return 'PPL'; // Push Pull Legs
+        }
+    
+        return $days <= 3 ? 'Full Body' : 'Upper Lower';
+    }
+    
+
+    private function createWorkoutPlan($splitType, $days){
         $split = [];
     
-        if ($level === 'beginner') {
-            // Goal-specific beginner splits
-            if ($goal === 'gain_muscle') {
-                $split = [
-                    'Day 1' => 'Push (Chest, Shoulders, Triceps) - Beginner Hypertrophy Focus',
-                    'Day 2' => 'Pull (Back, Biceps) - Beginner Strength Focus',
-                    'Day 3' => 'Legs (Glutes, Quads, Hamstrings)',
-                ];
-                if ($days >= 4) $split['Day 4'] = 'Core + Mobility';
-                if ($days >= 5) $split['Day 5'] = 'Push/Pull Mix + Cardio';
-                if ($days == 6) $split['Day 6'] = 'Stretching or Light Cardio Recovery';
-            }
-    
-            elseif ($goal === 'lose_fat') {
-                $split = [
-                    'Day 1' => 'Push (Chest, Shoulders, Triceps) + Light Cardio',
-                    'Day 2' => 'Pull (Back, Biceps) + Core',
-                    'Day 3' => 'Legs + HIIT Circuit',
-                ];
-                if ($days >= 4) $split['Day 4'] = 'Full Body Circuit Training';
-                if ($days >= 5) $split['Day 5'] = 'Low-Impact Cardio + Abs';
-                if ($days == 6) $split['Day 6'] = 'Stretch/Yoga Recovery';
-            }
-    
-            else { // maintenance
-                $split = [
-                    'Day 1' => 'Push (Chest, Shoulders, Triceps) - Moderate Volume',
-                    'Day 2' => 'Pull (Back, Biceps) - Moderate Volume',
-                    'Day 3' => 'Legs + Core',
-                ];
-                if ($days >= 4) $split['Day 4'] = 'Cardio + Mobility';
-                if ($days >= 5) $split['Day 5'] = 'Stretch + Core Stability';
-                if ($days == 6) $split['Day 6'] = 'Active Recovery';
-            }
-    
-            return $split;
-        }
-    
-        // Intermediate/Advanced logic remains the same
-        if ($goal === 'gain_muscle') {
-            if ($setup === 'full_gym') {
-                $split = [
-                    'Day 1' => 'Upper A (Chest, Back, Shoulders)',
-                    'Day 2' => 'Lower A (Quads, Hamstrings, Calves)',
-                    'Day 3' => 'Upper B (Arms, Shoulders, Chest)',
-                ];
-                if ($days >= 4) $split['Day 4'] = 'Lower B (Glutes, Hamstrings, Calves)';
-                if ($days >= 5) $split['Day 5'] = 'Push (Chest, Shoulders, Triceps)';
-                if ($days == 6) $split['Day 6'] = 'Pull (Back, Biceps) / Cardio';
-            } else {
-                $split = [
-                    'Day 1' => 'Bodyweight Push + Core',
-                    'Day 2' => 'Bodyweight Pull + Cardio',
-                    'Day 3' => 'Lower Body + Mobility',
-                ];
-                if ($days >= 4) $split['Day 4'] = 'Upper Body Circuits';
-                if ($days >= 5) $split['Day 5'] = 'Lower Body HIIT';
-                if ($days == 6) $split['Day 6'] = 'Active Recovery / Stretching';
-            }
-        } elseif ($goal === 'lose_fat') {
-            if ($intensity === 'high') {
-                $split = [
-                    'Day 1' => 'HIIT + Full Body Strength',
-                    'Day 2' => 'Cardio + Core',
-                    'Day 3' => 'Lower Body HIIT',
-                ];
-                if ($days >= 4) $split['Day 4'] = 'Circuit Training';
-                if ($days >= 5) $split['Day 5'] = 'Moderate Cardio + Core Focus';
-                if ($days == 6) $split['Day 6'] = 'Active Recovery (Yoga/Stretching)';
-            } else {
-                $split = [
-                    'Day 1' => 'Full Body Strength',
-                    'Day 2' => 'Cardio + Core',
-                    'Day 3' => 'Lower Body Focus',
-                ];
-                if ($days >= 4) $split['Day 4'] = 'Low-Impact HIIT';
-                if ($days >= 5) $split['Day 5'] = 'Flexibility + Mobility';
-                if ($days == 6) $split['Day 6'] = 'Active Recovery (Yoga/Stretching)';
-            }
-        } else {
-            $split = [
+        if ($splitType === 'Full Body') {
+            return [
                 'Day 1' => 'Full Body Strength',
-                'Day 2' => 'Light Cardio + Mobility',
-                'Day 3' => 'Core & Flexibility',
+                'Day 2' => 'Cardio + Core',
+                'Day 3' => 'Full Body HIIT',
+                'Day 4' => $days >= 4 ? 'Mobility + Recovery' : null,
+                'Day 5' => $days >= 5 ? 'Full Body Circuit' : null,
+                'Day 6' => $days >= 6 ? 'Stretch/Yoga' : null,
             ];
-            if ($days >= 4) $split['Day 4'] = 'Circuit/Moderate Training';
-            if ($days >= 5) $split['Day 5'] = 'Low-Impact Cardio + Recovery';
-            if ($days == 6) $split['Day 6'] = 'Stretching / Active Recovery';
         }
-    
-        return $split;
+        
+        if ($splitType === 'Upper Lower') {
+            return [
+                'Day 1' => 'Upper Body A (Chest, Back, Shoulders)',
+                'Day 2' => 'Lower Body A (Glutes, Quads)',
+                'Day 3' => 'Upper Body B (Arms, Chest)',
+                'Day 4' => $days >= 4 ? 'Lower Body B (Hamstrings, Calves)' : null,
+                'Day 5' => $days >= 5 ? 'Core + Cardio' : null,
+                'Day 6' => $days >= 6 ? 'Mobility / Recovery' : null,
+            ];
+        }
+        
+        if ($splitType === 'PPL') {
+            return [
+                'Day 1' => 'Push (Chest, Shoulders, Triceps)',
+                'Day 2' => 'Pull (Back, Biceps)',
+                'Day 3' => 'Legs (Quads, Hamstrings, Glutes)',
+                'Day 4' => $days >= 4 ? 'Push (Hypertrophy)' : null,
+                'Day 5' => $days >= 5 ? 'Pull (Volume)' : null,
+                'Day 6' => $days >= 6 ? 'Legs (Strength)' : null,
+            ];
+        }
+        
+        return []; // fallback        
     }
 
     public function updateStep(Request $request)

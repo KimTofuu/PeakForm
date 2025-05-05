@@ -71,11 +71,13 @@ Route::get('/', function () {
 })->name('index');
 
 Route::get('/progress_tab', function () {
-    return view('progress_tab');
+    $user = Auth::user();
+    return view('progress_tab', compact('user'));
 })->name('progress_tab');
 
 Route::get('/workouts_tab', function () {
-    return view('workouts_tab');
+    $user = Auth::user();
+    return view('workouts_tab', compact('user'));
 })->name('workouts_tab');
 
 Route::get('/welcome_page', function () {
@@ -83,11 +85,13 @@ Route::get('/welcome_page', function () {
 })->name('welcome_page');
 
 Route::get('/mealplan_tab', function () {
-    return view('mealplan_tab');
+    $user = Auth::user();
+    return view('mealplan_tab', compact('user'));
 })->name('mealplan_tab');
 
 Route::get('/profile_tab', function () {
-    return view('profile_tab');
+    $user = Auth::user();
+    return view('profile_tab', compact('user'));
 })->name('profile_tab');
 
 Route::get('/personal_info', function () {
