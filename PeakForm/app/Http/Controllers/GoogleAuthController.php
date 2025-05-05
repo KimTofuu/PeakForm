@@ -39,12 +39,13 @@ class GoogleAuthController extends Controller
     
             Auth::login($user);
     
-            Mail::to($user->email)->send(new AccountActivityMail($user));
+            
     
             // Redirect based on whether user was newly created or already existed
             if ($existingUser) {
                 return redirect()->route('overview_tab'); // Returning user
             } else {
+                Mail::to($user->email)->send(new AccountActivityMail($user));
                 return redirect()->route('welcome_page'); // New user
             }
         }
