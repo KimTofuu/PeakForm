@@ -94,49 +94,108 @@
    
   }
   
-  .card {
+  
+  .left_side{
     flex-basis: 30%;
+    text-align: center;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .daily_tab {
     background-color: #ddd;
     padding:10px;
     border-radius: 8px;
     text-align: center;
     font-size: 1.5rem;
-    height: 500px;
-    
+    height: 555px;
+  }
+
+  .header_content {
+    margin-bottom: 20px;
   }
   
-  .card_2 {
+  .workout_content {
+    padding: 20px;
+    margin: 10px 10px;
+    background-color: #bbb ;
+    border-radius: 8px;
+    text-align: justify;
+    font-size: 20px;
+  }
+  
+  .workout_content span {
+    font-size: 15px;
+    color: #4d4b4b;
+  }
+
+  .daily_tab h3 {
+    margin-top: 50px;
+    text-align: left;
+    font-size:30px;
+  }
+  .middle{
     flex-basis: 30%;
+    text-align: center;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .progress_tab {
     background-color: #ddd;
-    padding: 10px;
+    padding:10px;
     border-radius: 8px;
     text-align: center;
     font-size: 1.5rem;
-    height: 250px;
-    
-    
+    height: 555px;
+  }
+
+  .progress_contents {
+    width: 100%; 
+    max-width: 600px; 
+    margin-top: 20px;
+  }
+
+  .right_side{
+    flex-basis: 30%;
+    text-align: center;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .reminders {
+    background-color: #ddd;
+    padding:10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.5rem;
+    height: 400px;
+  }
+
+  .reminders_contents {
+    padding: 20px;
+    margin: 10px 10px;
+    background-color: #bbb ;
+    border-radius: 8px;
+    text-align: justify;
+    font-size: 20px;
   }
 
   .actions {
-      flex: 1;
-      padding: 2rem;
+      padding: 10px;
+      align-items: right;
     }
     
-  .actions_2 {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      text-align: center;
-     
-    }
-    
-    .actions_3{
-      flex-basis: 25%;
-      border-radius: 8px;
-      text-align: center;
-      font-size: 1.5rem;
-      
-    }
+  .actions_3{
+    border-radius: 8px;
+    text-align: right;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
   
   .btn {
     background-color: #8FB031;
@@ -161,4 +220,39 @@
 
 .btn edit {
      text-decoration: none;
+}
+
+.timer_tab {
+    background-color: #c9d89c;
+    color: black;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 20px;
+    font-size: 50px;
+    height: 200px;
+}
+
+.timer_tab h2{
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.timer_tab button {
+  padding: 10px 15px;;
+  color: white;
+  background-color: #8FB031;
+  border: none;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-decoration: none;
+  margin-top: 30px;
+}
+
+.timer_tab button:hover {
+  background-color: #799f37;
 }
