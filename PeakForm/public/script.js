@@ -4,36 +4,46 @@ document.querySelectorAll(".goal-button").forEach(button => {
   button.addEventListener("click", () => {
     const goal = button.getAttribute("data-goal");
 
-    // Skip if already selected
     if (selectedGoal === goal) return;
 
-    // Remove "active" from previously selected button
     if (selectedGoal !== null) {
       const prevButton = document.querySelector(`.goal-button[data-goal="${selectedGoal}"]`);
       if (prevButton) prevButton.classList.remove("active");
     }
 
-    // Add "active" to newly selected button
     button.classList.add("active");
     selectedGoal = goal;
+
+    // 🔥 Set hidden input value based on selected goal
+    document.getElementById("selected-goal").value = mapGoalToBackend(goal);
   });
 });
 
+function mapGoalToBackend(label) {
+  const goalMap = {
+    "Lose Fat": "lose_fat",
+    "Build Muscle": "gain_muscle",
+    "Get Toned": "maintenance"
+  };
+  return goalMap[label] || "";
+}
+
 
     function openPrivacyModal(e) {
-        e.preventDefault();
-        document.getElementById('privacyModal').style.display = 'block';
+      e.preventDefault();
+      document.getElementById('privacyModal').style.display = 'block';
     }
 
     function closePrivacyModal() {
-        document.getElementById('privacyModal').style.display = 'none';
+      document.getElementById('privacyModal').style.display = 'none';
     }
 
-    window.onclick = function(event) {
-        if (event.target == document.getElementById('privacyModal')) {
-            closePrivacyModal();
-        }
-    }
+<<<<<<< Updated upstream
+window.onclick = function(event) {
+  if (event.target == document.getElementById('privacyModal')) {
+    closePrivacyModal();
+  }
+}
 
 
     document.querySelectorAll('.faq-question').forEach(question => {
@@ -43,3 +53,10 @@ document.querySelectorAll(".goal-button").forEach(button => {
           answer.classList.toggle('show');
       });
   });
+=======
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('privacyModal')) {
+        closePrivacyModal();
+      }
+    }
+>>>>>>> Stashed changes

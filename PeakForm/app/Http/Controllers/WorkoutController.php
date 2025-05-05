@@ -12,13 +12,15 @@ class WorkoutController extends Controller
 {
     public function generateSplit(Request $request){
         // Validate incoming data
-        $data = $request->validate([
-            'goal' => 'required|string|in:gain_muscle,lose_fat,maintenance',
-            'intensity' => 'required|string|in:low,moderate,high',
-            'setup' => 'required|string|in:full_gym,home',
-            'days' => 'required|integer|min:3|max:6', 
-            'level' => 'required|string|in:beginner,intermediate,advanced'
-        ]);
+        $data = [
+            'goal' => session('workout_goal'),
+            'intensity' => session('workout_intensity'),
+            'setup' => session('workout_setup'),
+            'days' => session('workout_days'),
+            'level' => session('workout_level')
+        ];
+        
+        $request->replace($data);
 
         // Extract user inputs
         $goal = $data['goal'];
@@ -143,6 +145,18 @@ class WorkoutController extends Controller
     
         return $split;
     }
+
+    public function updateStep(Request $request)
+    {
+        foreach ($request->all() as $key => $value) {
+            if (in_array($key, ['goal', 'setup', 'intensity', 'level', 'days'])) {
+                session(["workout_$key" => $value]);
+            }
+        }
+
+        return redirect()->route('next_step'); // adjust dynamically
+    }
+
     
     public function storeGoal(Request $request)
     {
@@ -157,6 +171,49 @@ class WorkoutController extends Controller
         return redirect()->route('workout_plan_3');
     }
 
+    public function storeSetup(Request $request)
+    {
+        $request->validate([
+            'setup' => 'required|string|in:full_gym,home',
+        ]);
+
+        session(['workout_setup' => $request->setup]);
+
+        return redirect()->route('workout_plan_4'); // next step
+    }
+
+    public function storeIntensity(Request $request)
+    {
+        $request->validate([
+            'goal' => 'required|string|in:High Intensity,Moderate,Low Intensity',
+        ]);
+
+        // Optional: Map to normalized values
+        $mappedIntensity = match($request->goal) {
+            'High Intensity' => 'high',
+            'Moderate' => 'moderate',
+            'Low Intensity' => 'low',
+            default => 'moderate', // fallback
+        };
+
+        session(['workout_intensity' => $mappedIntensity]);
+
+        return redirect()->route('workout_plan_4');
+    }
+
+    public function storeDays(Request $request)
+    {
+        $request->validate([
+            'days' => 'required|integer|min:3|max:6',
+        ]);
+
+        session(['workout_days' => $request->days]);
+
+        // Redirect to final step or dashboard
+        return redirect()->route('dashboard_1'); // adjust if you're adding more steps
+    }
+
+
 
     public function store(Request $request)
     {
@@ -166,11 +223,12 @@ class WorkoutController extends Controller
         }
         
         $workSplit = WorkSplit::create([
+            'user_id' => $user->id,  // <-- optional if needed
             'PlanName' => $request->PlanName,
             'GoalType' => $request->GoalType,
             'SplitType' => $request->SplitType,
             'CreatedDate' => now(),
-        ]);
+        ]);        
 
         return response()->json($workSplit);
     }
