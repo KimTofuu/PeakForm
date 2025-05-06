@@ -131,8 +131,9 @@ class WorkoutController extends Controller
         // Store the selected goal in session
         session(['workout_goal' => $request->goal]);
 
+
         // Redirect to the next step
-        return redirect()->route('workout_plan_3');
+        return redirect()->route('workout_plan_2');
     }
 
     public function storeSetup(Request $request)
@@ -142,37 +143,30 @@ class WorkoutController extends Controller
         ]);
 
         session(['workout_setup' => $request->setup]);
-
-        return redirect()->route('workout_plan_4'); // next step
+        return redirect()->route('workout_plan_3'); // next step
     }
 
     public function storeIntensity(Request $request)
     {
         $request->validate([
-            'goal' => 'required|string|in:High Intensity,Moderate,Low Intensity',
+            'intensity' => 'required|string|in:high,moderate,low',
         ]);
 
-        // Optional: Map to normalized values
-        $mappedIntensity = match($request->goal) {
-            'High Intensity' => 'high',
-            'Moderate' => 'moderate',
-            'Low Intensity' => 'low',
-            default => 'moderate', // fallback
-        };
-
-        session(['workout_intensity' => $mappedIntensity]);
-
+        session(['workout_intensity' => $request->intensity]);
+        // dd($request->all());
         return redirect()->route('workout_plan_4');
     }
+
+
 
     public function storeDays(Request $request)
     {
         $request->validate([
-            'days' => 'required|integer|min:3|max:6',
+            'days' => 'required|integer|min:1|max:6',
         ]);
 
         session(['workout_days' => $request->days]);
-
+        // dd($request->all());
         // Redirect to final step or dashboard
         return redirect()->route('dashboard_1'); // adjust if you're adding more steps
     }

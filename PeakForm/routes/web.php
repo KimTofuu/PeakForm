@@ -81,7 +81,8 @@ Route::get('/workouts_tab', function () {
 })->name('workouts_tab');
 
 Route::get('/welcome_page', function () {
-    return view('welcome_page');
+    $user = Auth::user();
+    return view('welcome_page', compact('user'));
 })->name('welcome_page');
 
 Route::get('/mealplan_tab', function () {
@@ -114,8 +115,8 @@ Route::get('/workout_plan_4', function () {
     return view('workout_plan_4');
 })->name('workout_plan_4');
 
-Route::post('/dashboard_1', [WorkoutController::class, 'storeDays'])->name('dashboard_1');
-Route::post('/workout_plan_2', [WorkoutController::class, 'storeGoal'])->name('workout_plan_2');
-Route::post('/workout_plan_3', [WorkoutController::class, 'storeSetup'])->name('workout_plan_3');
-Route::post('/workout_plan_4', [WorkoutController::class, 'storeIntensity'])->name('workout_plan_4');
+Route::post('/workout_plan_1', [WorkoutController::class, 'storeGoal'])->name('workout_plan_1');
+Route::post('/workout_plan_2', [WorkoutController::class, 'storeSetup'])->name('workout_plan_2');
+Route::post('/workout_plan_3', [WorkoutController::class, 'storeIntensity'])->name('workout_plan_3');
+Route::post('/workout_plan_4', [WorkoutController::class, 'storeDays'])->name('workout_plan_4');
 
