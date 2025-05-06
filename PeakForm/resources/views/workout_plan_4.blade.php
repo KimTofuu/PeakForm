@@ -12,7 +12,7 @@
     <h2>Let’s Build Your Personalized Plan!</h2>
     <img src="images/logo_4.png" alt="Dumbbell Icon" class="icon" />
 
-    <form action="{{ route('dashboard_1') }}" method="POST">
+    <form action="{{ route('workout_plan_4') }}" method="POST">
       @csrf
       <div class="form-box">
         <p class="question">How many days a week do you want to work out?<br><span>(Select one)</span></p>

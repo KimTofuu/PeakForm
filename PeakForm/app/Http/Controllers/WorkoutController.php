@@ -168,7 +168,7 @@ class WorkoutController extends Controller
         session(['workout_days' => $request->days]);
         // dd($request->all());
         // Redirect to final step or dashboard
-        return redirect()->route('dashboard_1'); // adjust if you're adding more steps
+        return redirect()->route('overview_tab'); // adjust if you're adding more steps
     }
 
     public function store(Request $request)
