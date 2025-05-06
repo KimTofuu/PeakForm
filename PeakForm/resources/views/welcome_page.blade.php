@@ -12,44 +12,32 @@
 <body>
     <div id = "header">
         <nav>
-           <img src="images/logo.png" class = "logo">
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#FAQs">FAQs</a></li>
-                <li>
-                    <a href="{{ route('login') }}">
-                        <button>Log in</button>
-                    </a>
-                </li>
-            </ul>
+           <img src="images/logo.png" class = "welcome_logo">
         </nav>
     </header>
     
-    <div id="header-text">
-        <div class="container">
-            <div class="row">
-                <div class="col_1">
-                    <h1>Welcome beh! <br> Your Personalized Path <br> to Peak Performance.</h1>
-                    <p>Unlock your full potential with PeakForm’s personalized fitness and <br> nutrition plans. 
-                        From adaptive workouts to easy meal suggestions,
-                    <br> everything you need to succeed is at your fingertips.</p>
-                    <a href="{{ route('register') }}">
-                        <button>Register</button>
-                    </a>
-                </div>
-                <div class="col_2">
-                    <img src='images/bowl.png'>
-                </div>
-            </div>
-            <img src='images/dumbell.png' id = "dumbbell">
+    <div id = "welcome_contents">
+        <div class = "header_welcome">
+            <h1> Welcome, [User's Name]! <br> to PeakForm </h1>
+            <p> Your personalized path to peak performance! </p>
         </div>
 
-        <a class="button-up" href="#header"> <i class="fa-solid fa-arrow-up"></i> </a>
-
+        <div class = "proceed_options">
+            <div class = "proceed_opt">
+                <h4> Let's build your Workout </h4>
+                <div class = "button_proceed">
+                    <a class = "proc_btn"> Proceed </a>
+                </div>
+            </div>
+            <div class = "training_opt">
+                <h4> or you want to train first <br> <span> click and hold </span>  </h4>
+                <div class = "training_img">
+                    <img src = "images/Lift.png" class = "welcome_logo">
+                </div>
+            </div>
+        </div>
     </div>
-
-
+            
     <script src="script.js"></script>
 
 </body>
