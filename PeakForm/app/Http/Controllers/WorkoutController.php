@@ -71,43 +71,90 @@ class WorkoutController extends Controller
     }
     
 
-    private function createWorkoutPlan($splitType, $days){
-        $split = [];
-    
+    private function createWorkoutPlan($splitType, $days)
+    {
+        $plan = [
+            'Day 1' => null,
+            'Day 2' => null,
+            'Day 3' => null,
+            'Day 4' => null,
+            'Day 5' => null,
+            'Day 6' => null,
+            'Day 7' => null,
+        ];
+
         if ($splitType === 'Full Body') {
-            return [
-                'Day 1' => 'Full Body Strength',
-                'Day 2' => 'Cardio + Core',
-                'Day 3' => 'Full Body HIIT',
-                'Day 4' => $days >= 4 ? 'Mobility + Recovery' : null,
-                'Day 5' => $days >= 5 ? 'Full Body Circuit' : null,
-                'Day 6' => $days >= 6 ? 'Stretch/Yoga' : null,
-            ];
+            // Define base exercises for Full Body workouts
+            $plan['Day 1'] = ['Squats', 'Push-Ups', 'Dumbbell Rows', 'Plank'];
+            $plan['Day 2'] = ['Jumping Jacks', 'Lunges', 'Dips', 'Mountain Climbers'];
+            $plan['Day 3'] = ['Deadlifts', 'Bench Press', 'Pull-Ups', 'Leg Raises'];
+
+            if ($days >= 4) {
+                $plan['Day 4'] = ['Yoga Flow', 'Stretching', 'Foam Rolling'];
+            }
+            if ($days >= 5) {
+                $plan['Day 5'] = ['Circuit Training', 'Burpees', 'High Knees', 'Core Twist'];
+            }
+            if ($days >= 6) {
+                $plan['Day 6'] = ['Active Recovery', 'Walking', 'Core Exercises', 'Stability Ball Work'];
+            }
+            if ($days >= 7) {
+                $plan['Day 7'] = ['Rest Day'];
+            }
+        }
+
+        elseif ($splitType === 'Upper Lower') {
+            // Define exercises for Upper Lower split
+            $plan['Day 1'] = ['Bench Press', 'Incline Dumbbell Press', 'Chest Flys', 'Tricep Pushdown'];
+            $plan['Day 2'] = ['Squats', 'Leg Press', 'Walking Lunges', 'Calf Raises'];
+            $plan['Day 3'] = ['Pull-Ups', 'Bent Over Rows', 'Bicep Curls', 'Face Pulls'];
+
+            if ($days >= 4) {
+                $plan['Day 4'] = ['Deadlifts', 'Hamstring Curls', 'Glute Bridges', 'Core Stability'];
+            }
+            if ($days >= 5) {
+                $plan['Day 5'] = ['Shoulder Press', 'Lateral Raises', 'Front Raises', 'Tricep Extensions'];
+            }
+            if ($days >= 6) {
+                $plan['Day 6'] = ['Core Exercises', 'Plank Variations', 'Russian Twists', 'Leg Raises'];
+            }
+            if ($days >= 7) {
+                $plan['Day 7'] = ['Rest Day'];
+            }
+        }
+
+        elseif ($splitType === 'PPL') {
+            // Define exercises for a Push/Pull/Legs split
+            $plan['Day 1'] = ['Bench Press', 'Shoulder Press', 'Tricep Dips', 'Push-Ups']; // Push
+            $plan['Day 2'] = ['Pull-Ups', 'Barbell Rows', 'Bicep Curls', 'Face Pulls'];   // Pull
+            $plan['Day 3'] = ['Squats', 'Leg Press', 'Calf Raises', 'Glute Bridges'];      // Legs
+
+            if ($days >= 4) {
+                $plan['Day 4'] = ['Incline Bench Press', 'Lateral Raises', 'Skull Crushers', 'Cable Flys']; // Push variation
+            }
+            if ($days >= 5) {
+                $plan['Day 5'] = ['Chin-Ups', 'Hammer Curls', 'Reverse Flys', 'Single Arm Row'];          // Pull variation
+            }
+            if ($days >= 6) {
+                $plan['Day 6'] = ['Lunges', 'Leg Curls', 'Stiff Leg Deadlifts', 'Goblet Squats'];           // Legs variation
+            }
+            if ($days >= 7) {
+                $plan['Day 7'] = ['Rest Day'];
+            }
         }
         
-        if ($splitType === 'Upper Lower') {
-            return [
-                'Day 1' => 'Upper Body A (Chest, Back, Shoulders)',
-                'Day 2' => 'Lower Body A (Glutes, Quads)',
-                'Day 3' => 'Upper Body B (Arms, Chest)',
-                'Day 4' => $days >= 4 ? 'Lower Body B (Hamstrings, Calves)' : null,
-                'Day 5' => $days >= 5 ? 'Core + Cardio' : null,
-                'Day 6' => $days >= 6 ? 'Mobility / Recovery' : null,
-            ];
+        // Optionally trim the plan to only include the number of days requested.
+        // For example, if $days is less than 7, you could unset extra keys:
+        foreach ($plan as $day => $exercises) {
+            // Extract the day number from "Day X"
+            preg_match('/\d+/', $day, $matches);
+            $dayNumber = isset($matches[0]) ? (int)$matches[0] : 0;
+            if ($dayNumber > $days) {
+                unset($plan[$day]);
+            }
         }
-        
-        if ($splitType === 'PPL') {
-            return [
-                'Day 1' => 'Push (Chest, Shoulders, Triceps)',
-                'Day 2' => 'Pull (Back, Biceps)',
-                'Day 3' => 'Legs (Quads, Hamstrings, Glutes)',
-                'Day 4' => $days >= 4 ? 'Push (Hypertrophy)' : null,
-                'Day 5' => $days >= 5 ? 'Pull (Volume)' : null,
-                'Day 6' => $days >= 6 ? 'Legs (Strength)' : null,
-            ];
-        }
-        
-        return []; // fallback        
+
+        return $plan;
     }
 
     public function updateStep(Request $request)
