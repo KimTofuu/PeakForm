@@ -40,6 +40,11 @@ nav {
 	width: 400px;
 }
 
+.welcome_logo {
+	width: 300px;
+	margin-left: 40px;
+}
+
 nav ul li {
 	display: inline-block;
 	list-style: none;
@@ -92,18 +97,20 @@ nav ul li a:hover::after {
 
 	width: 110%;
 	border-radius: 15px;
+	transition: transform 0.5s ease-in-out; 
    
 }
 
+.col_2 img:hover {
+	transform: rotate(-10deg);
+}
 
-.col_1 {
-
-	flex-basis: 60%
-    
+.col_2 img:active {
+	transform: rotate(10deg);
 }
 
 .col_1 {
-	
+	flex-basis: 60%;
 	margin-top: 15px;
     margin-left: -90px;
 }
@@ -135,7 +142,17 @@ button {
     margin-left: -160px;
     margin-top: -70px;
     position: absolute;
+	transition: transform 0.3s ease-in-out;
 }
+
+#dumbbell:hover {
+	transform: translateY(-30px);
+}
+
+#dumbbell:active {
+	transform: translateY(30px);
+}
+
 .button-up {
 	position: fixed;
 	width: 50px;
@@ -221,6 +238,16 @@ button {
     right: -150px;
     margin-top: -190px;
     position: absolute;
+	transition: transform 1s ease-in-out; 
+}
+
+
+#bowl_v2:hover {
+	transform: rotate(-15deg);
+}
+
+#bowl_v2:active {
+	transform: rotate(15deg);
 }
 
 /*------------------------------------FEATURES-------------------------------*/
@@ -409,4 +436,102 @@ footer {
 
 .faq-answer.show {
 	display: block;
+}
+
+/*------------------------------------- Welcome Page -------------------------------*/
+
+#welcome_contents{
+	color: black;
+	padding: 30px 60px;
+	font-size: 30px;
+    margin-bottom: 20px;
+	background-color: #FAF9F6;
+}
+
+#welcome_contents h1 {
+    font-size: 60px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+#welcome_contents p {
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.proceed_options{
+	color: black;
+	display: flex;
+	flex-wrap: wrap;
+	background-color: #FAF9F6;
+}
+
+.proceed_options  span {
+	font-size: 18px;
+	margin-top: -10px;
+	opacity: 50%;
+}
+
+.proceed_opt {
+	flex-basis: 40%;
+	background-color: #c9d89c;
+	border-radius: 20px;
+	text-align: center;
+	height: 300px;
+	margin-right: 100px;
+	margin-left: 80px;
+}
+
+.proceed_opt h4 {
+	margin-top: 80px;
+	margin-bottom: 20px;
+}
+
+.training_opt {
+	flex-basis: 40%;
+	background-color: #c9d89c;
+	border-radius: 20px;
+	text-align: center;
+	height: 300px;
+	
+}
+
+.training_opt h4 {
+	margin-top: 40px;
+	margin-bottom: 20px;
+}
+
+.proc_btn {
+	padding: 12px 70px 12px 70px;
+    background-color: #8FB031;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+	
+}
+
+.button_proceed {
+	margin-top: 80px;
+}
+
+.training_img {
+	margin-top: 40px;
+	margin-left: -30px;
+}
+
+.training_img img {
+	width: 450px;
+    width: 450px;
+	transition: transform 1s ease-in-out;
+}
+
+.training_img img:hover {
+	transform: translateY(-10px);
+}
+
+.training_img img:active {
+	transform: translateY(-50px);
 }
