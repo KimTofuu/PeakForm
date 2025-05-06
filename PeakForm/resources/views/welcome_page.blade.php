@@ -18,16 +18,16 @@
     
     <div id = "welcome_contents">
         <div class = "header_welcome">
-            <h1> Welcome, [User's Name]! <br> to PeakForm </h1>
+            <h1> Welcome, {{$user->Fname}}! <br> to PeakForm </h1>
             <p> Your personalized path to peak performance! </p>
         </div>
 
         <div class = "proceed_options">
             <div class = "proceed_opt">
                 <h4> Let's build your Workout </h4>
-                <div class = "button_proceed">
-                    <a class = "proc_btn"> Proceed </a>
-                </div>
+                <a href="{{ route('workout_plan_1') }}">
+                    <button>Proceed</button>
+                </a>
             </div>
             <div class = "training_opt">
                 <h4> or you want to train first <br> <span> click and hold </span>  </h4>

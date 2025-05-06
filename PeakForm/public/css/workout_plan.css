@@ -90,6 +90,45 @@ body {
     border: 2px solid #7ea543;
   }
 
+  .day-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 250px;
+    margin: 0 auto;
+  }
+
+  .day-button {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    font-size: 0.95rem;
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .day-button:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+  }
+
+  .day-button.active {
+    background-color: #b5d67e;
+    font-weight: bold;
+    color: #2e2e2e;
+    border: 2px solid #7ea543;
+  }
+
   input {
     flex: 2;
     padding: 10px;
