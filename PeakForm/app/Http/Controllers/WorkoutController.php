@@ -178,7 +178,7 @@ class WorkoutController extends Controller
         // Store the selected goal in session
         session(['workout_goal' => $request->goal]);
 
-
+        // dd($request->all());
         // Redirect to the next step
         return redirect()->route('workout_plan_2');
     }
@@ -190,6 +190,7 @@ class WorkoutController extends Controller
         ]);
 
         session(['workout_setup' => $request->setup]);
+        // dd($request->all());
         return redirect()->route('workout_plan_3'); // next step
     }
 
@@ -214,8 +215,7 @@ class WorkoutController extends Controller
 
         session(['workout_days' => $request->days]);
         // dd($request->all());
-        // Redirect to final step or dashboard
-        return redirect()->route('overview_tab'); // adjust if you're adding more steps
+        return redirect()->route('overview_tab'); 
     }
 
     public function store(Request $request)
