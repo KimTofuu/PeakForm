@@ -124,6 +124,13 @@ Route::get('/workout_plan_4', function () {
     return view('workout_plan_4');
 })->name('workout_plan_4');
 
+Route::get('/workout_plan_5', function () {
+    return view('workout_plan_5');
+})->name('workout_plan_5');
+
+Route::get('/workout_plan_6', function () {
+    return view('workout_plan_6');
+})->name('workout_plan_6');
 
 Route::post('/workout_plan_1', [WorkoutController::class, 'storeGoal'])->name('workout_plan_1');
 Route::post('/workout_plan_2', [WorkoutController::class, 'storeSetup'])->name('workout_plan_2');
