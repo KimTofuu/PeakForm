@@ -31,3 +31,7 @@
         </button>
       </div>
     </aside>
+
+    <main id = "main-content">
+      
+    </main>

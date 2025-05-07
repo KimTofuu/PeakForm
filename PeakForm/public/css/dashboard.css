@@ -124,12 +124,11 @@
     text-align: justify;
     font-size: 20px;
   }
-  
+
   .workout_content span {
     font-size: 15px;
     color: #4d4b4b;
   }
-
   .daily_tab h3 {
     margin-top: 50px;
     text-align: left;
@@ -255,4 +254,45 @@
 
 .timer_tab button:hover {
   background-color: #799f37;
+}
+
+.goals_plan {
+  background-color: #c9d89c;
+    padding:10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.5rem;
+    height: 470px;
+}
+
+.goals_contents {
+  padding: 20px;
+    margin: 10px 10px;
+    background-color: #FAF9F6 ;
+    border-radius: 8px;
+    text-align: justify;
+    font-size: 20px;
+}
+
+.workout_content_2 {
+  padding: 20px;
+    margin: 10px 10px;
+    background-color: #bbb ;
+    border-radius: 8px;
+    text-align: justify;
+    font-size: 20px;
+}
+
+.workout_content_2 img {
+  width: 150px;
+}
+
+.workout_content_2 p {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.workout_content_2 span {
+  font-size: 15px;
+  color: #4d4b4b;
 }
