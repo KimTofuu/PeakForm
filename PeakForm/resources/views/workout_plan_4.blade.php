@@ -17,7 +17,7 @@
       <div class="form-box">
         <p class="question">How many days a week do you want to work out?<br><span>(Select one)</span></p>
         <div class="day-options">
-          @for ($i = 1; $i <= 7; $i++)
+          @for ($i = 1; $i <= 6; $i++)
             <button type="button" class="day-button" data-day="{{ $i }}">{{ $i }}</button>
           @endfor
         </div>
