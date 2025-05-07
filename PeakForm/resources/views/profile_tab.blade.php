@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Workout Dashboard</title>
+  <title>Profile</title>
   <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
@@ -26,10 +26,14 @@
 
       </nav>
       <div class="logout">
-        <button class="logout-btn">
-          <img src="images/log_out.png">
-        </button>
-      </div>
+        <div class="logout">
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="logout-btn">
+              <img src="images/log_out.png" alt="Log Out">
+            </button>
+          </form>
+        </div>
     </aside>
 
     <main id = "main-content">
