@@ -10,34 +10,28 @@ use App\Models\WorkSplit;
 
 class WorkoutController extends Controller
 {
-    public function generateSplit(Request $request){
-        // Validate incoming data
+    public function generateSplit(Request $request) {
         $data = [
             'goal' => session('workout_goal'),
             'intensity' => session('workout_intensity'),
             'setup' => session('workout_setup'),
             'days' => session('workout_days'),
-            'level' => session('workout_level')
+            'level' => session('workout_level'),
+            'splitType' => session('workout_splitType'),
         ];
-        
+    
         $request->replace($data);
-
-        // Extract user inputs
-        $goal = $data['goal'];
-        $intensity = $data['intensity'];
-        $setup = $data['setup'];
+    
+        $splitType = $data['splitType'];
         $days = $data['days'];
-        $level = $data['level'];
-
-
-        $splitType = $this->determineSplitType($goal, $intensity, $setup, $days, $level);
-        $splitDays = $this->createWorkoutPlan($splitType, $days);
-
+    
+        $splitDays = $this->createWorkoutPlan($splitType, $days, $data);
+    
         $user = Auth::user();
         if ($user) {
             WorkSplit::create([
                 'user_id' => $user->id,
-                'PlanName' => ucfirst(str_replace('_', ' ', $goal)) . ' Plan',
+                'PlanName' => ucfirst(str_replace('_', ' ', $data['goal'])) . ' Plan',
                 'SplitType' => $splitType,
                 'day1' => $splitDays['Day 1'] ?? null,
                 'day2' => $splitDays['Day 2'] ?? null,
@@ -48,115 +42,124 @@ class WorkoutController extends Controller
                 'day7' => $splitDays['Day 7'] ?? null,
             ]);
         }
-
-
-        // Return or save generated split
+    
         return response()->json([
             'success' => true,
             'split' => $splitDays
         ]);
     }
     
-    private function determineSplitType($goal, $intensity, $setup, $days, $level)
-    {
-        if ($level === 'beginner') {
-            return $days <= 3 ? 'Full Body' : 'Upper Lower';
-        }
     
-        if ($goal === 'gain_muscle' && $days >= 5) {
-            return 'PPL'; // Push Pull Legs
-        }
+    // private function determineSplitType($goal, $intensity, $setup, $days, $level)
+    // {
+    //     if ($level === 'beginner') {
+    //         return $days <= 3 ? 'Full Body' : 'Upper Lower';
+    //     }
     
-        return $days <= 3 ? 'Full Body' : 'Upper Lower';
-    }
+    //     if ($goal === 'gain_muscle' && $days >= 5) {
+    //         return 'PPL'; // Push Pull Legs
+    //     }
+    
+    //     return $days <= 3 ? 'Full Body' : 'Upper Lower';
+    // }
     
 
-    private function createWorkoutPlan($splitType, $days)
-    {
-        $plan = [
-            'Day 1' => null,
-            'Day 2' => null,
-            'Day 3' => null,
-            'Day 4' => null,
-            'Day 5' => null,
-            'Day 6' => null,
-            'Day 7' => null,
-        ];
+    private function createWorkoutPlan($splitType, $days, $data)
+{
+    $level = $data['level'];
+    $setup = $data['setup'];
 
-        if ($splitType === 'Full Body') {
-            // Define base exercises for Full Body workouts
-            $plan['Day 1'] = ['Squats', 'Push-Ups', 'Dumbbell Rows', 'Plank'];
-            $plan['Day 2'] = ['Jumping Jacks', 'Lunges', 'Dips', 'Mountain Climbers'];
-            $plan['Day 3'] = ['Deadlifts', 'Bench Press', 'Pull-Ups', 'Leg Raises'];
+    $plan = [
+        'Day 1' => null,
+        'Day 2' => null,
+        'Day 3' => null,
+        'Day 4' => null,
+        'Day 5' => null,
+        'Day 6' => null,
+        'Day 7' => null,
+    ];
 
-            if ($days >= 4) {
-                $plan['Day 4'] = ['Yoga Flow', 'Stretching', 'Foam Rolling'];
-            }
-            if ($days >= 5) {
-                $plan['Day 5'] = ['Circuit Training', 'Burpees', 'High Knees', 'Core Twist'];
-            }
-            if ($days >= 6) {
-                $plan['Day 6'] = ['Active Recovery', 'Walking', 'Core Exercises', 'Stability Ball Work'];
-            }
-            if ($days >= 7) {
-                $plan['Day 7'] = ['Rest Day'];
-            }
-        }
+    $homeExercises = [
+        'beginner' => [
+            'push' => ['Push-Ups', 'Overhead Dumbbell Press', 'Incline Pushups', 'Wall Pushups'],
+            'pull' => ['Resistance Band Rows', 'Superman Pulls', 'Back Extensions', 'Doorway Rows'],
+            'legs' => ['Bodyweight Squats', 'Lunges', 'Glute Bridges', 'Wall Sits'],
+        ],
+        'intermediate' => [
+            'push' => ['Pike Push-Ups', 'Chair Dips', 'Handstand Holds', 'Resistance Band Press'],
+            'pull' => ['Inverted Rows (Under Table)', 'Band Pull-Aparts', 'Towel Curls', 'Superman Pulls'],
+            'legs' => ['Bulgarian Split Squats', 'Jump Squats', 'Wall Sits', 'Step-Ups'],
+        ],
+        'advanced' => [
+            'push' => ['Handstand Push-Ups', 'Archer Push-Ups', 'Clap Push-Ups', 'Pseudo Planche Push-Ups'],
+            'pull' => ['Towel Rows', 'Band Face Pulls', 'Door Pulls', 'Backpack Curls'],
+            'legs' => ['Pistol Squats', 'Jump Lunges', 'Wall Sit Marches', 'Single-Leg Glute Bridges'],
+        ],
+    ];
 
-        elseif ($splitType === 'Upper Lower') {
-            // Define exercises for Upper Lower split
-            $plan['Day 1'] = ['Bench Press', 'Incline Dumbbell Press', 'Chest Flys', 'Tricep Pushdown'];
-            $plan['Day 2'] = ['Squats', 'Leg Press', 'Walking Lunges', 'Calf Raises'];
-            $plan['Day 3'] = ['Pull-Ups', 'Bent Over Rows', 'Bicep Curls', 'Face Pulls'];
+    $gymExercises = [
+        'beginner' => [
+            'push' => ['Machine Chest Press', 'Overhead Dumbbell Press', 'Tricep Pushdowns', 'Incline Machine Press'],
+            'pull' => ['Lat Pulldown', 'Cable Rows', 'EZ Bar Curls', 'Face Pulls'],
+            'legs' => ['Leg Press', 'Seated Leg Curl', 'Glute Kickbacks', 'Calf Raises'],
+        ],
+        'intermediate' => [
+            'push' => ['Bench Press', 'Shoulder Press', 'Tricep Extensions', 'Dumbbell Flys'],
+            'pull' => ['Pull-Ups', 'Barbell Rows', 'Hammer Curls', 'Lat Pulldown'],
+            'legs' => ['Squats', 'Leg Press', 'Deadlifts', 'Calf Raises'],
+        ],
+        'advanced' => [
+            'push' => ['Incline Bench Press', 'Arnold Press', 'Skull Crushers', 'Cable Crossovers'],
+            'pull' => ['Weighted Pull-Ups', 'T-Bar Rows', 'Preacher Curls', 'Cable Face Pulls'],
+            'legs' => ['Front Squats', 'Romanian Deadlifts', 'Hack Squats', 'Hip Thrusts'],
+        ],
+    ];
 
-            if ($days >= 4) {
-                $plan['Day 4'] = ['Deadlifts', 'Hamstring Curls', 'Glute Bridges', 'Core Stability'];
-            }
-            if ($days >= 5) {
-                $plan['Day 5'] = ['Shoulder Press', 'Lateral Raises', 'Front Raises', 'Tricep Extensions'];
-            }
-            if ($days >= 6) {
-                $plan['Day 6'] = ['Core Exercises', 'Plank Variations', 'Russian Twists', 'Leg Raises'];
-            }
-            if ($days >= 7) {
-                $plan['Day 7'] = ['Rest Day'];
-            }
-        }
+    // Choose correct source based on setup
+    $exerciseSource = ($setup === 'home') ? $homeExercises : $gymExercises;
+    $lvl = $exerciseSource[$level] ?? $exerciseSource['beginner'];
 
-        elseif ($splitType === 'PPL') {
-            // Define exercises for a Push/Pull/Legs split
-            $plan['Day 1'] = ['Bench Press', 'Shoulder Press', 'Tricep Dips', 'Push-Ups']; // Push
-            $plan['Day 2'] = ['Pull-Ups', 'Barbell Rows', 'Bicep Curls', 'Face Pulls'];   // Pull
-            $plan['Day 3'] = ['Squats', 'Leg Press', 'Calf Raises', 'Glute Bridges'];      // Legs
-
-            if ($days >= 4) {
-                $plan['Day 4'] = ['Incline Bench Press', 'Lateral Raises', 'Skull Crushers', 'Cable Flys']; // Push variation
-            }
-            if ($days >= 5) {
-                $plan['Day 5'] = ['Chin-Ups', 'Hammer Curls', 'Reverse Flys', 'Single Arm Row'];          // Pull variation
-            }
-            if ($days >= 6) {
-                $plan['Day 6'] = ['Lunges', 'Leg Curls', 'Stiff Leg Deadlifts', 'Goblet Squats'];           // Legs variation
-            }
-            if ($days >= 7) {
-                $plan['Day 7'] = ['Rest Day'];
-            }
-        }
-        
-        // Optionally trim the plan to only include the number of days requested.
-        // For example, if $days is less than 7, you could unset extra keys:
-        foreach ($plan as $day => $exercises) {
-            // Extract the day number from "Day X"
-            preg_match('/\d+/', $day, $matches);
-            $dayNumber = isset($matches[0]) ? (int)$matches[0] : 0;
-            if ($dayNumber > $days) {
-                unset($plan[$day]);
-            }
-        }
-
-        return $plan;
+    if ($splitType === 'PPL') {
+        $plan['Day 1'] = $lvl['push'];
+        $plan['Day 2'] = $lvl['pull'];
+        $plan['Day 3'] = $lvl['legs'];
+        if ($days >= 4) $plan['Day 4'] = $lvl['push'];
+        if ($days >= 5) $plan['Day 5'] = $lvl['pull'];
+        if ($days >= 6) $plan['Day 6'] = $lvl['legs'];
+        if ($days >= 7) $plan['Day 7'] = ['Rest Day'];
     }
 
+    elseif ($splitType === 'Upper Lower') {
+        $upper = array_merge($lvl['push'], $lvl['pull']);
+        $lower = $lvl['legs'];
+        $plan['Day 1'] = array_slice($upper, 0, 4);
+        $plan['Day 2'] = array_slice($lower, 0, 4);
+        if ($days >= 3) $plan['Day 3'] = array_slice($upper, 2, 4);
+        if ($days >= 4) $plan['Day 4'] = array_slice($lower, 2, 4);
+        if ($days >= 5) $plan['Day 5'] = ['HIIT', 'Planks', 'Side Planks', 'Bird Dogs'];
+        if ($days >= 6) $plan['Day 6'] = ['Mobility Work', 'Foam Rolling', 'Stretching'];
+        if ($days >= 7) $plan['Day 7'] = ['Rest Day'];
+    }
+
+    elseif ($splitType === 'Full Body') {
+        $combined = array_merge($lvl['push'], $lvl['pull'], $lvl['legs']);
+        shuffle($combined);
+        for ($i = 1; $i <= $days; $i++) {
+            $plan["Day $i"] = array_slice($combined, ($i - 1) * 4, 4);
+        }
+    }
+
+    // Trim extra days
+    foreach ($plan as $day => $exercises) {
+        preg_match('/\d+/', $day, $matches);
+        $dayNumber = isset($matches[0]) ? (int)$matches[0] : 0;
+        if ($dayNumber > $days) {
+            unset($plan[$day]);
+        }
+    }
+
+    return $plan;
+}
     public function updateStep(Request $request)
     {
         foreach ($request->all() as $key => $value) {
@@ -215,7 +218,18 @@ class WorkoutController extends Controller
 
         session(['workout_days' => $request->days]);
         // dd($request->all());
-        return redirect()->route('overview_tab'); 
+        return redirect()->route('workout_plan_5'); 
+    }
+
+    public function storeSplitType(Request $request)
+    {
+        $request->validate([
+            'splitType' => 'required|string|in:PPL,Upper Lower,Full Body',
+        ]);
+
+        session(['workout_splitType' => $request->splitType]);
+        // dd($request->all());
+        return redirect()->route('overview_tab');
     }
 
     public function store(Request $request)

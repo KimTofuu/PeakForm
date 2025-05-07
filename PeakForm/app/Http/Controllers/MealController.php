@@ -11,7 +11,6 @@ class MealController extends Controller
 {
     public function generateMealPlan(Request $request)
     {
-        // Validate incoming data
         $data = $request->validate([
             'age' => 'required|integer|min:13|max:80',
             'gender' => 'required|string|in:male,female',
@@ -21,28 +20,20 @@ class MealController extends Controller
             'activity' => 'required|numeric|between:1.2,1.9',
         ]);
 
-        // Calculate BMR and TDEE
-        $bmr = $this->calculateBMR($data);
+        $bmr = $this->calculateBMR($data['gender'], $data['weight'], $data['height'], $data['age']);
         $tdee = $bmr * $data['activity'];
-
-        // Adjust calories based on goal
         $calories = $this->adjustCalories($tdee, $data['goal']);
+        $macros = $this->calculateMacros($calories);
 
-        // Calculate macros
-        $macros = $this->calculateMacros($calories, $data['goal']);
-
-        // Generate meal plan
         $mealPlan = [
-            'PlanName' => $data['goal'] . ' Meal Plan', // or something more customized
+            'PlanName' => ucfirst(str_replace('_', ' ', $data['goal'])) . ' Meal Plan',
             'CalorieTarget' => round($calories),
             'ProteinTarget' => $macros['protein'],
             'CarbTarget' => $macros['carbs'],
-            'FatTarget' => $macros['fat']
+            'FatTarget' => $macros['fat'],
         ];
 
-        // Store the generated meal plan in the database
-        $user = Auth::user();
-        if ($user) {
+        if ($user = Auth::user()) {
             MealPlan::create([
                 'PlanName' => $mealPlan['PlanName'],
                 'CalorieTarget' => $mealPlan['CalorieTarget'],
@@ -55,45 +46,33 @@ class MealController extends Controller
 
         return response()->json([
             'success' => true,
-            'calories' => $mealPlan['CalorieTarget'],
-            'macros' => [
-                'protein' => $mealPlan['ProteinTarget'],
-                'carbs' => $mealPlan['CarbTarget'],
-                'fat' => $mealPlan['FatTarget']
-            ]
+            'plan' => $mealPlan,
         ]);
     }
 
-    private function calculateBMR($data)
+    private function calculateBMR($gender, $weight, $height, $age)
     {
-        if ($data['gender'] === 'male') {
-            return 10 * $data['weight'] + 6.25 * $data['height'] - 5 * $data['age'] + 5;
-        } else {
-            return 10 * $data['weight'] + 6.25 * $data['height'] - 5 * $data['age'] - 161;
-        }
+        return ($gender === 'male')
+            ? (10 * $weight + 6.25 * $height - 5 * $age + 5)
+            : (10 * $weight + 6.25 * $height - 5 * $age - 161);
     }
 
     private function adjustCalories($tdee, $goal)
     {
-        if ($goal === 'gain_muscle') {
-            return $tdee + 300; // Calorie surplus for bulking
-        } elseif ($goal === 'lose_fat') {
-            return $tdee - 500; // Calorie deficit for cutting
-        }
-        return $tdee; // Maintenance calories
+        return match ($goal) {
+            'gain_muscle' => $tdee + 300,
+            'lose_fat' => $tdee - 500,
+            default => $tdee,
+        };
     }
 
-    private function calculateMacros($calories, $goal)
+    private function calculateMacros($calories)
     {
-        $proteinCalories = ($calories * 0.3); // 30% calories from protein
-        $fatCalories = ($calories * 0.25);    // 25% calories from fats
-        $carbCalories = ($calories * 0.45);   // 45% calories from carbs
+        $protein = round(($calories * 0.30) / 4, 2);
+        $fat = round(($calories * 0.25) / 9, 2);
+        $carbs = round(($calories * 0.45) / 4, 2);
 
-        return [
-            'protein' => round($proteinCalories / 4, 2), // protein: 4 kcal per gram
-            'carbs' => round($carbCalories / 4, 2),       // carbs: 4 kcal per gram
-            'fat' => round($fatCalories / 9, 2)           // fat: 9 kcal per gram
-        ];
+        return compact('protein', 'carbs', 'fat');
     }
 
     public function store(Request $request)
