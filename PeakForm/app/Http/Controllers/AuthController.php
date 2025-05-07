@@ -15,10 +15,13 @@ class AuthController extends Controller
 {
     public function register(Request $request) {
         $fields = $request->validate([
-            'Fname' => 'required|max:255',
-            'Lname' => 'required|max:255',
+            'Fname' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
+            'Lname' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:8',
+        ], [
+            'Fname.regex' => 'First name may only contain letters and spaces.',
+            'Lname.regex' => 'Last name may only contain letters and spaces.',
         ]);
     
         // Manually hash the password

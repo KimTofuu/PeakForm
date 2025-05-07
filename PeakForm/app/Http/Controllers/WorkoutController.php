@@ -218,7 +218,8 @@ class WorkoutController extends Controller
 
         session(['workout_days' => $request->days]);
         // dd($request->all());
-        return redirect()->route('workout_plan_5'); 
+        // return redirect()->route('workout_plan_5'); 
+        return redirect()->route('overview_tab'); 
     }
 
     public function storeSplitType(Request $request)

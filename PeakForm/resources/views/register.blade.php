@@ -131,7 +131,7 @@ Welcome to PeakForm. Your privacy is important to us. This Privacy <br> Policy o
 <br><br><b>9. Contact Us</b>
 <br>If you have any questions or concerns about this Privacy Policy, please contact us at:
 
-<br>📧 [email ng PeakForm]
+<br>📧 peakformtech@gmail.com
 <br>🌐 www.peakform.com
             </p>
         </div>
