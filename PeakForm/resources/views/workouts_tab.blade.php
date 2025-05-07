@@ -87,7 +87,7 @@
 
             <div class = "goals_contents">
               <p>
-                 High Intensity
+                 Full Body Workout
               </p>
             </div>
 
