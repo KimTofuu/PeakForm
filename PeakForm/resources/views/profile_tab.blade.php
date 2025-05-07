@@ -36,6 +36,66 @@
         </div>
     </aside>
 
-    <main id = "main-content">
-      
-    </main>
+  <main class="main-content">
+      <div class="cards">
+    
+        <div class="left_side_2">
+          <div class = "daily_tab">
+            <div class = "header_content">
+              <h2 style="font-family: 'Michroma', sans-serif;" > Account </h2>
+            </div>
+            <div class = "workout_content">
+              Name:
+            </div>
+
+            <div class = "workout_content">
+              Email Address:
+            </div>
+
+            <div class = "workout_content">
+              Password:
+            </div>
+          </div>
+
+          <div class="actions">
+            <div class = "actions_3">
+              <a href="{{ route('workouts_tab') }}" class="btn play"> Edit Account </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="left_side_2">
+          <div class = "daily_tab">
+            <div class = "header_content">
+              <h2 style="font-family: 'Michroma', sans-serif;" > Profile </h2>
+            </div>
+            <div class = "workout_content">
+              Name:
+            </div>
+
+            <div class = "workout_content">
+              Age:
+            </div>
+
+            <div class = "workout_content">
+              Gender:
+            </div>
+
+            <div class = "workout_content">
+              Current Weight:  
+            </div>
+
+          </div>
+
+          <div class="actions">
+            <div class = "actions_3">
+              <a href="{{ route('workouts_tab') }}" class="btn play"> Edit Profile </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+  </main>
+
+  </body>
+  </html>
