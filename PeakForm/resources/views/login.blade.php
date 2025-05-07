@@ -30,7 +30,9 @@
                     <i id="eyeIcon" class="fa fa-eye"></i>
                 </span>
             </div>
-            
+            <div class="forgot-password">
+                <a href="{{ route('password.request') }}">Forgot Password?</a>
+            </div>
             @if ($errors->any())
                 <div class="error-message">
                     @foreach ($errors->all() as $error)
