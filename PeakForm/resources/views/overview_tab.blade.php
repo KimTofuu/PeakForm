@@ -119,5 +119,8 @@
   </div>
 
   <script src="script.js"> </script>
+  
+  <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
 </body>
 </html>
