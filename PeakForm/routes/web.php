@@ -71,7 +71,7 @@ Route::get('/glogin', function () {
 
 Route::post('/body-metrics', [BodyMetricsController::class, 'store']);
 
-Route::get('/index', function () {
+Route::get('/', function () {
     return view('index');
 })->name('index');
 
