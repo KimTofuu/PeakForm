@@ -27,7 +27,7 @@
       </nav>
       <div class="logout">
         <div class="logout">
-          <form method="POST" action="{{ route('logout') }}">
+          <form method="GET" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">
               <img src="images/log_out.png" alt="Log Out">
