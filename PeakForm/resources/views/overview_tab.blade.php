@@ -87,12 +87,12 @@
 
             <div class = "reminders_contents">
               <p>
-                Workout mo to baby
+                Workout Reminder
               </p>
             </div>
             <div class = "reminders_contents">
               <p>
-                Eat ka na po baby 
+                Meal Plan Reminder
               </p>
             </div>
 
