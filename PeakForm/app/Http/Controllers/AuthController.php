@@ -69,7 +69,7 @@ class AuthController extends Controller
     public function logout(Request $request) {
         $request->user()->tokens()->delete();
 
-        return redirect()->intended('index');
+        return redirect()->route('index')->with('message', 'Logged out successfully.');
     }
     
     // public function logout(Request $request)

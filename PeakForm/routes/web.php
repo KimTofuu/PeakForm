@@ -75,6 +75,10 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
+Route::get('/index', function () {
+    return view('index');
+})->name('logout');
+
 Route::get('/progress_tab', function () {
     $user = Auth::user();
     return view('progress_tab', compact('user'));
