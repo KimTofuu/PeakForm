@@ -37,20 +37,20 @@
     <main class="main-content">
       <div class="cards">
     
-        <div class="left_side">
+        <div class="left_side_1">
           <div class = "daily_tab">
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" >Monday</h2>
             </div>
             <div class = "workout_content_2">
               <label>
-                <input type="checkbox" name="agree"> <img src = "images/push-up.jpg"> <br> <p> Push-Ups <span> 250 times </span> </p>
+                <input type="checkbox" name="agree"> <img src = "images/push-up.jpg"> Push-Ups <span> 250 times </span> 
               </label>
             </div>
 
             <div class = "workout_content_2">
               <label>
-                <input type="checkbox" name="agree"> <img src = "images/push-up.jpg"> <br> <p> Squats <span> 250 times </span> </p>
+                <input type="checkbox" name="agree"> <img src = "images/push-up.jpg"> Squats <span> 250 times </span>
               </label>
             </div>
           </div>
@@ -58,25 +58,6 @@
           <div class="actions">
             <div class = "actions_3">
               <a href="{{ route('workouts_tab') }}" class="btn play"> Edit Daily Workout </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="middle">
-          <div class = "progress_tab">
-            <div class = "header_content">
-              <h2 style="font-family: 'Michroma', sans-serif;" >Weekly</h2>
-            </div>
-
-            <div class ="progress_contents">
-              <div>
-                <canvas id="progressChart"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="actions">
-            <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn edit"> Edit Weekly Workout </a>
             </div>
           </div>
         </div>
@@ -127,6 +108,10 @@
     </main>
   </div>
 
-    <script src="script.js"> </script>
+  <script src="script.js"> </script>
+
+  <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
+
 </body>
 </html>

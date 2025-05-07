@@ -122,6 +122,13 @@ window.onclick = function(event) {
           }
       }
 
+      function setTimer(minutes) {
+        stopTimer();
+        time = minutes * 60;
+        originalTime = time;
+        updateDisplay();
+    }
+
       // Initial display
       updateDisplay();
 
@@ -130,6 +137,11 @@ window.onclick = function(event) {
       document.getElementById('stopBtn').addEventListener('click', stopTimer);
       document.getElementById('resetBtn').addEventListener('click', resetTimer);
       document.getElementById('editBtn').addEventListener('click', editTime);
+    
+    // Add event listeners for the new buttons
+    document.getElementById('oneMinBtn').addEventListener('click', () => setTimer(1));
+    document.getElementById('twoMinBtn').addEventListener('click', () => setTimer(2));
+    document.getElementById('threeMinBtn').addEventListener('click', () => setTimer(3));
   });
 
 
