@@ -69,9 +69,17 @@ class AuthController extends Controller
     public function logout(Request $request) {
         $request->user()->tokens()->delete();
 
-        return [
-            'message' => 'You are logged out.'
-        ];
+        return redirect()->intended('index');
     }
+    
+    // public function logout(Request $request)
+    // {
+    //     Auth::logout(); 
+
+    //     $request->session()->invalidate(); 
+    //     $request->session()->regenerateToken(); 
+
+    //     return redirect('/index');
+    // }
 }
  

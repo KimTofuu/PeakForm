@@ -12,11 +12,16 @@ use App\Mail\MealReminder;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DashboardController;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 // Route::get('/', function () {
 //     return view('index');
+// });
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/overview_tab', [DashboardController::class, 'index'])->name('overview_tab');
 // });
 
 Route::get('/login', function () {return view('login');});
@@ -46,7 +51,7 @@ Route::get('/user', function (Request $request) {
 // Route::apiResource('posts', PostController::class);
 // Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/mealRemind', function () {
     $users = User::all();
@@ -66,7 +71,7 @@ Route::get('/glogin', function () {
 
 Route::post('/body-metrics', [BodyMetricsController::class, 'store']);
 
-Route::get('/', function () {
+Route::get('/index', function () {
     return view('index');
 })->name('index');
 
