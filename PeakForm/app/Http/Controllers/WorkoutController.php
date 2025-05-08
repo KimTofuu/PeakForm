@@ -10,29 +10,23 @@ use App\Models\WorkSplit;
 
 class WorkoutController extends Controller
 {
-    public function generateSplit(Request $request) {
-        $data = [
-            'goal' => session('workout_goal'),
-            'intensity' => session('workout_intensity'),
-            'setup' => session('workout_setup'),
-            'days' => session('workout_days'),
-            'level' => session('workout_level'),
-            'splitType' => session('workout_splitType'),
-        ];
-    
-        $request->replace($data);
-    
+    private function generateAndSaveWorkout($data)
+    {
+        if (!Auth::check()) {
+            abort(403, 'User not authenticated.');
+        }
+        
         $splitType = $data['splitType'];
         $days = $data['days'];
-    
+
         $splitDays = $this->createWorkoutPlan($splitType, $days, $data);
-    
+
         $user = Auth::user();
         if ($user) {
             WorkSplit::create([
                 'user_id' => $user->id,
-                'PlanName' => ucfirst(str_replace('_', ' ', $data['goal'])) . ' Plan',
-                'SplitType' => $splitType,
+                'WorkplanName' => ucfirst(str_replace('_', ' ', $data['goal'])) . ' Plan',
+                'splitType' => $splitType,
                 'day1' => $splitDays['Day 1'] ?? null,
                 'day2' => $splitDays['Day 2'] ?? null,
                 'day3' => $splitDays['Day 3'] ?? null,
@@ -40,14 +34,33 @@ class WorkoutController extends Controller
                 'day5' => $splitDays['Day 5'] ?? null,
                 'day6' => $splitDays['Day 6'] ?? null,
                 'day7' => $splitDays['Day 7'] ?? null,
-            ]);
+            ]);            
         }
-    
-        return response()->json([
-            'success' => true,
-            'split' => $splitDays
-        ]);
+
+        return $splitDays;
     }
+
+    public function generateSplit(Request $request)
+{
+    $data = [
+        'goal' => session('workout_goal'),
+        'intensity' => session('workout_intensity'),
+        'setup' => session('workout_setup'),
+        'days' => session('workout_days'),
+        'level' => session('workout_level'),
+        'splitType' => session('workout_splitType'),
+    ];
+
+    $request->replace($data);
+
+    $splitDays = $this->generateAndSaveWorkout($data);
+
+    return response()->json([
+        'success' => true,
+        'split' => $splitDays,
+    ]);
+}
+
     
     
     // private function determineSplitType($goal, $intensity, $setup, $days, $level)
@@ -218,19 +231,40 @@ class WorkoutController extends Controller
 
         session(['workout_days' => $request->days]);
         // dd($request->all());
-        // return redirect()->route('workout_plan_5'); 
-        return redirect()->route('overview_tab'); 
+        return redirect()->route('workout_plan_5'); 
+    }
+
+    public function storeLevel(Request $request)
+    {
+        $request->validate([
+            'level' => 'required|string|in:beginner,intermediate,advanced',
+        ]);
+
+        session(['workout_level' => $request->level]);
+        // dd($request->all());
+        return redirect()->route('workout_plan_6'); 
     }
 
     public function storeSplitType(Request $request)
-    {
+    {   
         $request->validate([
             'splitType' => 'required|string|in:PPL,Upper Lower,Full Body',
         ]);
 
         session(['workout_splitType' => $request->splitType]);
-        // dd($request->all());
-        return redirect()->route('overview_tab');
+
+        $data = [
+            'goal' => session('workout_goal'),
+            'intensity' => session('workout_intensity'),
+            'setup' => session('workout_setup'),
+            'days' => session('workout_days'),
+            'level' => session('workout_level'),
+            'splitType' => session('workout_splitType'),
+        ];
+
+        $this->generateAndSaveWorkout($data); // automatically generate and store the plan
+
+        return redirect()->route('overview_tab'); // user proceeds to next page
     }
 
     public function store(Request $request)
@@ -242,10 +276,10 @@ class WorkoutController extends Controller
         
         $workSplit = WorkSplit::create([
             'user_id' => $user->id,  // <-- optional if needed
-            'PlanName' => $request->PlanName,
-            'GoalType' => $request->GoalType,
-            'SplitType' => $request->SplitType,
-            'CreatedDate' => now(),
+            'workPlanName' => $request->PlanName,
+            // 'GoalType' => $request->GoalType,
+            'splitType' => $request->SplitType,
+            'created_at' => now(),
         ]);        
 
         return response()->json($workSplit);
