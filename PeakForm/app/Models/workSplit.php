@@ -13,14 +13,14 @@ class WorkSplit extends Model
     protected $table = 'work_splits';
 
     protected $fillable = [
-        'UserID',
-        'PlanName',
-        'GoalType',
-        'SplitType',
-        'CreatedDate',
+        'user_id',
+        'WorkplanName',
+        'splitType',
+        'day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7',
     ];
+    
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     // Relationships
     public function user()

@@ -144,4 +144,6 @@ Route::post('/workout_plan_1', [WorkoutController::class, 'storeGoal'])->name('w
 Route::post('/workout_plan_2', [WorkoutController::class, 'storeSetup'])->name('workout_plan_2');
 Route::post('/workout_plan_3', [WorkoutController::class, 'storeIntensity'])->name('workout_plan_3');
 Route::post('/workout_plan_4', [WorkoutController::class, 'storeDays'])->name('workout_plan_4');
+Route::post('/workout_plan_5', [WorkoutController::class, 'storeLevel'])->name('workout_plan_5');
+Route::post('/workout_plan_6', [WorkoutController::class, 'storeSplitType'])->name('workout_plan_6');
 

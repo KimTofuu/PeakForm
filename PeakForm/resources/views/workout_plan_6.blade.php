@@ -12,7 +12,7 @@
     <h2>Let’s Build Your Personalized Plan!</h2>
     <img src="images/logo_4.png" alt="Dumbbell Icon" class="icon" />
 
-    <form action="{{ route('workout_plan_3') }}" method="POST">
+    <form action="{{ route('workout_plan_6') }}" method="POST">
       @csrf
       <div class="form-box">
         <p class="question">Select your Workout Routine Type <br><span>(Select one)</span></p>
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <input type="hidden" name="intensity" id="selected-intensity" />
+      <input type="hidden" name="splitType" id="selected-splitType" />
       <button type="submit" class="proceed-button"> Proceed </button>
     </form>
   </div>
@@ -34,7 +34,7 @@
 
       document.querySelectorAll(".goal-button").forEach(button => {
         button.addEventListener("click", () => {
-          const field = document.getElementById("selected-intensity");
+          const field = document.getElementById("selected-splitType");
           const fieldName = field.getAttribute("name");
           const label = button.getAttribute("data-goal");
 
@@ -57,9 +57,9 @@
 
       function mapLabelToBackend(label) {
         const map = {
-          "High Intensity": "high",
-          "Moderate": "moderate",
-          "Low Intensity": "low",
+          "PPL": "PPL",
+          "Upper/Lower": "Upper Lower",
+          "Full Body": "Full Body",
         };
         return map[label] || label.toLowerCase().replace(" ", "_");
       }

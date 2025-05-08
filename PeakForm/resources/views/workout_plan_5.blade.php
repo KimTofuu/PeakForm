@@ -12,18 +12,18 @@
     <h2>Let’s Build Your Personalized Plan!</h2>
     <img src="images/logo_4.png" alt="Dumbbell Icon" class="icon" />
 
-    <form action="{{ route('workout_plan_3') }}" method="POST">
+    <form action="{{ route('workout_plan_5') }}" method="POST">
       @csrf
       <div class="form-box">
         <p class="question">Select Level of Expertise <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="Beginner"><b> Beginner </b> <br> <span> New to working out or returning after a long break. </span></button>
-          <button type="button" class="goal-button" data-goal="Intermediate"> <b> Intermediate </b> <br> <span> 6 months to 2 years of consistent training. </span> </button>
-          <button type="button" class="goal-button" data-goal="Advanced"><b> Advanced </b> <br> <span>  2+ years of consistent and structured training. </span></button>
+          <button type="button" class="goal-button" data-goal="beginner"><b> Beginner </b> <br> <span> New to working out or returning after a long break. </span></button>
+          <button type="button" class="goal-button" data-goal="intermediate"> <b> Intermediate </b> <br> <span> 6 months to 2 years of consistent training. </span> </button>
+          <button type="button" class="goal-button" data-goal="advanced"><b> Advanced </b> <br> <span>  2+ years of consistent and structured training. </span></button>
         </div>
       </div>
 
-      <input type="hidden" name="intensity" id="selected-intensity" />
+      <input type="hidden" name="level" id="selected-level" />
       <button type="submit" class="proceed-button"> Proceed </button>
     </form>
   </div>
@@ -34,7 +34,7 @@
 
       document.querySelectorAll(".goal-button").forEach(button => {
         button.addEventListener("click", () => {
-          const field = document.getElementById("selected-intensity");
+          const field = document.getElementById("selected-level");
           const fieldName = field.getAttribute("name");
           const label = button.getAttribute("data-goal");
 
@@ -57,9 +57,9 @@
 
       function mapLabelToBackend(label) {
         const map = {
-          "High Intensity": "high",
-          "Moderate": "moderate",
-          "Low Intensity": "low",
+          "advanced": "advanced",
+          "intermediate": "intermediate",
+          "beginner": "beginner",
         };
         return map[label] || label.toLowerCase().replace(" ", "_");
       }
