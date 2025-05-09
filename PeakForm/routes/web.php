@@ -147,3 +147,7 @@ Route::post('/workout_plan_4', [WorkoutController::class, 'storeDays'])->name('w
 Route::post('/workout_plan_5', [WorkoutController::class, 'storeLevel'])->name('workout_plan_5');
 Route::post('/workout_plan_6', [WorkoutController::class, 'storeSplitType'])->name('workout_plan_6');
 
+Route::get('/workouts_tab', [WorkoutController::class, 'workoutsTab'])->name('workouts_tab');
+
+Route::get('/workouts/edit', [WorkoutController::class, 'edit'])->name('workouts.edit');
+Route::put('/workouts/update', [WorkoutController::class, 'update'])->name('workouts.update');
