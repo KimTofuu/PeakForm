@@ -38,28 +38,27 @@
       <div class="cards">
     
         <div class="left_side_1">
-          <div class = "daily_tab">
-            <div class = "header_content">
-              <h2 style="font-family: 'Michroma', sans-serif;" >Monday</h2>
-            </div>
-            <div class = "workout_content_2">
-              <label>
-                <input type="checkbox" name="agree"> <img src = "images/push-up.jpg"> Push-Ups <span> 250 times </span> 
-              </label>
-            </div>
+          @foreach ($workouts as $day => $exercises)
+            <div class="daily_tab">
+              <div class="header_content">
+                <h2 style="font-family: 'Michroma', sans-serif;">{{ $day }}</h2>
+              </div>
 
-            <div class = "workout_content_2">
-              <label>
-                <input type="checkbox" name="agree"> <img src = "images/push-up.jpg"> Squats <span> 250 times </span>
-              </label>
+              @forelse ($exercises as $exercise)
+                <div class="workout_content_2">
+                  <label>
+                    <input type="checkbox" name="completed[]"> 
+                    <img src="{{ asset('images/push-up.jpg') }}" alt="Exercise Image"> 
+                    {{ $exercise }} 
+                    <span> x12 reps </span>
+                  </label>
+                </div>
+              @empty
+                <p>No exercises for this day.</p>
+              @endforelse
             </div>
-          </div>
+          @endforeach
 
-          <div class="actions">
-            <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn play"> Edit Daily Workout </a>
-            </div>
-          </div>
         </div>
 
         <div class = "right_side">

@@ -25,18 +25,17 @@ class WorkoutController extends Controller
         if ($user) {
             WorkSplit::create([
                 'user_id' => $user->id,
-                'WorkplanName' => ucfirst(str_replace('_', ' ', $data['goal'])) . ' Plan',
-                'splitType' => $splitType,
-                'day1' => $splitDays['Day 1'] ?? null,
-                'day2' => $splitDays['Day 2'] ?? null,
-                'day3' => $splitDays['Day 3'] ?? null,
-                'day4' => $splitDays['Day 4'] ?? null,
-                'day5' => $splitDays['Day 5'] ?? null,
-                'day6' => $splitDays['Day 6'] ?? null,
-                'day7' => $splitDays['Day 7'] ?? null,
-            ]);            
+                'WorkplanName' => 'Gain muscle Plan',
+                'splitType' => 'Upper Lower',
+                'day1' => json_encode($splitDays['Day 1'] ?? []),
+                'day2' => json_encode($splitDays['Day 2'] ?? []),
+                'day3' => json_encode($splitDays['Day 3'] ?? []),
+                'day4' => json_encode($splitDays['Day 4'] ?? []),
+                'day5' => json_encode($splitDays['Day 5'] ?? []),
+                'day6' => json_encode($splitDays['Day 6'] ?? []),
+                'day7' => json_encode($splitDays['Day 7'] ?? []),
+            ]);                           
         }
-
         return $splitDays;
     }
 
@@ -283,5 +282,76 @@ class WorkoutController extends Controller
         ]);        
 
         return response()->json($workSplit);
+    }
+
+    public function workoutsTab()
+    {
+        $user = Auth::user();
+        $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
+
+        if (!$workSplit) {
+            return view('workouts_tab', ['user' => $user, 'workouts' => []]);
+        }
+
+        $workouts = [
+            'Monday' => json_decode($workSplit->day1 ?? '[]'),
+            'Tuesday' => json_decode($workSplit->day2 ?? '[]'),
+            'Wednesday' => json_decode($workSplit->day3 ?? '[]'),
+            'Thursday' => json_decode($workSplit->day4 ?? '[]'),
+            'Friday' => json_decode($workSplit->day5 ?? '[]'),
+            'Saturday' => json_decode($workSplit->day6 ?? '[]'),
+            'Sunday' => json_decode($workSplit->day7 ?? '[]'),
+        ];
+
+        return view('workouts_tab', [
+            'user' => $user,
+            'workouts' => $workouts,
+        ]);
+    }
+
+    public function edit()
+    {
+        $user = Auth::user();
+        $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
+
+        return view('workouts.edit', [
+            'user' => $user,
+            'workSplit' => $workSplit,
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        
+        $validated = $request->validate([
+            'fitness_level' => 'required',
+            'goal' => 'required',
+            'days' => 'required|integer|min:1|max:7',
+            'equipment' => 'required',
+        ]);
+
+        
+        $newWorkout = $this->generateSplit(
+            $validated['fitness_level'],
+            $validated['goal'],
+            $validated['days'],
+            $validated['equipment']
+        );
+
+        // Save new plan
+        WorkSplit::create([
+            'user_id' => $user->id,
+            'day1' => json_encode($newWorkout['day1']),
+            'day2' => json_encode($newWorkout['day2']),
+            'day3' => json_encode($newWorkout['day3']),
+            'day4' => json_encode($newWorkout['day4']),
+            'day5' => json_encode($newWorkout['day5']),
+            'day6' => json_encode($newWorkout['day6']),
+            'day7' => json_encode($newWorkout['day7']),
+        ]);
+
+        return redirect()->route('workouts_tab')->with('success', 'Workout updated successfully!');
     }
 }
