@@ -375,6 +375,7 @@ class WorkoutController extends Controller
                 'intensity' => $workSplit->intensity,
                 'setup' => $workSplit->setup,
                 'days' => $workSplit->days,
+                'splitType' => $workSplit->splitType,
             ]
         ]);
     }
