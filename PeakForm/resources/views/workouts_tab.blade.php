@@ -74,25 +74,25 @@
             </div> --}}
             <div class = "goals_contents">
               <p>
-                 Goal: {{ $user->goal }}
+                 Goal: {{ $input['goal'] }}
               </p>
             </div>
 
             <div class = "goals_contents">
               <p>
-                 Full Gym Setup
+                 Setup: {{ $input['setup'] }}
               </p>
             </div>
 
             <div class = "goals_contents">
               <p>
-                 Full Body Workout
+                 Workout Type: {{ $input['splitType'] }}
               </p>
             </div>
 
              <div class = "goals_contents">
               <p>
-                 <b> {{$user->workout_days}} </b> Days / Week Workout
+                 <b> {{$input['days']}} </b> Days / Week Workout
               </p>
             </div>
 
