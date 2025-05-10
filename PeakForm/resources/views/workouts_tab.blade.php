@@ -67,14 +67,14 @@
               <h2 style="font-family: 'Michroma', sans-serif;" >Goals / Plan</h2>
             </div>
 
-            <div class = "goals_contents">
+            {{-- <div class = "goals_contents">
               <p>
                 Target Weight: <b> 60kg </b>
               </p>
-            </div>
+            </div> --}}
             <div class = "goals_contents">
               <p>
-                 Build Muscle
+                 Goal: {{ $user->goal }}
               </p>
             </div>
 
@@ -92,14 +92,17 @@
 
              <div class = "goals_contents">
               <p>
-                 <b> 5 </b> Days / Week Workout
+                 <b> {{$user->workout_days}} </b> Days / Week Workout
               </p>
             </div>
 
           </div>
           <div class="actions">
-            <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn edit"> Edit Goals / Plan </a>
+            <div class="actions_3">
+              <a href="{{ route('workouts_tab') }}" class="btn edit">Edit Goals / Plan</a>
+            </div>
+            <div class="actions_3" style="margin-top: 10px;">
+              <a href="{{ route('workout_plan_1') }}" class="btn update">Update Workout Preferences</a>
             </div>
           </div>
         </div>

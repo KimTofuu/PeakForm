@@ -151,3 +151,5 @@ Route::get('/workouts_tab', [WorkoutController::class, 'workoutsTab'])->name('wo
 
 Route::get('/workouts/edit', [WorkoutController::class, 'edit'])->name('workouts.edit');
 Route::put('/workouts/update', [WorkoutController::class, 'update'])->name('workouts.update');
+
+Route::get('/update', [WorkoutController::class, 'update'])->name('/update');
