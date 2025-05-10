@@ -16,7 +16,19 @@ class WorkSplit extends Model
         'user_id',
         'WorkplanName',
         'splitType',
-        'day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7',
+        'goal',
+        'fitness_level',
+        'equipment',
+        'intensity',
+        'setup',
+        'days',
+        'day1',
+        'day2',
+        'day3',
+        'day4',
+        'day5',
+        'day6',
+        'day7',
     ];
     
 
