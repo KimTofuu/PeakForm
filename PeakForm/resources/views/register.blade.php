@@ -7,12 +7,23 @@
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <script src="script.js"></script>
 </head>
 <body>
 
-    <div class="upper_register">
-        <img src="images/signup.png">
+<div class = "main-cont">
+    <div class = "left_space">
+        <h1 style="font-family: 'Michroma', sans-serif;"> PeakForm </h1>
+        <p>Your Personalized Path to Peak Performance <p>
+        <img src= "images/logo_1.png">
     </div>
+
+    <div class = "right_space">
+        <div class="upper_register">
+            <img src="images/signup.png">
+        </div>
 
     <form action="{{ route('register') }}" method="POST" class="signup-container">
         @csrf
@@ -37,15 +48,18 @@
             @enderror
         </div>
         
-        <div class="form-group">
-            <input type="password" name="password" placeholder="Password" required>
+        <div class="form-group" style="position: relative;">
+            <input type="password" name="password" id="password" placeholder="Password" required>
             @error('password')
                 <p class="error-message">{{ $message }}</p>
             @enderror
         </div>
-    
-        <div class="form-group">
-            <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+
+        <div class="form-group" style="position: relative;">
+            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password" required>
+                <span class="position-absolute" style=" cursor: pointer;" onclick="togglePassword()">
+                    <i id="eyeIcon" class="fa fa-eye"></i>
+                </span>
             @error('password_confirmation')
                 <p class="error-message">{{ $message }}</p>
             @enderror
@@ -159,8 +173,22 @@ Welcome to PeakForm. Your privacy is important to us. This Privacy <br> Policy o
             Continue with Google
         </button>
     </div>
+</div>
+</div>
+    
+    <script>
+       function togglePassword() {
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("password_confirmation");
+        const icon = document.getElementById("eyeIcon");
 
-    <script src="script.js"></script>
+        const isHidden = password.type === "password";
 
+        password.type = isHidden ? "text" : "password";
+        confirmPassword.type = isHidden ? "text" : "password";
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
+    }
+    </script>
 </body>
 </html>

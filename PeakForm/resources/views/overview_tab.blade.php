@@ -24,6 +24,7 @@
           <a href="{{ route('workouts_tab') }}">Workouts</a>
           <a href="{{ route('mealplan_tab') }}">Meal Plan</a>
           <a href="{{ route('profile_tab') }}">Profile</a>
+          <a href="{{ route('timer_tab') }}">Timer</a>
         </nav>
         <div class="logout">
           <form method="GET" action="{{ route('logout') }}">
@@ -58,7 +59,9 @@
 
           <div class="actions">
             <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn play"> View Video Guide </a>
+              <a href="{{ route('workouts_tab') }}" class="btn play"> 
+                <button> View Video Guide </button>
+              </a>
             </div>
           </div>
         </div>
@@ -71,13 +74,15 @@
 
             <div class ="progress_contents">
               <div>
-                <canvas id="progressChart"></canvas>
+                <div id="radialChart"></div>
               </div>
             </div>
           </div>
           <div class="actions">
             <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn edit"> Edit Workout Plan </a>
+              <a href="{{ route('workouts_tab') }}" class="btn edit">
+                <button> Edit Workout Plan </button>
+              </a>
             </div>
           </div>
         </div>
@@ -100,23 +105,6 @@
             </div>
 
           </div>
-
-          <div class="timer_tab">
-            <div>
-              <h2 style="font-family: 'Michroma', sans-serif;" >Timer</h2>
-              <div id="timer" style="font-family: 'Michroma', sans-serif; margin-bottom: 20px;">05:00</div>
-
-                <button id="startBtn">Start</button>
-                <button id="stopBtn">Stop</button>
-                <button id="resetBtn">Reset</button>
-                <button id="editBtn">Edit</button>
-                <button id="oneMinBtn">1 Min</button>
-                <button id="twoMinBtn">2 Min</button>
-                <button id="threeMinBtn">3 Min</button>
-                
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </main>
@@ -124,7 +112,7 @@
 
   <script src="script.js"> </script>
   
-  <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
 </body>
 </html>
