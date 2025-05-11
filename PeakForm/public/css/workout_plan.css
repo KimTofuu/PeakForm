@@ -1,142 +1,143 @@
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f9f8f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-  
-  .container {
-    text-align: center;
-  }
-  
-  h2 {
-    font-weight: normal;
-    font-size: 1.5rem;
-    color: #1a1a1a;
-  }
-  
-  .icon {
-    width: 70px;
-    margin: 10px 0;
-  }
-  
-  .form-box {
-    background-color: rgba(143, 176, 49, 0.4);
-    padding: 30px;
-    border-radius: 10px;
-    width: 400px;
-    margin: 0 auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .question {
-    font-size: 1rem;
-    color: #3c3c3c;
-    margin-bottom: 20px;
-  }
-  
-  .question span {
-    font-size: 0.9rem;
-    color: #4d4d4d;
-  }
-  
-  .goal-options {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .goal-button {
-    padding: 15px;
-    font-size: 1rem;
-    background-color: white;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s;
-  }
-  
-  .goal-button span {
-    opacity: 50%;
-    font-size: 13px;
-  }
-  .goal-button:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-2px);
-  }
-  
-  .proceed-button {
-    margin-top: 20px;
-    padding: 12px 70px 12px 70px;
-    background-color: #8FB031;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .proceed-button:hover {
-    background: #7f9c2b;
-  }
+  font-family: 'Inter', sans-serif;
+  background-color: #f9f8f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+}
 
-  .goal-button.active {
-    background-color: #b5d67e;
-    font-weight: bold;
-    color: #2e2e2e;
-    border: 2px solid #7ea543;
-  }
+.container {
+  text-align: center;
+}
 
-  .day-options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    max-width: 250px;
-    margin: 0 auto;
-  }
+h2 {
+  font-weight: normal;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+}
 
-  .day-button {
-    width: 50px;
-    height: 50px;
-    padding: 0;
-    font-size: 0.95rem;
-    background-color: white;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    color: #333;
-  }
+.icon {
+  width: 4.375rem; /* 70px */
+  margin: 0.625rem 0; /* 10px 0 */
+}
 
-  .day-button:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-2px);
-  }
+.form-box {
+  background-color: rgba(143, 176, 49, 0.4);
+  padding: 1.875rem; /* 30px */
+  border-radius: 0.625rem; /* 10px */
+  width: 25rem; /* 400px */
+  margin: 0 auto;
+  box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); /* 4px 6px */
+}
 
-  .day-button.active {
-    background-color: #b5d67e;
-    font-weight: bold;
-    color: #2e2e2e;
-    border: 2px solid #7ea543;
-  }
+.question {
+  font-size: 1rem;
+  color: #3c3c3c;
+  margin-bottom: 1.25rem; /* 20px */
+}
 
-  input {
-    flex: 2;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-  }
+.question span {
+  font-size: 0.9rem;
+  color: #4d4d4d;
+}
+
+.goal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9375rem; /* 15px */
+}
+
+.goal-button {
+  padding: 0.9375rem; /* 15px */
+  font-size: 1rem;
+  background-color: white;
+  border: none;
+  border-radius: 0.625rem; /* 10px */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* 2px 4px */
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s;
+}
+
+.goal-button span {
+  opacity: 0.5;
+  font-size: 0.8125rem; /* 13px */
+}
+
+.goal-button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-0.125rem); /* -2px */
+}
+
+.proceed-button {
+  margin-top: 1.25rem; /* 20px */
+  padding: 0.75rem 4.375rem; /* 12px 70px */
+  background-color: #8FB031;
+  color: white;
+  border: none;
+  border-radius: 0.375rem; /* 6px */
+  font-size: 1rem; /* 16px */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.proceed-button:hover {
+  background: #7f9c2b;
+}
+
+.goal-button.active {
+  background-color: #b5d67e;
+  font-weight: bold;
+  color: #2e2e2e;
+  border: 0.125rem solid #7ea543; /* 2px */
+}
+
+.day-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.625rem; /* 10px */
+  max-width: 15.625rem; /* 250px */
+  margin: 0 auto;
+}
+
+.day-button {
+  width: 3.125rem; /* 50px */
+  height: 3.125rem;
+  padding: 0;
+  font-size: 0.95rem;
+  background-color: white;
+  border: none;
+  border-radius: 0.75rem; /* 12px */
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.08); /* 2px 5px */
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  color: #333;
+}
+
+.day-button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-0.125rem); /* -2px */
+}
+
+.day-button.active {
+  background-color: #b5d67e;
+  font-weight: bold;
+  color: #2e2e2e;
+  border: 0.125rem solid #7ea543; /* 2px */
+}
+
+input {
+  flex: 2;
+  padding: 0.625rem; /* 10px */
+  border: none;
+  border-radius: 0.3125rem; /* 5px */
+  font-size: 1rem;
+}
