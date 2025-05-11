@@ -165,10 +165,22 @@ class WorkoutController extends Controller
         elseif ($splitType === 'Full Body') {
             $combined = array_merge($lvl['push'], $lvl['pull'], $lvl['legs']);
             shuffle($combined);
+
+            $exerciseCount = count($combined);
+
             for ($i = 1; $i <= $days; $i++) {
-                $plan["Day $i"] = array_slice($combined, ($i - 1) * 4, 4);
+                $start = (($i - 1) * 4) % $exerciseCount;
+                $dayExercises = array_slice($combined, $start, 4);
+
+                // If slice goes beyond array end, wrap around
+                if (count($dayExercises) < 4) {
+                    $dayExercises = array_merge($dayExercises, array_slice($combined, 0, 4 - count($dayExercises)));
+                }
+
+                $plan["Day $i"] = $dayExercises;
             }
         }
+
 
         // Trim extra days
         foreach ($plan as $day => $exercises) {
