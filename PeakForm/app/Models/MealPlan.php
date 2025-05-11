@@ -18,6 +18,9 @@ class MealPlan extends Model
         'proteinTarget',
         'carbsTarget',
         'fatTarget',
+        'bmr',
+        'created_at',
+        'updated_at',
     ];
 
     public $timestamps = false;
