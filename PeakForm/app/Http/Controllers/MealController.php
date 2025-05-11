@@ -31,6 +31,7 @@ class MealController extends Controller
             'proteinTarget' => $macros['protein'],
             'carbsTarget' => $macros['carbs'],
             'fatTarget' => $macros['fat'],
+            'bmr' => $bmr,
         ];
 
         if ($user = Auth::user()) {
@@ -45,6 +46,9 @@ class MealController extends Controller
                     'proteinTarget' => $mealPlan['proteinTarget'],
                     'carbsTarget' => $mealPlan['carbsTarget'],
                     'fatTarget' => $mealPlan['fatTarget'],
+                    'bmr' => $bmr,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]);
             } else {
                 // Create a new record
@@ -55,6 +59,9 @@ class MealController extends Controller
                     'proteinTarget' => $mealPlan['proteinTarget'],
                     'carbsTarget' => $mealPlan['carbsTarget'],
                     'fatTarget' => $mealPlan['fatTarget'],
+                    'bmr' => $bmr,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]);
             }
         }
@@ -99,31 +106,31 @@ class MealController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        $user = Auth::user();
+    // public function store(Request $request)
+    // {
+    //     $user = Auth::user();
 
-        if (!$user) {
-            return response()->json(['error' => 'Unauthenticated'], 401);
-        }
+    //     if (!$user) {
+    //         return response()->json(['error' => 'Unauthenticated'], 401);
+    //     }
 
-        $request->validate([
-            'MealplanName' => 'required|string',
-            'calorieTarget' => 'required|numeric',
-            'proteinTarget' => 'required|numeric',
-            'carbsTarget' => 'required|numeric',
-            'FatTarget' => 'required|numeric',
-        ]);
+    //     $request->validate([
+    //         'MealplanName' => 'required|string',
+    //         'calorieTarget' => 'required|numeric',
+    //         'proteinTarget' => 'required|numeric',
+    //         'carbsTarget' => 'required|numeric',
+    //         'FatTarget' => 'required|numeric',
+    //     ]);
 
-        $mealPlan = MealPlan::create([
-            'user_id' => $user->id,
-            'MealplanName' => $request->MealplanName,
-            'calorieTarget' => $request->calorieTarget,
-            'proteinTarget' => $request->proteinTarget,
-            'carbsTarget' => $request->carbsTarget,
-            'fatTarget' => $request->fatTarget,
-        ]);
+    //     $mealPlan = MealPlan::create([
+    //         'user_id' => $user->id,
+    //         'MealplanName' => $request->MealplanName,
+    //         'calorieTarget' => $request->calorieTarget,
+    //         'proteinTarget' => $request->proteinTarget,
+    //         'carbsTarget' => $request->carbsTarget,
+    //         'fatTarget' => $request->fatTarget,
+    //     ]);
 
-        return response()->json($mealPlan);
-    }
+    //     return response()->json($mealPlan);
+    // }
 }
