@@ -23,6 +23,7 @@
         <a href="{{ route('workouts_tab') }}">Workouts</a>
         <a href="{{ route('mealplan_tab') }}">Meal Plan</a>
         <a href="{{ route('profile_tab') }}">Profile</a>
+        <a href="{{ route('timer_tab') }}">Timer</a>
       </nav>
       <div class="logout">
         <form method="GET" action="{{ route('logout') }}">

@@ -89,7 +89,7 @@ nav ul li a:hover::after {
 .col_2 {
 	flex-basis: 35%;
 	margin-right: -9.375vw;
-	margin-top: -6.25vh;
+	margin-top: -15vh;
 }
 
 .col_2 img {
@@ -132,12 +132,20 @@ button {
 	font-size: 1.25rem;
 	border-radius: 0.3125rem;
 	transition: background-color 0.3s;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	transition: background 0.3s, transform 0.4s;
+}
+
+button:hover {
+	transform: scale(1.03); /* Slightly enlarges the button */
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+	
 }
 
 #dumbbell {
 	width: 28.125rem;
 	margin-left: -10vw;
-	margin-top: -4.375vh;
+	margin-top: -8vh;
 	position: absolute;
 	transition: transform 0.3s ease-in-out;
 }
@@ -193,7 +201,7 @@ button {
 .col_3 img {
 	width: 50%;
 	border-radius: 0.9375rem;
-	margin-top: 20vh;
+	margin-top: 40vh;
 	margin-left: 11.875vw;
 }
 
@@ -228,7 +236,7 @@ button {
 #bowl_v2 {
 	width: 31.25rem;
 	right: -9.375vw;
-	margin-top: -11.875vh;
+	margin-top: -25vh;
 	position: absolute;
 	transition: transform 1s ease-in-out;
 }
@@ -420,13 +428,13 @@ footer {
 	border-radius: 1.25rem;
 	text-align: center;
 	height: 18.75rem;
-	margin-right: 6.25rem;
+	margin-right: 3rem;
 	margin-left: 5vw;
 }
 
 .proceed_opt h4 {
-	margin-top: 5rem;
-	margin-bottom: 1.25rem;
+	margin-top: 3rem;
+	margin-bottom: 5rem;
 }
 
 .training_opt h4 {
@@ -447,7 +455,7 @@ footer {
 }
 
 .button_proceed {
-	margin-top: 5rem;
+	margin-top: 20rem;
 }
 
 .training_img {
@@ -456,7 +464,7 @@ footer {
 }
 
 .training_img img {
-	width: 28.125rem;
+	width: 100vh;
 	transition: transform 1s ease-in-out;
 }
 

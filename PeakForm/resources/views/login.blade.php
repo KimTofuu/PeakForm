@@ -8,13 +8,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
 
 </head>
 <body>
 
+<div class = "main-cont">
+    <div class = "left_space">
+        <h1 style="font-family: 'Michroma', sans-serif;"> PeakForm </h1>
+        <p>Your Personalized Path to Peak Performance <p>
+        <img src= "images/logo_1.png">
+    </div>
+
+    <div class = "right_space">
     <div class="upper_login">
-        <img src="images/login.png">
+        <img src="images/login_2.png">
     </div>
 
     <div class="login-container">
@@ -28,10 +36,9 @@
                 <input type="password" name="password" id="password" placeholder="Password" required>
                 <span class="position-absolute" onclick="togglePassword()">
                     <i id="eyeIcon" class="fa fa-eye"></i>
-                </span>
-            </div>
-            <div class="forgot-password">
-                <a href="{{ route('password.request') }}">Forgot Password?</a>
+                    <a href="{{ route('password.request') }}" class="forgot-password">Forgot Password?</a>
+                </span> 
+                
             </div>
             @if ($errors->any())
                 <div class="error-message">
@@ -63,6 +70,8 @@
                 Continue with Google
             </button>
         </div>
+    </div>
+</div>
     
 
         <script>

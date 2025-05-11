@@ -112,6 +112,12 @@ Route::get('/profile_tab', function () {
     return view('profile_tab', compact('user'));
 })->name('profile_tab');
 
+Route::get('/timer_tab', function () {
+    $user = Auth::user();
+    return view('timer_tab', compact('user'));
+})->name('timer_tab');
+
+
 Route::get('/personal_info', function () {
     return view('personal_info');
 })->name('personal_info');
@@ -139,6 +145,8 @@ Route::get('/workout_plan_5', function () {
 Route::get('/workout_plan_6', function () {
     return view('workout_plan_6');
 })->name('workout_plan_6');
+
+
 
 Route::post('/workout_plan_1', [WorkoutController::class, 'storeGoal'])->name('workout_plan_1');
 Route::post('/workout_plan_2', [WorkoutController::class, 'storeSetup'])->name('workout_plan_2');

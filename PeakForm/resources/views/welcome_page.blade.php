@@ -25,7 +25,7 @@
         <div class = "proceed_options">
             <div class = "proceed_opt">
                 <h4> Let's build your Workout </h4>
-                <a href="{{ route('workout_plan_1') }}">
+                <a href="{{ route('workout_plan_1') }}" class = "button_proceed">
                     <button>Proceed</button>
                 </a>
             </div>

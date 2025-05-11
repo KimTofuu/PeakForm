@@ -23,6 +23,7 @@
         <a href="{{ route('workouts_tab') }}">Workouts</a>
         <a href="{{ route('mealplan_tab') }}">Meal Plan</a>
         <a class="active" href="{{ route('profile_tab') }}">Profile</a>
+        <a href="{{ route('timer_tab') }}">Timer</a>
 
       </nav>
       <div class="logout">
@@ -59,7 +60,9 @@
 
           <div class="actions">
             <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn play"> Edit Account </a>
+              <a href="{{ route('workouts_tab') }}" class="btn play"> 
+                <button> Edit Account </button>
+              </a>
             </div>
           </div>
         </div>
@@ -89,7 +92,9 @@
 
           <div class="actions">
             <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn play"> Edit Profile </a>
+              <a href="{{ route('workouts_tab') }}" class="btn play"> 
+                <button> Edit Profile </button>
+              </a>
             </div>
           </div>
         </div>

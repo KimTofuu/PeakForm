@@ -147,29 +147,37 @@ window.onclick = function(event) {
 
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const ctx = document.getElementById('progressChart').getContext('2d');
-
-        const progressChart = new Chart(ctx, {
-            type: 'bar', // Change to 'line' or 'pie' if you prefer
-            data: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                datasets: [{
-                    label: 'Progress (%)',
-                    data: [25, 40, 65, 90], // Sample progress data
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2
-                }]
+  document.addEventListener('DOMContentLoaded', function () {
+    var options = {
+      chart: {
+        height: 350,
+        type: 'radialBar'
+      },
+      series: [65, 40, 80], // Example percentages
+      labels: ['Calories Lost', 'Weight Lost', 'Workout Completion'],
+      plotOptions: {
+        radialBar: {
+          dataLabels: {
+            name: {
+              fontSize: '16px',
             },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
-                }
+            value: {
+              fontSize: '14px',
+            },
+            total: {
+              show: true,
+              label: 'Overall Progress',
+              formatter: function () {
+                // Optional: average of the values
+                return Math.round((65 + 40 + 80) / 3) + "%";
+              }
             }
-        });
-    });
+          }
+        }
+      },
+      colors: ['#8FB031', '#6B8E23', '#4682B4'] // customize as needed
+    };
+
+    var chart = new ApexCharts(document.querySelector("#radialChart"), options);
+    chart.render();
+  });

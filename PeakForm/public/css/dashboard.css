@@ -23,6 +23,7 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 1rem 0;
+  box-shadow: 0 17px 19px rgba(0, 0, 0, 0.1);
 }
 
 .profile-section {
@@ -98,26 +99,52 @@ body {
 .left_side,
 .middle,
 .right_side {
-  flex-basis: 30%;
+  flex-basis: 35%;
   text-align: center;
   font-size: 1.5rem;
   display: flex;
   flex-direction: column;
+  
 }
 
-.daily_tab,
-.progress_tab,
-.reminders,
+.right_side {
+  flex-basis: 20%;
+}
+
+.right_side_2{
+  flex-basis: 30%;
+}
+
+.daily_tab_2{
+  margin-bottom: 5rem;
+  background-color: #ddd;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
 .goals_plan {
   background-color: #ddd;
   padding: 1rem;
   border-radius: 0.5rem;
   font-size: 1.5rem;
   height: 70vh;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+.progress_tab,
+.daily_tab,
+.reminders {
+  background-color: #ddd;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  height: 80vh;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .reminders {
-  height: 45vh;
+  height: 80vh;
 }
 
 .header_content {
@@ -126,14 +153,22 @@ body {
 
 .workout_content,
 .workout_content_2,
-.goals_contents,
 .reminders_contents {
   padding: 1.25rem;
   margin: 0.625rem;
   background-color: #bbb;
   border-radius: 0.5rem;
-  text-align: justify;
+  text-align: left;
   font-size: 1.25rem;
+}
+
+.goals_contents{
+  padding: 1.2rem;
+  margin: 0.625rem;
+  background-color: #bbb;
+  border-radius: 0.5rem;
+  text-align: justify;
+  font-size: 1.2rem;
 }
 
 .workout_content span,
@@ -156,31 +191,38 @@ body {
 
 .actions {
   padding: 0.625rem;
-  align-items: flex-end;
+  align-items: left;
 }
 
-.actions_3 {
-  border-radius: 0.5rem;
-  text-align: right;
-  font-size: 1.5rem;
-  margin: 1.25rem 0;
-}
-
-.btn {
+.actions button {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #8FB031;
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem;
   border: none;
   font-size: 1rem;
   border-radius: 0.375rem;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.3s;
   text-decoration: none;
+  width: 15rem;
+  height: 3rem;
 }
 
-.btn:hover {
-  background-color: #799f37;
+.actions button:hover {
+  transform: scale(1.04); /* Slightly enlarges the button */
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  background-color: #7f9c2b;
 }
+
+.actions_3 {
+  border-radius: 0.5rem;
+  text-align: left;
+  font-size: 1.5rem;
+  margin: 1.25rem 0;
+}
+
+
 
 img {
   width: 2rem;
@@ -237,6 +279,10 @@ img {
   font-size: 1.5rem;
   display: flex;
   flex-direction: column;
+  max-height: 90vh;         /* Set max height relative to viewport */
+  overflow-y: auto;         /* Enable vertical scrolling */
+  overflow-x: hidden;       /* Hide horizontal scroll */
+  padding-right: 8px;  
 }
 
 .left_side_2 {
@@ -298,4 +344,15 @@ img {
   float: right;
   font-size: 20px;
   cursor: pointer;
+}
+
+.chart-container {
+  width: 200px;
+  height: 200px;
+  text-align: center;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
 }

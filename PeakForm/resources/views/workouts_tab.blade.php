@@ -23,6 +23,7 @@
         <a class="active" href="{{ route('workouts_tab') }}">Workouts</a>
         <a href="{{ route('mealplan_tab') }}">Meal Plan</a>
         <a href="{{ route('profile_tab') }}">Profile</a>
+        <a href="{{ route('timer_tab') }}">Timer</a>
       </nav>
       <div class="logout">
         <form method="GET" action="{{ route('logout') }}">
@@ -39,7 +40,7 @@
     
         <div class="left_side_1">
           @foreach ($workouts as $day => $exercises)
-            <div class="daily_tab">
+            <div class="daily_tab_2">
               <div class="header_content">
                 <h2 style="font-family: 'Michroma', sans-serif;">{{ $day }}</h2>
               </div>
@@ -61,7 +62,7 @@
 
         </div>
 
-        <div class = "right_side">
+        <div class = "right_side_2">
           <div class="goals_plan">
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" >Goals / Plan</h2>
@@ -96,13 +97,19 @@
               </p>
             </div>
 
+            
+
           </div>
           <div class="actions">
             <div class="actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn edit">Edit Goals / Plan</a>
+              <a href="{{ route('workouts_tab') }}" class="btn edit">
+                <button> Edit Goals / Plan </button>
+              </a>
             </div>
             <div class="actions_3" style="margin-top: 10px;">
-              <a href="{{ route('workout_plan_1') }}" class="btn update">Update Workout Preferences</a>
+              <a href="{{ route('workout_plan_1') }}" class="btn update">
+                <button> Update Workout Preferences </button>
+              </a>
             </div>
           </div>
         </div>

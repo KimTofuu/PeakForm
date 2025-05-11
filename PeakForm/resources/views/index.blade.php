@@ -66,7 +66,7 @@
                         Take the guesswork out of fitness planning achieve your peak form with PeakForm!</p>
                 </div>
                 <div class="col_5">
-                    <img src="images/phone.png">
+                    <img src="images/phone_right.png">
                 </div>
             </div>
             <img src='images/bowl_v2.png' id = "bowl_v2">
