@@ -153,3 +153,5 @@ Route::get('/workouts/edit', [WorkoutController::class, 'edit'])->name('workouts
 Route::put('/workouts/update', [WorkoutController::class, 'update'])->name('workouts.update');
 
 Route::get('/update', [WorkoutController::class, 'update'])->name('/update');
+
+Route::post('/generate-meal-plan', [MealController::class, 'generateMealPlan'])->name('generate_meal_plan');

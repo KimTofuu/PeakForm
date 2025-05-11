@@ -23,25 +23,40 @@ class MealController extends Controller
         $bmr = $this->calculateBMR($data['gender'], $data['weight'], $data['height'], $data['age']);
         $tdee = $bmr * $data['activity'];
         $calories = $this->adjustCalories($tdee, $data['goal']);
-        $macros = $this->calculateMacros($calories);
+        $macros = $this->calculateMacros($calories, $data['goal']);
 
         $mealPlan = [
-            'PlanName' => ucfirst(str_replace('_', ' ', $data['goal'])) . ' Meal Plan',
-            'CalorieTarget' => round($calories),
-            'ProteinTarget' => $macros['protein'],
-            'CarbTarget' => $macros['carbs'],
-            'FatTarget' => $macros['fat'],
+            'MealplanName' => ucfirst(str_replace('_', ' ', $data['goal'])) . ' Meal Plan',
+            'calorieTarget' => round($calories),
+            'proteinTarget' => $macros['protein'],
+            'carbsTarget' => $macros['carbs'],
+            'fatTarget' => $macros['fat'],
         ];
 
         if ($user = Auth::user()) {
-            MealPlan::create([
-                'PlanName' => $mealPlan['PlanName'],
-                'CalorieTarget' => $mealPlan['CalorieTarget'],
-                'ProteinTarget' => $mealPlan['ProteinTarget'],
-                'CarbTarget' => $mealPlan['CarbTarget'],
-                'FatTarget' => $mealPlan['FatTarget'],
-                'CreatedDate' => now(),
-            ]);
+            // Check if a meal plan already exists for the user
+            $existingMealPlan = MealPlan::where('user_id', $user->id)->latest()->first();
+
+            if ($existingMealPlan) {
+                // Update existing record
+                $existingMealPlan->update([
+                    'MealplanName' => $mealPlan['MealplanName'],
+                    'calorieTarget' => $mealPlan['calorieTarget'],
+                    'proteinTarget' => $mealPlan['proteinTarget'],
+                    'carbsTarget' => $mealPlan['carbsTarget'],
+                    'fatTarget' => $mealPlan['fatTarget'],
+                ]);
+            } else {
+                // Create a new record
+                MealPlan::create([
+                    'user_id' => $user->id,
+                    'MealplanName' => $mealPlan['MealplanName'],
+                    'calorieTarget' => $mealPlan['calorieTarget'],
+                    'proteinTarget' => $mealPlan['proteinTarget'],
+                    'carbsTarget' => $mealPlan['carbsTarget'],
+                    'fatTarget' => $mealPlan['fatTarget'],
+                ]);
+            }
         }
 
         return response()->json([
@@ -66,14 +81,23 @@ class MealController extends Controller
         };
     }
 
-    private function calculateMacros($calories)
+    private function calculateMacros($calories, $goal)
     {
-        $protein = round(($calories * 0.30) / 4, 2);
-        $fat = round(($calories * 0.25) / 9, 2);
-        $carbs = round(($calories * 0.45) / 4, 2);
+        // Macronutrient distribution by goal
+        $splits = match ($goal) {
+            'gain_muscle' => ['protein' => 0.30, 'carbs' => 0.50, 'fat' => 0.20],
+            'lose_fat' => ['protein' => 0.40, 'carbs' => 0.30, 'fat' => 0.30],
+            'maintenance' => ['protein' => 0.30, 'carbs' => 0.45, 'fat' => 0.25],
+            default => ['protein' => 0.30, 'carbs' => 0.45, 'fat' => 0.25],
+        };
+
+        $protein = round(($calories * $splits['protein']) / 4, 2);
+        $carbs = round(($calories * $splits['carbs']) / 4, 2);
+        $fat = round(($calories * $splits['fat']) / 9, 2);
 
         return compact('protein', 'carbs', 'fat');
     }
+
 
     public function store(Request $request)
     {
@@ -84,20 +108,20 @@ class MealController extends Controller
         }
 
         $request->validate([
-            'PlanName' => 'required|string',
-            'CalorieTarget' => 'required|numeric',
-            'ProteinTarget' => 'required|numeric',
-            'CarbTarget' => 'required|numeric',
+            'MealplanName' => 'required|string',
+            'calorieTarget' => 'required|numeric',
+            'proteinTarget' => 'required|numeric',
+            'carbsTarget' => 'required|numeric',
             'FatTarget' => 'required|numeric',
         ]);
 
         $mealPlan = MealPlan::create([
-            'PlanName' => $request->PlanName,
-            'CalorieTarget' => $request->CalorieTarget,
-            'ProteinTarget' => $request->ProteinTarget,
-            'CarbTarget' => $request->CarbTarget,
-            'FatTarget' => $request->FatTarget,
-            'CreatedDate' => now(),
+            'user_id' => $user->id,
+            'MealplanName' => $request->MealplanName,
+            'calorieTarget' => $request->calorieTarget,
+            'proteinTarget' => $request->proteinTarget,
+            'carbsTarget' => $request->carbsTarget,
+            'fatTarget' => $request->fatTarget,
         ]);
 
         return response()->json($mealPlan);

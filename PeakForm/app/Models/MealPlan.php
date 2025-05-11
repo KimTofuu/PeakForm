@@ -9,16 +9,15 @@ class MealPlan extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'MealPlanID';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'UserID',
-        'PlanName',
-        'CalorieTarget',
-        'ProteinTarget',
-        'CarbTarget',
-        'FatTarget',
-        'CreatedDate',
+        'user_id',
+        'MealplanName',
+        'calorieTarget',
+        'proteinTarget',
+        'carbsTarget',
+        'fatTarget',
     ];
 
     public $timestamps = false;
@@ -31,6 +30,6 @@ class MealPlan extends Model
 
     public function mealPlans()
     {
-        return $this->hasMany(MealPlan::class, 'MealPlanID');
+        return $this->hasMany(MealPlan::class, 'id');
     }
 }
