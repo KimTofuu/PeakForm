@@ -48,8 +48,8 @@ function mapLabelToBackend(label) {
   return map[label] || label.toLowerCase().replace(" ", "_"); // fallback
 }
 
-function openPrivacyModal(e) {
-  e.preventDefault();
+function openPrivacyModal(event) {
+  event.preventDefault();
   document.getElementById('privacyModal').style.display = 'block';
 }
 
@@ -181,3 +181,16 @@ window.onclick = function(event) {
     var chart = new ApexCharts(document.querySelector("#radialChart"), options);
     chart.render();
   });
+
+  function togglePassword() {
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("password_confirmation");
+        const icon = document.getElementById("eyeIcon");
+
+        const isHidden = password.type === "password";
+
+        password.type = isHidden ? "text" : "password";
+        confirmPassword.type = isHidden ? "text" : "password";
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
+    }
