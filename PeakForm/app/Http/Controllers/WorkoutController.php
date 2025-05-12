@@ -336,23 +336,46 @@ class WorkoutController extends Controller
     }
 
 
-    // public function store(Request $request)
-    // {
-    //     $user = Auth::user();
-    //     if (!$user) {
-    //         return response()->json(['error' => 'Unauthenticated'], 401);
-    //     }
-        
-    //     $workSplit = WorkSplit::create([
-    //         'user_id' => $user->id,  // <-- optional if needed
-    //         'workPlanName' => $request->PlanName,
-    //         // 'GoalType' => $request->GoalType,
-    //         'splitType' => $request->SplitType,
-    //         'created_at' => now(),
-    //     ]);        
+    public function getWorkoutForDay(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated.'], 403);
+        }
 
-    //     return response()->json($workSplit);
-    // }
+        // Get the day number from the request
+        $dayNumber = $request->input('day');
+        
+        // Fetch the latest workout split for the user
+        $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
+        
+        if (!$workSplit) {
+            return response()->json(['error' => 'No workout plan found.'], 404);
+        }
+
+        // Decode the workout plan for the specified day
+        $days = [
+            'Day 1' => json_decode($workSplit->day1 ?? '[]'),
+            'Day 2' => json_decode($workSplit->day2 ?? '[]'),
+            'Day 3' => json_decode($workSplit->day3 ?? '[]'),
+            'Day 4' => json_decode($workSplit->day4 ?? '[]'),
+            'Day 5' => json_decode($workSplit->day5 ?? '[]'),
+            'Day 6' => json_decode($workSplit->day6 ?? '[]'),
+            'Day 7' => json_decode($workSplit->day7 ?? '[]'),
+        ];
+
+        $selectedDay = "Day $dayNumber";
+
+        if (isset($days[$selectedDay])) {
+            return response()->json([
+                'success' => true,
+                'day' => $selectedDay,
+                'exercises' => $days[$selectedDay],
+            ]);
+        }
+
+        return response()->json(['error' => 'Invalid day.'], 400);
+    }
 
     public function workoutsTab()
     {
@@ -404,60 +427,25 @@ class WorkoutController extends Controller
         ]);
     }
 
-    // private function generateSplitData($level, $goal, $days, $equipment)
-    // {
-    //     return $this->createWorkoutPlan('Full Body', $days, [
-    //         'level' => $level,
-    //         'goal' => $goal,
-    //         'days' => $days,
-    //         'setup' => $equipment,
-    //         'splitType' => 'Full Body', // or determine dynamically
-    //     ]);
-    // }
+    public function showDailyWorkout($day)
+    {
+        $user = Auth::user();
+        $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
 
+        $workouts = [
+            1 => json_decode($workSplit->day1 ?? '[]'),
+            2 => json_decode($workSplit->day2 ?? '[]'),
+            3 => json_decode($workSplit->day3 ?? '[]'),
+            4 => json_decode($workSplit->day4 ?? '[]'),
+            5 => json_decode($workSplit->day5 ?? '[]'),
+            6 => json_decode($workSplit->day6 ?? '[]'),
+            7 => json_decode($workSplit->day7 ?? '[]'),
+        ];
 
-    // public function update(Request $request)
-    // {
-    //     $user = Auth::user();
-
-    //     $validated = $request->validate([
-    //         'fitness_level' => 'required',
-    //         'goal' => 'required',
-    //         'days' => 'required|integer|min:1|max:7',
-    //         'equipment' => 'required',
-    //     ]);
-
-    //     $newWorkout = $this->generateSplitData(
-    //         $validated['fitness_level'],
-    //         $validated['goal'],
-    //         $validated['days'],
-    //         $validated['equipment']
-    //     );
-
-    //     // Delete all existing workouts for the user
-    //     WorkSplit::where('user_id', $user->id)->delete();
-
-    //     // Create new workout
-    //     WorkSplit::create([
-    //         'user_id' => $user->id,
-    //         'goal' => $validated['goal'],
-    //         'fitness_level' => $validated['fitness_level'],
-    //         'equipment' => $validated['equipment'],
-    //         'setup' => $validated['equipment'], // if setup and equipment are the same
-    //         'intensity' => 'moderate', // or pull from session/request if needed
-    //         'days' => $validated['days'],
-    //         'splitType' => 'Full Body',
-    //         'WorkplanName' => 'Full Body',
-
-    //         'day1' => json_encode($newWorkout['Day 1'] ?? []),
-    //         'day2' => json_encode($newWorkout['Day 2'] ?? []),
-    //         'day3' => json_encode($newWorkout['Day 3'] ?? []),
-    //         'day4' => json_encode($newWorkout['Day 4'] ?? []),
-    //         'day5' => json_encode($newWorkout['Day 5'] ?? []),
-    //         'day6' => json_encode($newWorkout['Day 6'] ?? []),
-    //         'day7' => json_encode($newWorkout['Day 7'] ?? []),
-    //     ]);
-
-    //     return redirect()->route('workouts_tab')->with('success', 'Workout updated successfully!');
-    // }
+        return view('daily_workout', [
+            'user' => $user,
+            'workouts' => $workouts,
+            'day' => $day, // Must be a number (1 to 7)
+        ]);
+    }
 }

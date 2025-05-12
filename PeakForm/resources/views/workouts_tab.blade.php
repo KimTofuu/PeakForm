@@ -39,10 +39,14 @@
       <div class="cards">
     
         <div class="left_side_1">
-          @foreach ($workouts as $day => $exercises)
+          @php
+            $dayCount = 1; // Initialize a counter for day numbers
+          @endphp
+
+          @foreach ($workouts as $exercises)
             <div class="daily_tab_2">
               <div class="header_content">
-                <h2 style="font-family: 'Michroma', sans-serif;">{{ $day }}</h2>
+                <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $dayCount }}</h2> <!-- Day 1, Day 2, ... -->
               </div>
 
               @forelse ($exercises as $exercise)
@@ -58,47 +62,41 @@
                 <p>No exercises for this day.</p>
               @endforelse
             </div>
-          @endforeach
 
+            @php
+              $dayCount++; // Increment the day number for each loop iteration
+            @endphp
+          @endforeach
         </div>
 
         <div class = "right_side_2">
           <div class="goals_plan">
-            <div class = "header_content">
-              <h2 style="font-family: 'Michroma', sans-serif;" >Goals / Plan</h2>
+            <div class="header_content">
+              <h2 style="font-family: 'Michroma', sans-serif;">Goals / Plan</h2>
             </div>
-
-            {{-- <div class = "goals_contents">
+            <div class="goals_contents">
               <p>
-                Target Weight: <b> 60kg </b>
-              </p>
-            </div> --}}
-            <div class = "goals_contents">
-              <p>
-                 Goal: {{ $input['goal'] }}
+                Goal: {{ ucwords(str_replace('_', ' ', $input['goal'])) }}
               </p>
             </div>
 
-            <div class = "goals_contents">
+            <div class="goals_contents">
               <p>
-                 Setup: {{ $input['setup'] }}
+                Setup: {{ ucwords(str_replace('_', ' ', $input['setup'])) }}
               </p>
             </div>
 
-            <div class = "goals_contents">
+            <div class="goals_contents">
               <p>
-                 Workout Type: {{ $input['splitType'] }}
+                Workout Type: {{ ucwords(str_replace('_', ' ', $input['splitType'])) }}
               </p>
             </div>
 
-             <div class = "goals_contents">
+            <div class="goals_contents">
               <p>
-                 <b> {{$input['days']}} </b> Days / Week Workout
+                <b>{{ $input['days'] }}</b> Days / Week Workout
               </p>
             </div>
-
-            
-
           </div>
           <div class="actions">
             <div class="actions_3">
