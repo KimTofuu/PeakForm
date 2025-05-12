@@ -41,15 +41,15 @@
         <div class="left_side">
           <div class="daily_tab">
                 <div class="header_content">
-                    <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $day }}</h2>
+                    {{-- <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $day }}</h2> --}}
                 </div>
-                @foreach($workouts[$day] ?? [] as $exercise)
+                {{-- @foreach($workouts[$day] ?? [] as $exercise)
                     <div class="workout_content">
                         <label>
                             <input type="checkbox" name="agree"> {{ $exercise }}
                         </label>
                     </div>
-                @endforeach
+                @endforeach --}}
             </div>
           <div class="actions">
             <div class = "actions_3">
