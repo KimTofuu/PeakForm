@@ -38,25 +38,19 @@
 
     <main class="main-content">
       <div class="cards">
-    
         <div class="left_side">
-          <div class = "daily_tab">
-            <div class = "header_content">
-              <h2 style="font-family: 'Michroma', sans-serif;" >Monday</h2>
+          <div class="daily_tab">
+                <div class="header_content">
+                    <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $day }}</h2>
+                </div>
+                @foreach($workouts[$day] ?? [] as $exercise)
+                    <div class="workout_content">
+                        <label>
+                            <input type="checkbox" name="agree"> {{ $exercise }}
+                        </label>
+                    </div>
+                @endforeach
             </div>
-            <div class = "workout_content">
-              <label>
-                <input type="checkbox" name="agree"> Push-Ups <span> 250 times </span>
-              </label>
-            </div>
-
-            <div class = "workout_content">
-              <label>
-                <input type="checkbox" name="agree"> Squats <span> 250 times </span>
-              </label>
-            </div>
-          </div>
-
           <div class="actions">
             <div class = "actions_3">
               <a href="{{ route('workouts_tab') }}" class="btn play"> 
@@ -115,4 +109,43 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
 </body>
+<script>
+  let currentDay = 1;
+
+  function loadWorkoutForDay(day) {
+      fetch(`/api/workout/day?day=${day}`)
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  // Update the workout display with the new day exercises
+                  displayWorkout(data.exercises);
+              } else {
+                  console.error('Error loading workout: ', data.error);
+              }
+          });
+  }
+
+  function nextDay() {
+      if (currentDay < 7) {
+          currentDay++;
+          loadWorkoutForDay(currentDay);
+      }
+  }
+
+  function previousDay() {
+      if (currentDay > 1) {
+          currentDay--;
+          loadWorkoutForDay(currentDay);
+      }
+  }
+
+  function displayWorkout(exercises) {
+      // Display the exercises (you need to update the HTML structure based on your frontend)
+      const workoutContainer = document.getElementById('workout-container');
+      workoutContainer.innerHTML = exercises.map(exercise => `<p>${exercise}</p>`).join('');
+  }
+
+  // Initial load
+  loadWorkoutForDay(currentDay);
+</script>
 </html>

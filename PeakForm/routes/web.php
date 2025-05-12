@@ -156,6 +156,7 @@ Route::post('/workout_plan_5', [WorkoutController::class, 'storeLevel'])->name('
 Route::post('/workout_plan_6', [WorkoutController::class, 'storeSplitType'])->name('workout_plan_6');
 
 Route::get('/workouts_tab', [WorkoutController::class, 'workoutsTab'])->name('workouts_tab');
+Route::get('/showDailyWorkout', [WorkoutController::class, 'showDailyWorkout'])->name('daily_workout');
 
 Route::get('/workouts/edit', [WorkoutController::class, 'edit'])->name('workouts.edit');
 Route::put('/workouts/update', [WorkoutController::class, 'update'])->name('workouts.update');
@@ -163,3 +164,5 @@ Route::put('/workouts/update', [WorkoutController::class, 'update'])->name('work
 Route::get('/update', [WorkoutController::class, 'update'])->name('/update');
 
 Route::post('/generate-meal-plan', [MealController::class, 'generateMealPlan'])->name('generate_meal_plan');
+Route::get('/meal-plan', [MealController::class, 'showUserMealPlan'])->name('meal.show');
+
