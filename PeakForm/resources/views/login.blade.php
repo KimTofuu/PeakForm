@@ -16,8 +16,8 @@
 <div class = "main-cont">
     <div class = "left_space">
         <h1 style="font-family: 'Michroma', sans-serif;"> PeakForm </h1>
-        <p>Your Personalized Path to Peak Performance <p>
-        <img src= "images/logo_1.png">
+        <p>Your Personalized Path to Peak Performance </p>
+        <img src= "images/logo_5.png">
     </div>
 
     <div class = "right_space">

@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
-    <script src="script.js"></script>
+    
 </head>
 <body>
 
 <div class = "main-cont">
     <div class = "left_space">
         <h1 style="font-family: 'Michroma', sans-serif;"> PeakForm </h1>
-        <p>Your Personalized Path to Peak Performance <p>
-        <img src= "images/logo_1.png">
+        <p>Your Personalized Path to Peak Performance </p>
+        <img src= "images/logo_5.png">
     </div>
 
     <div class = "right_space">
@@ -70,7 +70,7 @@
     <div class="privacy_policy">
         <input type="checkbox" id="privacyCheck" name="privacy" required>
         <label for="privacyCheck">
-        I agree to the <a href="#" onclick="openPrivacyModal(event)">Privacy Policy</a>
+             I agree to the <a href="#" onclick="openPrivacyModal(event)">Privacy Policy</a>
         </label>
     </div>
 
@@ -176,19 +176,6 @@ Welcome to PeakForm. Your privacy is important to us. This Privacy <br> Policy o
 </div>
 </div>
     
-    <script>
-       function togglePassword() {
-        const password = document.getElementById("password");
-        const confirmPassword = document.getElementById("password_confirmation");
-        const icon = document.getElementById("eyeIcon");
-
-        const isHidden = password.type === "password";
-
-        password.type = isHidden ? "text" : "password";
-        confirmPassword.type = isHidden ? "text" : "password";
-        icon.classList.toggle("fa-eye");
-        icon.classList.toggle("fa-eye-slash");
-    }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

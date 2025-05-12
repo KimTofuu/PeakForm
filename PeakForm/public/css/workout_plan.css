@@ -1,8 +1,12 @@
+html {
+  font-size: 16px; /* Base font size for rem units */
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background-color: #f9f8f4;
-  margin: 0;
-  padding: 0;
+  margin: 0rem;
+  padding: 0rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,23 +25,23 @@ h2 {
 }
 
 .icon {
-  width: 4.375rem; /* 70px */
-  margin: 0.625rem 0; /* 10px 0 */
+  width: 4.375rem; /* 70px / 16px */
+  margin: 0.625rem 0rem; /* 10px / 16px 0 */
 }
 
 .form-box {
   background-color: rgba(143, 176, 49, 0.4);
-  padding: 1.875rem; /* 30px */
-  border-radius: 0.625rem; /* 10px */
-  width: 25rem; /* 400px */
-  margin: 0 auto;
-  box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); /* 4px 6px */
+  padding: 1.875rem; /* 30px / 16px */
+  border-radius: 0.625rem; /* 10px / 16px */
+  width: 25rem; /* 400px / 16px */
+  margin: 0rem auto;
+  box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); /* 4px/16px=0.25rem 6px/16px=0.375rem */
 }
 
 .question {
   font-size: 1rem;
   color: #3c3c3c;
-  margin-bottom: 1.25rem; /* 20px */
+  margin-bottom: 1.25rem; /* 20px / 16px */
 }
 
 .question span {
@@ -48,71 +52,75 @@ h2 {
 .goal-options {
   display: flex;
   flex-direction: column;
-  gap: 0.9375rem; /* 15px */
+  gap: 0.9375rem; /* 15px / 16px */
 }
 
 .goal-button {
-  padding: 0.9375rem; /* 15px */
+  padding: 0.9375rem; /* 15px / 16px */
   font-size: 1rem;
   background-color: white;
   border: none;
-  border-radius: 0.625rem; /* 10px */
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* 2px 4px */
+  border-radius: 0.625rem; /* 10px / 16px */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* 2px/16px=0.125rem 4px/16px=0.25rem */
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s;
 }
 
 .goal-button span {
   opacity: 0.5;
-  font-size: 0.8125rem; /* 13px */
+  font-size: 0.8125rem; /* 13px / 16px */
 }
 
 .goal-button:hover {
   background-color: #f0f0f0;
-  transform: translateY(-0.125rem); /* -2px */
+  transform: translateY(-0.125rem); /* -2px / 16px */
 }
 
 .proceed-button {
-  margin-top: 1.25rem; /* 20px */
-  padding: 0.75rem 4.375rem; /* 12px 70px */
+  margin-top: 1.25rem; /* 20px / 16px */
+  padding: 0.75rem 4.375rem; /* 12px / 16px 70px / 16px */
   background-color: #8FB031;
   color: white;
   border: none;
-  border-radius: 0.375rem; /* 6px */
-  font-size: 1rem; /* 16px */
+  border-radius: 0.375rem; /* 6px / 16px */
+  font-size: 1rem; /* 16px / 16px */
   cursor: pointer;
   transition: background-color 0.3s;
+  transition: background 0.3s, transform 0.4s;
+	box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
 }
 
 .proceed-button:hover {
   background: #7f9c2b;
+  transform: scale(1.03);
+	box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.4);
 }
 
 .goal-button.active {
   background-color: #b5d67e;
   font-weight: bold;
   color: #2e2e2e;
-  border: 0.125rem solid #7ea543; /* 2px */
+  border: 0.125rem solid #7ea543; /* 2px / 16px */
 }
 
 .day-options {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.625rem; /* 10px */
-  max-width: 15.625rem; /* 250px */
+  gap: 0.625rem; /* 10px / 16px */
+  max-width: 15.625rem; /* 250px / 16px */
   margin: 0 auto;
 }
 
 .day-button {
-  width: 3.125rem; /* 50px */
+  width: 3.125rem; /* 50px / 16px */
   height: 3.125rem;
-  padding: 0;
+  padding: 0rem;
   font-size: 0.95rem;
   background-color: white;
   border: none;
-  border-radius: 0.75rem; /* 12px */
-  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.08); /* 2px 5px */
+  border-radius: 0.75rem; /* 12px / 16px */
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.08); /* 2px/16px=0.125rem 5px/16px=0.3125rem */
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s;
   display: flex;
@@ -124,20 +132,20 @@ h2 {
 
 .day-button:hover {
   background-color: #f0f0f0;
-  transform: translateY(-0.125rem); /* -2px */
+  transform: translateY(-0.125rem); /* -2px / 16px */
 }
 
 .day-button.active {
   background-color: #b5d67e;
   font-weight: bold;
   color: #2e2e2e;
-  border: 0.125rem solid #7ea543; /* 2px */
+  border: 0.125rem solid #7ea543; /* 2px / 16px */
 }
 
 input {
   flex: 2;
-  padding: 0.625rem; /* 10px */
+  padding: 0.625rem; /* 10px / 16px */
   border: none;
-  border-radius: 0.3125rem; /* 5px */
+  border-radius: 0.3125rem; /* 5px / 16px */
   font-size: 1rem;
 }
