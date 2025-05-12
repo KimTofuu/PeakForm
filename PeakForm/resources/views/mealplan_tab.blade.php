@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>Meal Plan</title>
   <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
-  
 </head>
 <body>
   <div class="container">
@@ -76,6 +76,23 @@
       </form>
     </div>
   </div>
+  <div id="mealPlanSummary" class="meal-summary" style="display:none; margin-top: 20px;">
+    <h2>Generated Meal Plan</h2>
+    <p><strong>Name:</strong> <span id="planName"></span></p>
+    <p><strong>Calories:</strong> <span id="calories"></span></p>
+    <p><strong>Protein:</strong> <span id="protein"></span> g</p>
+    <p><strong>Carbs:</strong> <span id="carbs"></span> g</p>
+    <p><strong>Fat:</strong> <span id="fat"></span> g</p>
+    <canvas id="mealPlanChart" width="300" height="300" style="max-width: 400px; margin-top: 20px;"></canvas>
+  </div>
+  <div id="userIntakeForm" style="margin-top: 30px;">
+    <h3>Enter Your Actual Daily Intake</h3>
+    <label>Protein (g): <input type="number" id="actualProtein" min="0"></label><br>
+    <label>Carbs (g): <input type="number" id="actualCarbs" min="0"></label><br>
+    <label>Fat (g): <input type="number" id="actualFat" min="0"></label><br>
+    <button id="compareIntakeBtn">Compare</button>
+  </div>
+  <canvas id="comparisonChart" width="400" height="400" style="margin-top: 20px;"></canvas>
 </body>
 <script>
   const openBtn = document.getElementById('openMealPlanModal');
@@ -84,7 +101,7 @@
 
   openBtn.onclick = () => modal.style.display = 'block';
   closeBtn.onclick = () => modal.style.display = 'none';
-  window.onclick = e => { if (e.target == modal) modal.style.display = 'none'; };
+  window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
 
   document.getElementById('mealPlanForm').onsubmit = async function(e) {
     e.preventDefault();
@@ -92,22 +109,129 @@
     const formData = new FormData(this);
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    const response = await fetch('{{ route("generate_meal_plan") }}', {
-      method: 'POST',
-      headers: {
-        'X-CSRF-TOKEN': csrfToken,
-        'Accept': 'application/json'
-      },
-      body: formData
-    });
+    // Optional: loading state
+    const submitButton = this.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = "Generating...";
 
-    const result = await response.json();
+    try {
+      const response = await fetch('{{ route("generate_meal_plan") }}', {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': csrfToken,
+          'Accept': 'application/json'
+        },
+        body: formData
+      });
 
-    if (result.success) {
-      alert(`✅ Meal Plan Saved!\n\n${result.plan.PlanName}\nCalories: ${result.plan.CalorieTarget}\nProtein: ${result.plan.ProteinTarget}g\nCarbs: ${result.plan.CarbTarget}g\nFat: ${result.plan.FatTarget}g`);
-      document.getElementById('mealPlanModal').style.display = 'none';
-    } else {
-      alert('❌ Failed to generate and save meal plan.');
+      const result = await response.json();
+      console.log(result);
+      submitButton.disabled = false;
+      submitButton.textContent = "Generate";
+
+      if (result.success) {
+        const plan = result.meal_plans;
+
+        document.getElementById('planName').textContent = plan.MealplanName;
+        document.getElementById('calories').textContent = plan.calorieTarget;
+        document.getElementById('protein').textContent = plan.proteinTarget;
+        document.getElementById('carbs').textContent = plan.carbsTarget;
+        document.getElementById('fat').textContent = plan.fatTarget;
+
+        document.getElementById('mealPlanSummary').style.display = 'block';
+        modal.style.display = 'none';
+
+        setTimeout(() => {
+          const ctx = document.getElementById('mealPlanChart').getContext('2d');
+
+          if (window.mealPlanChart instanceof Chart) {
+            window.mealPlanChart.destroy();
+          }
+          window.mealPlanChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ['Protein (g)', 'Carbs (g)', 'Fat (g)'],
+              datasets: [{
+                label: 'Macronutrient Breakdown',
+                data: [plan.proteinTarget, plan.carbsTarget, plan.fatTarget],
+                backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'bottom'
+                },
+                title: {
+                  display: true,
+                  text: 'Macronutrient Distribution'
+                }
+              }
+            }
+          });
+          document.getElementById('compareIntakeBtn').onclick = () => {
+          const actualProtein = parseInt(document.getElementById('actualProtein').value);
+          const actualCarbs = parseInt(document.getElementById('actualCarbs').value);
+          const actualFat = parseInt(document.getElementById('actualFat').value);
+
+          const targetProtein = plan.proteinTarget;
+          const targetCarbs = plan.carbsTarget;
+          const targetFat = plan.fatTarget;
+
+          const ctxCompare = document.getElementById('comparisonChart').getContext('2d');
+
+          // Destroy old comparison chart if exists
+          if (window.comparisonChart && typeof window.comparisonChart.destroy === 'function') {
+            window.comparisonChart.destroy();
+          }
+
+          window.comparisonChart = new Chart(ctxCompare, {
+            type: 'bar',
+            data: {
+              labels: ['Protein', 'Carbs', 'Fat'],
+              datasets: [
+                {
+                  label: 'Target (g)',
+                  data: [targetProtein, targetCarbs, targetFat],
+                  backgroundColor: 'rgba(54, 162, 235, 0.5)'
+                },
+                {
+                  label: 'Actual (g)',
+                  data: [actualProtein, actualCarbs, actualFat],
+                  backgroundColor: 'rgba(255, 99, 132, 0.5)'
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                title: {
+                  display: true,
+                  text: 'Target vs Actual Intake'
+                },
+                legend: {
+                  position: 'bottom'
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        };
+        }, 100); // small delay to ensure canvas is visible
+      } else {
+        alert('❌ Failed to generate and save meal plan.');
+      }
+    } catch (err) {
+      console.error(err);
+      submitButton.disabled = false;
+      submitButton.textContent = "Generate";
+      alert('⚠️ An error occurred. Please try again.');
     }
   };
 </script>

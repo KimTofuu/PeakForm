@@ -68,7 +68,7 @@ class MealController extends Controller
 
         return response()->json([
             'success' => true,
-            'plan' => $mealPlan,
+            'meal_plans' => $mealPlan,
         ]);
     }
 
