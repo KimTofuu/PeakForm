@@ -52,11 +52,11 @@
               @forelse ($exercises as $exercise)
                 <div class="workout_content_2">
                   <label>
-                    <input type="checkbox" name="completed[]"> 
-                    <img src="{{ asset('images/push-up.jpg') }}" alt="Exercise Image"> 
                     {{ $exercise }} 
-                    <span> x12 reps </span>
+                    <span> x12 reps <a href="#" class="video-link"> <button> View Video Tutorial </button> </a> </span>
+                    
                   </label>
+                  
                 </div>
               @empty
                 <p>No exercises for this day.</p>
@@ -99,11 +99,6 @@
             </div>
           </div>
           <div class="actions">
-            <div class="actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn edit">
-                <button> Edit Goals / Plan </button>
-              </a>
-            </div>
             <div class="actions_3" style="margin-top: 10px;">
               <a href="{{ route('workout_plan_1') }}" class="btn update">
                 <button> Update Workout Preferences </button>

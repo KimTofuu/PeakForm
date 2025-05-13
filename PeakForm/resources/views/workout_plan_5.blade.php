@@ -17,9 +17,9 @@
       <div class="form-box">
         <p class="question">Select Level of Expertise <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="beginner"><b> Beginner </b> <br> <span> New to working out or returning after a long break. </span></button>
-          <button type="button" class="goal-button" data-goal="intermediate"> <b> Intermediate </b> <br> <span> 6 months to 2 years of consistent training. </span> </button>
-          <button type="button" class="goal-button" data-goal="advanced"><b> Advanced </b> <br> <span>  2+ years of consistent and structured training. </span></button>
+          <button type="button" class="goal-button" data-goal="beginner">  <b> Beginner </b> <br> <p> <span> New to working out or returning after a long break. </span> </p> <br> <img src="images/beginner.png">  </button>
+          <button type="button" class="goal-button" data-goal="intermediate"> <b> Intermediate </b> <br> <span> 6 months to 2 years of consistent training. </span> <br> <img src="images/moderateIntensity.png">  </button>
+          <button type="button" class="goal-button" data-goal="advanced"><b> Advanced </b> <br> <span>  2+ years of consistent and structured training. </span> <br> <img src="images/highIntensity.png">  </button>
         </div>
       </div>
 

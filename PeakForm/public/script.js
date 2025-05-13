@@ -182,15 +182,34 @@ window.onclick = function(event) {
     chart.render();
   });
 
-  function togglePassword() {
-        const password = document.getElementById("password");
-        const confirmPassword = document.getElementById("password_confirmation");
-        const icon = document.getElementById("eyeIcon");
+ function togglePassword(event) {
+  const passwordInput = document.getElementById("password");
+  const eyeIcon = document.getElementById("eyeIcon1"); // Target the specific icon
 
-        const isHidden = password.type === "password";
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    eyeIcon.classList.remove("fa-eye");
+    eyeIcon.classList.add("fa-eye-slash");
+  } else {
+    passwordInput.type = "password";
+    eyeIcon.classList.remove("fa-eye-slash");
+    eyeIcon.classList.add("fa-eye");
+  }
+}
 
-        password.type = isHidden ? "text" : "password";
-        confirmPassword.type = isHidden ? "text" : "password";
-        icon.classList.toggle("fa-eye");
-        icon.classList.toggle("fa-eye-slash");
-    }
+function togglePassword2(event) {
+  const confirmPasswordInput = document.getElementById("password_confirmation");
+  const eyeIcon = document.getElementById("eyeIcon2"); // Target the specific icon
+
+  if (confirmPasswordInput.type === "password") {
+    confirmPasswordInput.type = "text";
+    eyeIcon.classList.remove("fa-eye");
+    eyeIcon.classList.add("fa-eye-slash");
+  } else {
+    confirmPasswordInput.type = "password";
+    eyeIcon.classList.remove("fa-eye-slash");
+    eyeIcon.classList.add("fa-eye");
+  }
+}
+
+  

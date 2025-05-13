@@ -32,14 +32,14 @@
                 <input type="email" name="email" id="email" placeholder="Email" required>
             </div>
             
-            <div class="form-group">
+            <div class="form-group-pass">
                 <input type="password" name="password" id="password" placeholder="Password" required>
-                <span class="position-absolute" onclick="togglePassword()">
+                <span class="toggle-password" onclick="togglePassword()">
                     <i id="eyeIcon" class="fa fa-eye"></i>
-                    <a href="{{ route('password.request') }}" class="forgot-password">Forgot Password?</a>
-                </span> 
-                
+                </span>
             </div>
+            <a href="{{ route('password.request') }}" class="forgot-password">Forgot Password?</a>   
+
             @if ($errors->any())
                 <div class="error-message">
                     @foreach ($errors->all() as $error)
@@ -70,7 +70,7 @@
                 Continue with Google
             </button>
         </div>
-    </div>
+    
 </div>
     
 

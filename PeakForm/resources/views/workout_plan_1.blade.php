@@ -17,9 +17,9 @@
       <div class="form-box">
         <p class="question">What’s your primary goal? <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="Lose Fat">Lose Fat</button>
-          <button type="button" class="goal-button" data-goal="Build Muscle">Build Muscle</button>
-          <button type="button" class="goal-button" data-goal="Get Toned">Get Toned</button>
+          <button type="button" class="goal-button" data-goal="Lose Fat"> <b>Lose Fat</b> <img src="images/loseFat.png"> </button>
+          <button type="button" class="goal-button" data-goal="Build Muscle"><b>Build Muscle</b> <img src="images/buildMuscle.png"> </button>
+          <button type="button" class="goal-button" data-goal="Get Toned"><b>Get Toned</b> <img src="images/getToned.png"> </button>
         </div>
       </div>
 

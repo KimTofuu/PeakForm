@@ -55,7 +55,7 @@
         <div class="container_2">
             <div class="row_2">
                 <div class="col_3">
-                    <img src="images/phone.png">
+                    <img src="images/phone_left.png">
                 </div>
                 <div class="col_4">
                     <p class = "p1"> PeakForm is a web-based <b> gym split and meal planner </b> designed to help fitness enthusiasts and 

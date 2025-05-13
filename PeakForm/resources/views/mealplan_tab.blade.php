@@ -36,9 +36,29 @@
       </div>
     </aside>
     <!-- Trigger Button -->
-  <div class="main-content">
-    <button id="openMealPlanModal" class="generate-btn">Generate Meal Plan</button>
-  </div>
+
+  <main class = "main-content">
+    <div class="cards">
+      <div class="first-side">
+        <div class = "progress_tab">
+          <button id="openMealPlanModal" class="generate-btn">Generate Meal Plan</button>
+        </div>
+      </div>
+
+      <div class="second-side">
+        <div class = "progress_tab">
+          <h3>Enter Your Actual Daily Intake</h3>
+          <div class = "mealplan-label">
+          <label> <input type="number" id="actualProtein" min="0" placeholder="Protein (g)"></label><br>
+          <label> <input type="number" id="actualCarbs" min="0" placeholder="Carbs (g)"></label><br>
+          <label> <input type="number" id="actualFat" min="0" placeholder="Fat (g)"></label><br>
+          </div>
+          <button id="compareIntakeBtn"  class="generate-btn" >Compare</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
 
   <!-- Modal Form -->
   <div id="mealPlanModal" class="modal">
@@ -86,13 +106,8 @@
     <p><strong>BMR:</strong> <span id="bmr"></span></p>
     <canvas id="mealPlanChart" width="300" height="300" style="max-width: 400px; margin-top: 20px;"></canvas>
   </div>
-  <div id="userIntakeForm" style="margin-top: 30px;">
-    <h3>Enter Your Actual Daily Intake</h3>
-    <label>Protein (g): <input type="number" id="actualProtein" min="0"></label><br>
-    <label>Carbs (g): <input type="number" id="actualCarbs" min="0"></label><br>
-    <label>Fat (g): <input type="number" id="actualFat" min="0"></label><br>
-    <button id="compareIntakeBtn">Compare</button>
   </div>
+
   <canvas id="comparisonChart" width="400" height="400" style="margin-top: 20px;"></canvas>
 </body>
 <script>

@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Progress</title>
-  <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+   <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
 </head>
 <body>
@@ -34,3 +35,29 @@
         </form>
       </div>
     </aside>
+
+    <main class="main-content">
+      <div class = "cards">
+      <div class="middle">
+          <div class = "progress_tab">
+            <div class = "header_content">
+              <h2 style="font-family: 'Michroma', sans-serif;" >Progress</h2>
+            </div>
+
+            <div class ="progress_contents">
+              <div>
+                <div id="radialChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+
+    <script src="script.js"> </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
+</body>
+</html>
