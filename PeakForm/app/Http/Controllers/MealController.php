@@ -48,6 +48,8 @@ class MealController extends Controller
             'carbsTarget' => $macros['carbs'],
             'fatTarget' => $macros['fat'],
             'bmr' => $bmr,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
 
         return MealPlan::updateOrCreate(
