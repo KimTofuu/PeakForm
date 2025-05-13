@@ -83,6 +83,7 @@
     <p><strong>Protein:</strong> <span id="protein"></span> g</p>
     <p><strong>Carbs:</strong> <span id="carbs"></span> g</p>
     <p><strong>Fat:</strong> <span id="fat"></span> g</p>
+    <p><strong>BMR:</strong> <span id="bmr"></span></p>
     <canvas id="mealPlanChart" width="300" height="300" style="max-width: 400px; margin-top: 20px;"></canvas>
   </div>
   <div id="userIntakeForm" style="margin-top: 30px;">
@@ -130,13 +131,14 @@
       submitButton.textContent = "Generate";
 
       if (result.success) {
-        const plan = result.meal_plans;
+        const plan = result.meal_plan;
 
         document.getElementById('planName').textContent = plan.MealplanName;
         document.getElementById('calories').textContent = plan.calorieTarget;
         document.getElementById('protein').textContent = plan.proteinTarget;
         document.getElementById('carbs').textContent = plan.carbsTarget;
         document.getElementById('fat').textContent = plan.fatTarget;
+        document.getElementById('bmr').textContent = plan.bmr;
 
         document.getElementById('mealPlanSummary').style.display = 'block';
         modal.style.display = 'none';
