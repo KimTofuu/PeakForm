@@ -18,7 +18,16 @@ class AuthController extends Controller
             'Fname' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'Lname' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:8',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[a-z]/',   
+                'regex:/[A-Z]/',      
+                'regex:/[0-9]/',      
+                'regex:/[@$!%*?&]/',  
+                'confirmed'           
+            ],
         ], [
             'Fname.regex' => 'First name may only contain letters and spaces.',
             'Lname.regex' => 'Last name may only contain letters and spaces.',

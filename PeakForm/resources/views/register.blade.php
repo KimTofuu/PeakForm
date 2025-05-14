@@ -49,14 +49,24 @@
         </div>
         
         <div class="form-group-pass" style="position: relative;">
-            <input type="password" name="password" id="password" placeholder="Password" required>
-                 <span class="toggle-password" style=" cursor: pointer;" onclick="togglePassword()">
-                    <i id="eyeIcon1" class="fa fa-eye"></i>
-                </span>
+            <input type="password" name="password" id="password" placeholder="Password" required oninput="validatePassword()">
+            <span class="toggle-password" style="cursor: pointer;" onclick="togglePassword()">
+                <i id="eyeIcon1" class="fa fa-eye"></i>
+            </span>
             @error('password')
                 <p class="error-message">{{ $message }}</p>
             @enderror
+
+            <!-- Password Rules -->
+            <ul id="password-rules" style="list-style: none; padding: 5px 0 0 0; margin: 0; font-size: 13px; color: red;">
+                <li id="rule-length" class="rule">❌ At least 8 characters</li>
+                <li id="rule-upper" class="rule">❌ At least 1 uppercase letter</li>
+                <li id="rule-lower" class="rule">❌ At least 1 lowercase letter</li>
+                <li id="rule-number" class="rule">❌ At least 1 number</li>
+                <li id="rule-special" class="rule">❌ At least 1 special character (@$!%*?&)</li>
+            </ul>
         </div>
+
 
         <div class="form-group-pass" style="position: relative;">
             <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password" required>
@@ -180,5 +190,31 @@ Welcome to PeakForm. Your privacy is important to us. This Privacy <br> Policy o
 </div>
     
     <script src="script.js"></script>
+    <script>
+        function validatePassword() {
+            const password = document.getElementById("password").value;
+
+            const rules = {
+                length: password.length >= 8,
+                upper: /[A-Z]/.test(password),
+                lower: /[a-z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[@$!%*?&]/.test(password),
+            };
+
+            document.getElementById("rule-length").innerHTML = rules.length ? "✅ At least 8 characters" : "❌ At least 8 characters";
+            document.getElementById("rule-upper").innerHTML = rules.upper ? "✅ At least 1 uppercase letter" : "❌ At least 1 uppercase letter";
+            document.getElementById("rule-lower").innerHTML = rules.lower ? "✅ At least 1 lowercase letter" : "❌ At least 1 lowercase letter";
+            document.getElementById("rule-number").innerHTML = rules.number ? "✅ At least 1 number" : "❌ At least 1 number";
+            document.getElementById("rule-special").innerHTML = rules.special ? "✅ At least 1 special character (@$!%*?&)" : "❌ At least 1 special character (@$!%*?&)";
+
+            // Optional: Add color
+            for (let key in rules) {
+                const item = document.getElementById(`rule-${key}`);
+                item.style.color = rules[key] ? "green" : "red";
+            }
+        }
+    </script>
+
 </body>
 </html>

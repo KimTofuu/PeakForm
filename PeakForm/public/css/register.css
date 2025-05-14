@@ -248,7 +248,7 @@ body {
 
 .toggle-password {
   position: absolute;
-  top: 50%; /* Vertically center the icon */
+  top: 16%; /* Vertically center the icon */
   right: 0.75rem;
   transform: translateY(-50%);
   cursor: pointer;
