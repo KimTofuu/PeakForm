@@ -17,9 +17,9 @@
       <div class="form-box">
         <p class="question">Select your Workout Routine Type <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="PPL"><b> Push-Pull-Legs (PPL) </b> <br> <span> Push (chest, shoulders, triceps), Pull (back, biceps), and Legs </span></button>
-          <button type="button" class="goal-button" data-goal="Upper/Lower"> <b> Upper/Lower </b> <br> <span> Alternates between upper and lower body days </span> </button>
-          <button type="button" class="goal-button" data-goal="Full Body"><b> Full Body </b> <br> <span>  Trains all major muscle groups in one session </span></button>
+          <button type="button" class="goal-button" data-goal="PPL"> <b> Push-Pull-Legs (PPL) </b> <br> <span> Push (chest, shoulders, triceps), Pull (back, biceps), and Legs </span>  <img src="images/PPL.png"> </button>
+          <button type="button" class="goal-button" data-goal="Upper/Lower"> <b> Upper/Lower </b> <br> <span> Alternates between upper and lower body days </span> <img src="images/upperLower.png"> </button>
+          <button type="button" class="goal-button" data-goal="Full Body"><b> Full Body </b> <br> <span>  Trains all major muscle groups in one session </span> <img src="images/fullBody.png"></button>
         </div>
       </div>
 

@@ -17,8 +17,8 @@
       <div class="form-box">
         <p class="question">What best describes your workout setup? <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="Full Gym Setup">Full Gym Setup</button>
-          <button type="button" class="goal-button" data-goal="Home / Minimal Setup">Home / Minimal Setup</button>
+          <button type="button" class="goal-button" data-goal="Full Gym Setup"> <b>Full Gym Setup</b> <img src="images/fullGym.png"> </button>
+          <button type="button" class="goal-button" data-goal="Home / Minimal Setup"> <b>Home / Minimal Setup</b> <img src="images/homeGym.png"> </button>
         </div>
       </div>
 

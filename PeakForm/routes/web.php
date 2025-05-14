@@ -117,6 +117,12 @@ Route::get('/timer_tab', function () {
     return view('timer_tab', compact('user'));
 })->name('timer_tab');
 
+Route::get('/workout-preview', function () {
+    $user = Auth::user();
+    return view('workout-preview', compact('user'));
+})->name('workout-preview');
+
+
 
 Route::get('/personal_info', function () {
     return view('personal_info');

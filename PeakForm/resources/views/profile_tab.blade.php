@@ -40,7 +40,7 @@
   <main class="main-content">
       <div class="cards">
     
-        <div class="left_side_2">
+        <div class="first-side">
           <div class = "daily_tab">
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" > Account </h2>
@@ -67,7 +67,7 @@
           </div>
         </div>
 
-        <div class="left_side_2">
+        <div class="second-side">
           <div class = "daily_tab">
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" > Profile </h2>

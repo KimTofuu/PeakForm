@@ -17,9 +17,9 @@
       <div class="form-box">
         <p class="question">Select workout intensity <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="High Intensity">High Intensity</button>
-          <button type="button" class="goal-button" data-goal="Moderate">Moderate</button>
-          <button type="button" class="goal-button" data-goal="Low Intensity">Low Intensity</button>
+          <button type="button" class="goal-button" data-goal="High Intensity"> <b>High Intensity</b> <img src="images/highIntensity.png"> </button>
+          <button type="button" class="goal-button" data-goal="Moderate"> <b>Moderate</b> <img src="images/moderateIntensity.png"> </button>
+          <button type="button" class="goal-button" data-goal="Low Intensity"> <b>Low Intensity</b> <img src="images/lowIntensity.png"> </button>
         </div>
       </div>
 

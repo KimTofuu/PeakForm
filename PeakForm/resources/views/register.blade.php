@@ -48,17 +48,20 @@
             @enderror
         </div>
         
-        <div class="form-group" style="position: relative;">
+        <div class="form-group-pass" style="position: relative;">
             <input type="password" name="password" id="password" placeholder="Password" required>
+                 <span class="toggle-password" style=" cursor: pointer;" onclick="togglePassword()">
+                    <i id="eyeIcon1" class="fa fa-eye"></i>
+                </span>
             @error('password')
                 <p class="error-message">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="form-group" style="position: relative;">
+        <div class="form-group-pass" style="position: relative;">
             <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password" required>
-                <span class="position-absolute" style=" cursor: pointer;" onclick="togglePassword()">
-                    <i id="eyeIcon" class="fa fa-eye"></i>
+                <span class="toggle-password-2" style=" cursor: pointer;" onclick="togglePassword2()">
+                    <i id="eyeIcon2" class="fa fa-eye"></i>
                 </span>
             @error('password_confirmation')
                 <p class="error-message">{{ $message }}</p>

@@ -43,7 +43,7 @@
           <div class="timer_tab">
             <div>
               <h2 style="font-family: 'Michroma', sans-serif;" >Timer</h2>
-              <div id="timer" style="font-family: 'Michroma', sans-serif; margin-bottom: 20px;">05:00</div>
+              <div id="timer" style="font-family: 'Michroma', sans-serif; margin-bottom: 3rem;">05:00</div>
 
                 <button id="startBtn">Start</button>
                 <button id="stopBtn">Stop</button>
