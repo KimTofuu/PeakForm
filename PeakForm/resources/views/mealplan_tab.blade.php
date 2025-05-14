@@ -40,13 +40,27 @@
   <main class = "main-content">
     <div class="cards">
       <div class="first-side">
-        <div class = "progress_tab">
+        <div class="progress_tab2">
           <button id="openMealPlanModal" class="generate-btn">Generate Meal Plan</button>
-        </div>
-      </div>
+        
+
+  <!-- Meal Plan Output Will Be Injected Here -->
+  <div id="mealPlanSummary" class="meal-summary hidden">
+    <h2>Generated Meal Plan</h2>
+    <p><strong>Name:</strong> <span id="planName"></span></p>
+    <p><strong>Calories:</strong> <span id="calories"></span></p>
+    <p><strong>Protein:</strong> <span id="protein"></span> g</p>
+    <p><strong>Carbs:</strong> <span id="carbs"></span> g</p>
+    <p><strong>Fat:</strong> <span id="fat"></span> g</p>
+    <p><strong>BMR:</strong> <span id="bmr"></span></p>
+    <canvas id="mealPlanChart" width="300" height="300" style="max-width: 400px; margin-top: 20px;"></canvas>
+  </div>
+  </div>
+</div>
+
 
       <div class="second-side">
-        <div class = "progress_tab">
+        <div class = "progress_tab2">
           <h3>Enter Your Actual Daily Intake</h3>
           <div class = "mealplan-label">
           <label> <input type="number" id="actualProtein" min="0" placeholder="Protein (g)"></label><br>
@@ -95,16 +109,6 @@
         <button type="submit">Generate</button>
       </form>
     </div>
-  </div>
-  <div id="mealPlanSummary" class="meal-summary" style="display:none; margin-top: 20px;">
-    <h2>Generated Meal Plan</h2>
-    <p><strong>Name:</strong> <span id="planName"></span></p>
-    <p><strong>Calories:</strong> <span id="calories"></span></p>
-    <p><strong>Protein:</strong> <span id="protein"></span> g</p>
-    <p><strong>Carbs:</strong> <span id="carbs"></span> g</p>
-    <p><strong>Fat:</strong> <span id="fat"></span> g</p>
-    <p><strong>BMR:</strong> <span id="bmr"></span></p>
-    <canvas id="mealPlanChart" width="300" height="300" style="max-width: 400px; margin-top: 20px;"></canvas>
   </div>
   </div>
 
@@ -155,7 +159,7 @@
         document.getElementById('fat').textContent = plan.fatTarget;
         document.getElementById('bmr').textContent = plan.bmr;
 
-        document.getElementById('mealPlanSummary').style.display = 'block';
+        document.getElementById('mealPlanSummary').classList.remove('hidden');
         modal.style.display = 'none';
 
         setTimeout(() => {

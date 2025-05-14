@@ -173,7 +173,19 @@ body {
   box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.3);
 }
 
-.progress_tab h3 {
+.progress_tab2,
+.daily_tab2,
+.reminders2 {
+  background-color: #ddd;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  height: 40rem;
+  box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.3);
+  align-content: center;
+}
+.progress_tab h3,
+.progress_tab2 h3  {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -553,4 +565,10 @@ img {
 
 .hidden {
   display: none !important;
+}
+
+#mealPlanSummary{
+  width: 70%;
+  font-size: 1rem;
+  margin: auto;
 }
