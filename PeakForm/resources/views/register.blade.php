@@ -81,9 +81,9 @@
 
 
     <div class="privacy_policy">
-        <input type="checkbox" id="privacyCheck" name="privacy" required>
+        <input type="checkbox" id="privacyCheck" name="privacy" required style="margin-right: 8px;">
         <label for="privacyCheck">
-             I agree to the <a href="#" onclick="openPrivacyModal(event)">Privacy Policy</a>
+            I agree to the <a href="#" onclick="openPrivacyModal(event)">Privacy Policy</a>
         </label>
     </div>
 
