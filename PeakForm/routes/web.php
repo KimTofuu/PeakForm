@@ -174,3 +174,4 @@ Route::post('/generate-meal-plan', [MealController::class, 'generateMealPlan'])-
 Route::get('/meal-plan', [MealController::class, 'showUserMealPlan'])->name('meal.show');
 
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::get('/mealplan/latest', [MealController::class, 'getLatestMealPlan'])->name('mealplan.latest');
