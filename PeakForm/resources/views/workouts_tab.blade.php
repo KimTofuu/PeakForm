@@ -50,13 +50,22 @@
               </div>
 
               @forelse ($exercises as $exercise)
+                    @php
+                      $normalized = strtolower(trim($exercise));
+                      $video = $videoList[$normalized] ?? null;
+                      // dd($video);
+                    @endphp
                 <div class="workout_content_2">
                   <label>
-                    {{ $exercise }} 
-                    <span> x12 reps <a href="#" class="video-link"> <button> View Video Tutorial </button> </a> </span>
-                    
+                    {{ $exercise }}
+                    @if ($video)
+                      <a href="{{ $video->youtube_url }}" target="_blank" class="video-link">
+                        <button>View Video Tutorial</button>
+                      </a>
+                    @else
+                      <span style="color: gray;">No video available</span>
+                    @endif
                   </label>
-                  
                 </div>
               @empty
                 <p>No exercises for this day.</p>

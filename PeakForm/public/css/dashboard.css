@@ -21,7 +21,9 @@ body {
 
 .container {
   display: flex;
-  height: 44rem; /* 100vh */
+  max-width: 2000px;
+  width: 100%;
+  margin: 0 auto; 
 }
 
 .sidebar {

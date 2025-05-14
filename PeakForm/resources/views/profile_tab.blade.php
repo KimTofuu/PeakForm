@@ -46,15 +46,15 @@
               <h2 style="font-family: 'Michroma', sans-serif;" > Account </h2>
             </div>
             <div class = "workout_content">
-              Name:
+              Name: {{ $user->Fname }} {{ $user->Lname }}
             </div>
 
             <div class = "workout_content">
-              Email Address:
+              Email Address: {{ $user->email }}
             </div>
 
             <div class = "workout_content">
-              Password:
+              Password: ********
             </div>
           </div>
 
@@ -73,15 +73,15 @@
               <h2 style="font-family: 'Michroma', sans-serif;" > Profile </h2>
             </div>
             <div class = "workout_content">
-              Name:
+              Name: {{ $user->Fname }} {{ $user->Lname }}
             </div>
 
             <div class = "workout_content">
-              Age:
+              Age:  {{ $user->age }}
             </div>
 
             <div class = "workout_content">
-              Gender:
+              Gender: {{ $user->gender }}
             </div>
 
             <div class = "workout_content">
@@ -149,42 +149,46 @@
       <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="modal-close">&times;</button>
     </div>
 
-    <form>
+    <form method="POST" action="{{ route('profile.update') }}">
+      @csrf
       <div class="form-group">
-        <label for="profileName">Name</label>
-        <input type="text" id="profileName" class="form-input" placeholder="Your name" />
+          <label for="profileName">Name</label>
+          <input type="text" id="profileName" name="name" class="form-input" placeholder="Your name"
+                value="{{ $user->Fname }} {{ $user->Lname }}" />
       </div>
 
       <div class="form-group">
-        <label for="profileAge">Age</label>
-        <input type="number" id="profileAge" class="form-input" placeholder="Your age" />
+          <label for="profileAge">Age</label>
+          <input type="number" id="profileAge" name="age" class="form-input" placeholder="Your age"
+                value="{{ $user->age }}" />
       </div>
 
       <div class="form-group">
-        <label for="profileGender">Gender</label>
-        <select id="profileGender" class="form-input">
-          <option value="">Select gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-          <option value="Prefer not to say">Prefer not to say</option>
-        </select>
+          <label for="profileGender">Gender</label>
+          <select id="profileGender" name="gender" class="form-input">
+              <option value="">Select gender</option>
+              <option value="Male" {{ $user->gender == 'Male' ? 'selected' : '' }}>Male</option>
+              <option value="Female" {{ $user->gender == 'Female' ? 'selected' : '' }}>Female</option>
+              <option value="Other" {{ $user->gender == 'Other' ? 'selected' : '' }}>Other</option>
+              <option value="Prefer not to say" {{ $user->gender == 'Prefer not to say' ? 'selected' : '' }}>Prefer not to say</option>
+          </select>
       </div>
 
       <div class="form-group">
-        <label for="profileWeight">Current Weight (kg)</label>
-        <input type="number" id="profileWeight" class="form-input" placeholder="e.g. 70" />
+          <label for="profileWeight">Current Weight (kg)</label>
+          <input type="number" id="profileWeight" name="weight" class="form-input" placeholder="e.g. 70"
+                value="{{ $user->weight }}" />
       </div>
 
       <div class="modal-actions">
-        <button type="button" onclick="document.getElementById('profileModal').classList.add('hidden')" class="btn btn-secondary">
-          Cancel
-        </button>
-        <button type="submit" class="btn btn-primary">
-          Save Changes
-        </button>
+          <button type="button" onclick="document.getElementById('profileModal').classList.add('hidden')" class="btn btn-secondary">
+              Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+              Save Changes
+          </button>
       </div>
-    </form>
+  </form>
   </div>
 </div>
 
