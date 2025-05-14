@@ -255,5 +255,50 @@
       alert('⚠️ An error occurred. Please try again.');
     }
   };
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const response = await fetch('{{ route("mealplan.latest") }}');
+    const result = await response.json();
+
+    if (result.success) {
+      const plan = result.meal_plan;
+
+      document.getElementById('planName').textContent = plan.MealplanName;
+      document.getElementById('calories').textContent = plan.calorieTarget;
+      document.getElementById('protein').textContent = plan.proteinTarget;
+      document.getElementById('carbs').textContent = plan.carbsTarget;
+      document.getElementById('fat').textContent = plan.fatTarget;
+      document.getElementById('bmr').textContent = plan.bmr;
+
+      document.getElementById('mealPlanSummary').classList.remove('hidden');
+
+      const ctx = document.getElementById('mealPlanChart').getContext('2d');
+      if (window.mealPlanChart instanceof Chart) {
+        window.mealPlanChart.destroy();
+      }
+      window.mealPlanChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Protein (g)', 'Carbs (g)', 'Fat (g)'],
+          datasets: [{
+            label: 'Macronutrient Breakdown',
+            data: [plan.proteinTarget, plan.carbsTarget, plan.fatTarget],
+            backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'bottom' },
+            title: { display: true, text: 'Macronutrient Distribution' }
+          }
+        }
+      });
+    }
+  } catch (err) {
+    console.error('Failed to load latest meal plan:', err);
+  }
+});
 </script>
 </html>

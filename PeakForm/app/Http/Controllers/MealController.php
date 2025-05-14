@@ -90,23 +90,19 @@ class MealController extends Controller
         ];
     }
 
-    public function showUserMealPlan()
+    public function getLatestMealPlan()
     {
         $user = Auth::user();
 
-        if (!$user) {
-            return response()->json(['error' => 'Unauthenticated'], 401);
+        $latestPlan = MealPlan::where('user_id', $user->id)->latest()->first();
+
+        if ($latestPlan) {
+            return response()->json([
+                'success' => true,
+                'meal_plan' => $latestPlan
+            ]);
         }
 
-        $mealPlan = MealPlan::where('user_id', $user->id)->latest()->first();
-
-        if (!$mealPlan) {
-            return response()->json(['error' => 'Meal plan not found'], 404);
-        }
-
-        return response()->json([
-            'success' => true,
-            'meal_plan' => $mealPlan,
-        ]);
+        return response()->json(['success' => false, 'message' => 'No meal plan found.']);
     }
 }

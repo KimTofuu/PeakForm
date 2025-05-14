@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -29,12 +30,12 @@ class ProfileController extends Controller
 
         [$fname, $lname] = explode(' ', $request->name . ' ', 2);
 
-        $user->update([
+        Profile::where('user_id', $user->id)->update([
             'Fname' => $fname,
             'Lname' => trim($lname),
         ]);
 
-        $user->profile()->updateOrCreate(
+        Profile::updateOrCreate(
             ['user_id' => $user->id],
             [
                 'age' => $request->age,
