@@ -60,7 +60,7 @@
 
           <div class="actions">
             <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn play"> 
+              <a onclick="document.getElementById('editModal').classList.remove('hidden')"  class="btn play"> 
                 <button> Edit Account </button>
               </a>
             </div>
@@ -92,7 +92,7 @@
 
           <div class="actions">
             <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn play"> 
+              <a onclick="document.getElementById('profileModal').classList.remove('hidden')"class="btn play"> 
                 <button> Edit Profile </button>
               </a>
             </div>
@@ -103,6 +103,90 @@
     </main>
   </div>    
   
+  <!-- Modal Background -->
+<div id="editModal" class="modal-overlay hidden">
+  <!-- Modal Box -->
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Edit Account</h2>
+      <button onclick="document.getElementById('editModal').classList.add('hidden')" class="modal-close">&times;</button>
+    </div>
+
+<!-- Form -->
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" class="form-input" placeholder="Your name" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" class="form-input" placeholder="you@example.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-input" placeholder="••••••••" />
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="btn btn-secondary">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="profileModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Edit Profile</h2>
+      <button onclick="document.getElementById('profileModal').classList.add('hidden')" class="modal-close">&times;</button>
+    </div>
+
+    <form>
+      <div class="form-group">
+        <label for="profileName">Name</label>
+        <input type="text" id="profileName" class="form-input" placeholder="Your name" />
+      </div>
+
+      <div class="form-group">
+        <label for="profileAge">Age</label>
+        <input type="number" id="profileAge" class="form-input" placeholder="Your age" />
+      </div>
+
+      <div class="form-group">
+        <label for="profileGender">Gender</label>
+        <select id="profileGender" class="form-input">
+          <option value="">Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+          <option value="Prefer not to say">Prefer not to say</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="profileWeight">Current Weight (kg)</label>
+        <input type="number" id="profileWeight" class="form-input" placeholder="e.g. 70" />
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" onclick="document.getElementById('profileModal').classList.add('hidden')" class="btn btn-secondary">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
   </body>
   </html>
