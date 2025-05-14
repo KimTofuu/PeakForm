@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Password;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -172,3 +173,4 @@ Route::get('/update', [WorkoutController::class, 'update'])->name('/update');
 Route::post('/generate-meal-plan', [MealController::class, 'generateMealPlan'])->name('generate_meal_plan');
 Route::get('/meal-plan', [MealController::class, 'showUserMealPlan'])->name('meal.show');
 
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');

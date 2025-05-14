@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\WorkSplit;
+use App\Models\WorkoutVideo;
 
 class WorkoutController extends Controller
 {
@@ -447,5 +448,37 @@ class WorkoutController extends Controller
             'workouts' => $workouts,
             'day' => $day, // Must be a number (1 to 7)
         ]);
+    }
+
+   public function show($id)
+    {
+        $user = Auth::user(); // Assuming you're using authentication
+        $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
+
+        $workouts = [
+            1 => json_decode($workSplit->day1 ?? '[]'),
+            2 => json_decode($workSplit->day2 ?? '[]'),
+            3 => json_decode($workSplit->day3 ?? '[]'),
+            4 => json_decode($workSplit->day4 ?? '[]'),
+            5 => json_decode($workSplit->day5 ?? '[]'),
+            6 => json_decode($workSplit->day6 ?? '[]'),
+            7 => json_decode($workSplit->day7 ?? '[]'),
+        ];
+
+        $input = [
+            'goal' => $workSplit->goal,
+            'fitness_level' => $workSplit->fitness_level,
+            'equipment' => $workSplit->equipment,
+            'intensity' => $workSplit->intensity,
+            'setup' => $workSplit->setup,
+            'days' => $workSplit->days,
+            'splitType' => $workSplit->splitType,
+        ];
+        
+        $videoList = WorkoutVideo::all()->keyBy(function ($item) {
+            return strtolower(trim($item->title));
+        }); // All available videos
+
+        return view('workout_tab', compact('user', 'workouts', 'input', 'videoList'));
     }
 }

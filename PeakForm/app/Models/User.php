@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\WorkSplit;
+use App\Models\MealPlan;
+use App\Models\Profile;
 
 class User extends Authenticatable
 {
@@ -59,5 +61,10 @@ class User extends Authenticatable
     public function mealPlans()
     {
         return $this->hasMany(MealPlan::class);
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 }
