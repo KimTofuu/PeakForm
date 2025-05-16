@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\WorkSplit;
 use App\Models\WorkoutVideo;
+use App\Models\Exercise;
 
 class WorkoutController extends Controller
 {
@@ -337,46 +338,46 @@ class WorkoutController extends Controller
     }
 
 
-    public function getWorkoutForDay(Request $request)
-    {
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated.'], 403);
-        }
+    // public function getWorkoutForDay(Request $request)
+    // {
+    //     $user = Auth::user();
+    //     if (!$user) {
+    //         return response()->json(['error' => 'User not authenticated.'], 403);
+    //     }
 
-        // Get the day number from the request
-        $dayNumber = $request->input('day');
+    //     // Get the day number from the request
+    //     $dayNumber = $request->input('day');
         
-        // Fetch the latest workout split for the user
-        $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
+    //     // Fetch the latest workout split for the user
+    //     $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
         
-        if (!$workSplit) {
-            return response()->json(['error' => 'No workout plan found.'], 404);
-        }
+    //     if (!$workSplit) {
+    //         return response()->json(['error' => 'No workout plan found.'], 404);
+    //     }
 
-        // Decode the workout plan for the specified day
-        $days = [
-            'Day 1' => json_decode($workSplit->day1 ?? '[]'),
-            'Day 2' => json_decode($workSplit->day2 ?? '[]'),
-            'Day 3' => json_decode($workSplit->day3 ?? '[]'),
-            'Day 4' => json_decode($workSplit->day4 ?? '[]'),
-            'Day 5' => json_decode($workSplit->day5 ?? '[]'),
-            'Day 6' => json_decode($workSplit->day6 ?? '[]'),
-            'Day 7' => json_decode($workSplit->day7 ?? '[]'),
-        ];
+    //     // Decode the workout plan for the specified day
+    //     $days = [
+    //         'Day 1' => json_decode($workSplit->day1 ?? '[]'),
+    //         'Day 2' => json_decode($workSplit->day2 ?? '[]'),
+    //         'Day 3' => json_decode($workSplit->day3 ?? '[]'),
+    //         'Day 4' => json_decode($workSplit->day4 ?? '[]'),
+    //         'Day 5' => json_decode($workSplit->day5 ?? '[]'),
+    //         'Day 6' => json_decode($workSplit->day6 ?? '[]'),
+    //         'Day 7' => json_decode($workSplit->day7 ?? '[]'),
+    //     ];
 
-        $selectedDay = "Day $dayNumber";
+    //     $selectedDay = "Day $dayNumber";
 
-        if (isset($days[$selectedDay])) {
-            return response()->json([
-                'success' => true,
-                'day' => $selectedDay,
-                'exercises' => $days[$selectedDay],
-            ]);
-        }
+    //     if (isset($days[$selectedDay])) {
+    //         return response()->json([
+    //             'success' => true,
+    //             'day' => $selectedDay,
+    //             'exercises' => $days[$selectedDay],
+    //         ]);
+    //     }
 
-        return response()->json(['error' => 'Invalid day.'], 400);
-    }
+    //     return response()->json(['error' => 'Invalid day.'], 400);
+    // }
 
     public function workoutsTab()
     {
@@ -428,57 +429,40 @@ class WorkoutController extends Controller
         ]);
     }
 
-    public function showDailyWorkout($day)
+    public function getWorkoutForDay(Request $request)
     {
         $user = Auth::user();
+        $day = $request->query('day', 1);
+
         $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
 
-        $workouts = [
-            1 => json_decode($workSplit->day1 ?? '[]'),
-            2 => json_decode($workSplit->day2 ?? '[]'),
-            3 => json_decode($workSplit->day3 ?? '[]'),
-            4 => json_decode($workSplit->day4 ?? '[]'),
-            5 => json_decode($workSplit->day5 ?? '[]'),
-            6 => json_decode($workSplit->day6 ?? '[]'),
-            7 => json_decode($workSplit->day7 ?? '[]'),
-        ];
+        $field = 'day' . $day;
+        $exercises = json_decode($workSplit->{$field} ?? '[]', true);
 
-        return view('daily_workout', [
-            'user' => $user,
-            'workouts' => $workouts,
-            'day' => $day, // Must be a number (1 to 7)
-        ]);
-    }
-
-   public function show($id)
-    {
-        $user = Auth::user(); // Assuming you're using authentication
-        $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
-
-        $workouts = [
-            1 => json_decode($workSplit->day1 ?? '[]'),
-            2 => json_decode($workSplit->day2 ?? '[]'),
-            3 => json_decode($workSplit->day3 ?? '[]'),
-            4 => json_decode($workSplit->day4 ?? '[]'),
-            5 => json_decode($workSplit->day5 ?? '[]'),
-            6 => json_decode($workSplit->day6 ?? '[]'),
-            7 => json_decode($workSplit->day7 ?? '[]'),
-        ];
-
-        $input = [
-            'goal' => $workSplit->goal,
-            'fitness_level' => $workSplit->fitness_level,
-            'equipment' => $workSplit->equipment,
-            'intensity' => $workSplit->intensity,
-            'setup' => $workSplit->setup,
-            'days' => $workSplit->days,
-            'splitType' => $workSplit->splitType,
-        ];
-        
         $videoList = WorkoutVideo::all()->keyBy(function ($item) {
             return strtolower(trim($item->title));
-        }); // All available videos
+        });
 
-        return view('workout_tab', compact('user', 'workouts', 'input', 'videoList'));
+        $final = [];
+
+        foreach ($exercises as $exercise) {
+            $title = strtolower(trim($exercise));
+            if ($videoList->has($title)) {
+                $final[] = [
+                    'title' => $exercise,
+                    'video_url' => $videoList[$title]->video_url,
+                ];
+            } else {
+                $final[] = [
+                    'title' => $exercise,
+                    'not_found' => true,
+                ];
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'exercises' => $final,
+        ]);
     }
 }

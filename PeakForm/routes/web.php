@@ -16,6 +16,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WorkoutProgressController;
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -93,10 +94,10 @@ Route::get('/progress_tab', function () {
     return view('progress_tab', compact('user'));
 })->name('progress_tab');
 
-Route::get('/workouts_tab', function () {
-    $user = Auth::user();
-    return view('workouts_tab', compact('user'));
-})->name('workouts_tab');
+// Route::get('/workouts_tab', function () {
+//     $user = Auth::user();
+//     return view('workouts_tab', compact('user'));
+// })->name('workouts_tab');
 
 Route::get('/welcome_page', function () {
     $user = Auth::user();
@@ -163,7 +164,10 @@ Route::post('/workout_plan_5', [WorkoutController::class, 'storeLevel'])->name('
 Route::post('/workout_plan_6', [WorkoutController::class, 'storeSplitType'])->name('workout_plan_6');
 
 Route::get('/workouts_tab', [WorkoutController::class, 'workoutsTab'])->name('workouts_tab');
-Route::get('/showDailyWorkout', [WorkoutController::class, 'showDailyWorkout'])->name('daily_workout');
+// Route::get('/showDailyWorkout', [WorkoutController::class, 'showDailyWorkout'])->name('daily_workout');
+Route::get('/workout/show', [WorkoutController::class, 'show'])->name('workout.show');
+Route::get('/api/workout/day', [WorkoutController::class, 'getWorkoutForDay']);
+
 
 Route::get('/workouts/edit', [WorkoutController::class, 'edit'])->name('workouts.edit');
 Route::put('/workouts/update', [WorkoutController::class, 'update'])->name('workouts.update');
@@ -175,3 +179,16 @@ Route::get('/meal-plan', [MealController::class, 'showUserMealPlan'])->name('mea
 
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/mealplan/latest', [MealController::class, 'getLatestMealPlan'])->name('mealplan.latest');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/workout/progress', [WorkoutProgressController::class, 'show']);
+    Route::post('/workout/progress', [WorkoutProgressController::class, 'store']);
+});
+// Route::middleware('auth:sanctum')->get('/workout/summary', [WorkoutProgressController::class, 'summary']);
+
+Route::middleware('auth:sanctum')->prefix('api/workout')->group(function () {
+    Route::get('/day', [WorkoutController::class, 'getWorkoutForDay']);
+    Route::get('/progress', [WorkoutProgressController::class, 'show']);
+    Route::post('/progress', [WorkoutProgressController::class, 'store']);
+    Route::get('/summary', [WorkoutProgressController::class, 'summary']);
+});
