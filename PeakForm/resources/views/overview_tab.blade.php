@@ -40,17 +40,14 @@
       <div class="cards">
         <div class="left_side">
           <div class="daily_tab">
-                <div class="header_content">
-                    {{-- <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $day }}</h2> --}}
-                </div>
-                {{-- @foreach($workouts[$day] ?? [] as $exercise)
-                    <div class="workout_content">
-                        <label>
-                            <input type="checkbox" name="agree"> {{ $exercise }}
-                        </label>
-                    </div>
-                @endforeach --}}
-            </div>
+            <h2 style="font-family: 'Michroma', sans-serif;">Today's Workout</h2>
+            <div class="day-controls">
+              <button onclick="previousDay()">Previous</button>
+              <span id="day-label">Day 1</span>
+              <button onclick="nextDay()">Next</button>
+            </div> 
+            <div id="workout-container" class="workout-list"></div>
+          </div>
           <div class="actions">
             <div class = "actions_3">
               <a href="{{ route('workouts_tab') }}" class="btn play"> 
@@ -65,10 +62,9 @@
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" >Progress</h2>
             </div>
-
             <div class ="progress_contents">
               <div>
-                <div id="radialChart"></div>
+                <div id="radialChart" style="height: 350px;"></div>
               </div>
             </div>
           </div>
@@ -111,6 +107,61 @@
 </body>
 <script>
   let currentDay = 1;
+  let radialChart;
+
+  function renderRadialChart(dailyPercent, weeklyPercent) {
+    const options = {
+      series: [dailyPercent, weeklyPercent],
+      chart: {
+        height: 350,
+        type: 'radialBar',
+      },
+      plotOptions: {
+        radialBar: {
+          dataLabels: {
+            name: {
+              fontSize: '18px',
+            },
+            value: {
+              fontSize: '16px',
+              formatter: val => `${val}%`
+            },
+            total: {
+              show: true,
+              label: 'Total Progress',
+              formatter: () => `${Math.round((dailyPercent + weeklyPercent) / 2)}%`
+            }
+          }
+        }
+      },
+      labels: ['Today', 'This Week'],
+      colors: ['#00E396', '#FEB019'],
+    };
+
+    if (radialChart) {
+      radialChart.updateOptions(options);
+    } else {
+      const chartEl = document.querySelector("#radialChart");
+      if (!chartEl) return console.error("radialChart element not found!");
+      radialChart = new ApexCharts(chartEl, options);
+      radialChart.render();
+    }
+  }
+
+ function updateProgressChart() {
+    fetch('/api/workout/summary')
+      .then(res => res.json())
+      .then(data => {
+        console.log("Workout summary data:", data);
+        const dailyPercent = data.daily_percent ?? 0;
+        const weeklyPercent = data.weekly_percent ?? 0;
+        renderRadialChart(dailyPercent, weeklyPercent);
+      })
+      .catch(error => console.error("Failed to fetch workout summary", error));
+  }
+
+
+  
 
   function loadWorkoutForDay(day) {
       fetch(`/api/workout/day?day=${day}`)
@@ -139,13 +190,69 @@
       }
   }
 
-  function displayWorkout(exercises) {
-      // Display the exercises (you need to update the HTML structure based on your frontend)
-      const workoutContainer = document.getElementById('workout-container');
-      workoutContainer.innerHTML = exercises.map(exercise => `<p>${exercise}</p>`).join('');
+  function saveProgress(day, completedTitles) {
+    fetch('/api/workout/progress', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+      },
+      body: JSON.stringify({ day: day, exercises: completedTitles })
+    }).then(response => response.json())
+      .then(data => {
+        if (!data.success) {
+          console.error('Failed to save progress:', data.message);
+        }
+      });
   }
 
-  // Initial load
-  loadWorkoutForDay(currentDay);
+  function displayWorkout(exercises) {
+      const workoutContainer = document.getElementById('workout-container');
+      const dayLabel = document.getElementById('day-label');
+
+      dayLabel.textContent = `Day ${currentDay}`;
+
+      if (!exercises || exercises.length === 0) {
+          workoutContainer.innerHTML = '<p>It is rest day! Enjoy your break.</p>';
+          return;
+      }
+
+      workoutContainer.innerHTML = exercises.map((exercise, index) => `
+          <div class="exercise-item">
+              <label>
+                  <input type="checkbox" id="exercise-${index}" />
+                  ${exercise.title}
+              </label>
+          </div>
+      `).join('');
+
+      fetch(`/api/workout/progress?day=${currentDay}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.completed) {
+          data.completed.forEach(title => {
+            const checkbox = [...document.querySelectorAll('input[type="checkbox"]')]
+              .find(cb => cb.dataset.title === title);
+            if (checkbox) checkbox.checked = true;
+          });
+        }
+      });
+
+      workoutContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const completed = [...document.querySelectorAll('input[type="checkbox"]')]
+          .filter(cb => cb.checked)
+          .map(cb => cb.dataset.title);
+        saveProgress(currentDay, completed);
+        updateProgressChart(); // optionally refresh the chart
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    updateProgressChart();
+    loadWorkoutForDay(currentDay);
+  });
+
 </script>
 </html>
