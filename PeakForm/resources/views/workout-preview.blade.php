@@ -26,10 +26,8 @@
               @forelse ($exercises as $exercise)
                 <div class="workout_content_2">
                   <label>
-                    {{ $exercise }} 
-                    <span> x12 reps <a href="#" class="video-link"> <button> View Video Tutorial </button> </a> </span>
+                    {{ $exercise }}
                   </label>
-                  
                 </div>
               @empty
                 <p>No exercises for this day.</p>
@@ -42,6 +40,9 @@
           @endforeach
         </div>
         </div>
+        <a href="{{ route('overview_tab') }}" class = "button_proceed">
+            <button>Proceed</button>
+        </a>
     </div>
 
     <script src="script.js"> </script>
