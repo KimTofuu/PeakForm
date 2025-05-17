@@ -177,10 +177,22 @@
   }
 
   function nextDay() {
-      if (currentDay < 7) {
-          currentDay++;
-          loadWorkoutForDay(currentDay);
-      }
+    const nextDay = currentDay + 1;
+    if (nextDay > 7) return; // assuming max 7 days
+
+    // Check if next day has exercises
+    fetch(`/api/workout/day?day=${nextDay}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.exercises && data.exercises.length > 0) {
+          currentDay = nextDay;
+          displayWorkout(data.exercises);
+        } else {
+          // Optionally alert or just do nothing to prevent next day navigation
+          console.log('No workout for the next day.');
+        }
+      })
+      .catch(err => console.error('Failed to check next day workout:', err));
   }
 
   function previousDay() {
