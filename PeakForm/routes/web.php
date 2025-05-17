@@ -192,3 +192,5 @@ Route::middleware('auth:sanctum')->prefix('api/workout')->group(function () {
     Route::post('/progress', [WorkoutProgressController::class, 'store']);
     Route::get('/summary', [WorkoutProgressController::class, 'summary']);
 });
+
+Route::get('/workout-preview', [WorkoutController::class, 'workoutPreview'])->name('workout-preview');

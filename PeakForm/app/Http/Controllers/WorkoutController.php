@@ -334,8 +334,9 @@ class WorkoutController extends Controller
             }
         }
 
-        return redirect()->route('overview_tab'); // user proceeds to next page
+        return redirect()->route('workout-preview'); // user proceeds to next page
     }
+
 
 
     // public function getWorkoutForDay(Request $request)
@@ -416,6 +417,45 @@ class WorkoutController extends Controller
             ]
         ]);
     }
+
+    public function workoutPreview()
+    {
+        $user = Auth::user();
+        $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
+
+        if (!$workSplit) {
+            return view('workout-preview', [
+                'user' => $user,
+                'workouts' => [],
+                'input' => []
+            ]);
+        }
+
+        $workouts = [
+            'Monday' => json_decode($workSplit->day1 ?? '[]'),
+            'Tuesday' => json_decode($workSplit->day2 ?? '[]'),
+            'Wednesday' => json_decode($workSplit->day3 ?? '[]'),
+            'Thursday' => json_decode($workSplit->day4 ?? '[]'),
+            'Friday' => json_decode($workSplit->day5 ?? '[]'),
+            'Saturday' => json_decode($workSplit->day6 ?? '[]'),
+            'Sunday' => json_decode($workSplit->day7 ?? '[]'),
+        ];
+
+        return view('workout-preview', [
+            'user' => $user,
+            'workouts' => $workouts,
+            'input' => [
+                'goal' => $workSplit->goal,
+                'fitness_level' => $workSplit->fitness_level,
+                'equipment' => $workSplit->equipment,
+                'intensity' => $workSplit->intensity,
+                'setup' => $workSplit->setup,
+                'days' => $workSplit->days,
+                'splitType' => $workSplit->splitType,
+            ]
+        ]);
+    }
+    
 
 
     public function edit()
