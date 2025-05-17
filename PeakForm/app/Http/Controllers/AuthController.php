@@ -77,21 +77,16 @@ class AuthController extends Controller
             'email' => 'The provided credentials are incorrect.',
         ]);
     }
+    
+    public function logout(Request $request)
+    {
+        Auth::logout(); 
 
-    public function logout(Request $request) {
+        $request->session()->invalidate(); 
+        // $request->session()->regenerateToken(); 
         $request->user()->tokens()->delete();
 
         return redirect()->route('index')->with('message', 'Logged out successfully.');
     }
-    
-    // public function logout(Request $request)
-    // {
-    //     Auth::logout(); 
-
-    //     $request->session()->invalidate(); 
-    //     $request->session()->regenerateToken(); 
-
-    //     return redirect('/index');
-    // }
 }
  
