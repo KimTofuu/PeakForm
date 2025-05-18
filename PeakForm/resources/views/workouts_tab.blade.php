@@ -71,7 +71,6 @@
                 <p>No exercises for this day.</p>
               @endforelse
             </div>
-
             @php
               $dayCount++; // Increment the day number for each loop iteration
             @endphp
