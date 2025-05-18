@@ -12,7 +12,7 @@
 <body>
     <div id = "header">
         <nav>
-           <img src="images/logo.png" class = "welcome_logo">
+           <img src="images/logo_7.png" class = "welcome_logo">
         </nav>
     </header>
     

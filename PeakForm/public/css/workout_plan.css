@@ -25,8 +25,8 @@ h2 {
 }
 
 .icon {
-  width: 4.375rem; /* 70px / 16px */
-  margin: 0.625rem 0rem; /* 10px / 16px 0 */
+  width: 7rem; /* 70px / 16px */
+  margin-top: -2rem; /* 10px / 16px 0 */
 }
 
 .form-box {

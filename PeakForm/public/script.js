@@ -213,4 +213,6 @@ function togglePassword2(event) {
   }
 }
 
-  
+function confirmUpdate() {
+        return confirm("Are you sure you want to update your workout preferences?");
+    }

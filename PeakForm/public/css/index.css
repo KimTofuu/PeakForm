@@ -27,6 +27,9 @@ body {
 
 .container {
 	padding: 0.625rem 10%;
+  max-width: 2000px;
+  width: 100%;
+  margin: 0 auto; 
 }
 
 nav {

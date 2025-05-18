@@ -13,7 +13,7 @@
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
-        <div class="avatar"></div>
+        <img src="images/logo_6.png" class="avatar">
         <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
         <hr />
       </div>
@@ -57,6 +57,7 @@
                     @endphp
                 <div class="workout_content_2">
                   <label>
+<<<<<<< Updated upstream
                     {{ $exercise }}
                     @if ($video)
                       <a href="{{ $video->youtube_url }}" target="_blank" class="video-link">
@@ -65,6 +66,10 @@
                     @else
                       <span style="color: gray;">No video available</span>
                     @endif
+=======
+                    {{ $exercise }} 
+                    <span> x12 reps <a href="#" class="video-link"> <button> View Video Tutorial </button> </a> </span>
+>>>>>>> Stashed changes
                   </label>
                 </div>
               @empty
@@ -109,8 +114,8 @@
           </div>
           <div class="actions">
             <div class="actions_3" style="margin-top: 10px;">
-              <a href="{{ route('workout_plan_1') }}" class="btn update">
-                <button> Update Workout Preferences </button>
+              <a href="{{ route('workout_plan_1') }}" class="btn update" onclick="confirmUpdate(event)">
+                <button>Update Workout Preferences</button>
               </a>
             </div>
           </div>
@@ -118,9 +123,28 @@
       </div>
     </main>
   </div>
-
   <script src="script.js"> </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function confirmUpdate(event) {
+        event.preventDefault(); // Stop default action
+        const url = "{{ route('workout_plan_1') }}";
 
+        Swal.fire({
+            title: 'Update Preferences?',
+            text: "Are you sure you want to update your workout preferences?",
+            showCancelButton: true,
+            confirmButtonColor: '#8FB031',
+            cancelButtonColor: '#ccc',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    }
+  </script>
   <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
   <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
 

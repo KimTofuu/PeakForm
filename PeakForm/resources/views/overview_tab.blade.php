@@ -14,9 +14,9 @@
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
-        <div class="avatar"></div>
-          <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
-          <hr />
+        <img src="images/logo_6.png" class="avatar">
+        <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
+        <hr />
         </div>
         <nav class="nav-menu">
           <a class="active" href="{{ route('overview_tab') }}">Overview</a>
@@ -74,26 +74,6 @@
                 <button> Edit Workout Plan </button>
               </a>
             </div>
-          </div>
-        </div>
-
-        <div class = "right_side">
-          <div class="reminders">
-            <div class = "header_content">
-              <h2 style="font-family: 'Michroma', sans-serif;" >Reminder</h2>
-            </div>
-
-            <div class = "reminders_contents">
-              <p>
-                Workout Reminder
-              </p>
-            </div>
-            <div class = "reminders_contents">
-              <p>
-                Meal Plan Reminder
-              </p>
-            </div>
-
           </div>
         </div>
       </div>
