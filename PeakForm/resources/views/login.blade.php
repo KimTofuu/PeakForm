@@ -15,9 +15,12 @@
 
 <div class = "main-cont">
     <div class = "left_space">
-        <h1 style="font-family: 'Michroma', sans-serif;"> PeakForm </h1>
-        <p>Your Personalized Path to Peak Performance </p>
-        <img src= "images/logo_5.png">
+        <img src= "images/logo_7.png">
+        <h1>Your Personalized Path <br> to Peak Performance.</h1>
+        <p>Unlock your full potential with PeakForm’s personalized fitness and <br> nutrition plans. 
+            From adaptive workouts to easy meal suggestions,
+            <br> everything you need to succeed is at your fingertips.
+        </p>
     </div>
 
     <div class = "right_space">

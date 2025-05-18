@@ -13,7 +13,7 @@
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
-        <div class="avatar"></div>
+        <img src="images/logo_6.png" class="avatar">
         <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
         <hr />
       </div>

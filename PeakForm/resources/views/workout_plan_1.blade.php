@@ -10,7 +10,8 @@
 <body>
   <div class="container">
     <h2>Let’s Build Your Personalized Plan!</h2>
-    <img src="{{ asset('images/logo_4.png') }}" alt="Dumbbell Icon" class="icon" />
+    <img src="{{ asset('images/logo_6.png') }}" alt="Dumbbell Icon" class="icon" />
+    
 
     <form action="{{ route('workout_plan_1') }}" method="POST">
       @csrf
