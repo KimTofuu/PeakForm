@@ -149,7 +149,8 @@ class MealController extends Controller
     }
     public function latestIntake(Request $request)
     {
-        $intake = DailyIntake::where('user_id', auth()->id())->latest()->first();
+        $user = Auth::user();
+        $intake = DailyIntake::where('user_id', $user->id)->latest()->first();
 
         if ($intake) {
             return response()->json([
