@@ -57,7 +57,6 @@
                     @endphp
                 <div class="workout_content_2">
                   <label>
-<<<<<<< Updated upstream
                     {{ $exercise }}
                     @if ($video)
                       <a href="{{ $video->youtube_url }}" target="_blank" class="video-link">
@@ -66,17 +65,12 @@
                     @else
                       <span style="color: gray;">No video available</span>
                     @endif
-=======
-                    {{ $exercise }} 
-                    <span> x12 reps <a href="#" class="video-link"> <button> View Video Tutorial </button> </a> </span>
->>>>>>> Stashed changes
                   </label>
                 </div>
               @empty
                 <p>No exercises for this day.</p>
               @endforelse
             </div>
-
             @php
               $dayCount++; // Increment the day number for each loop iteration
             @endphp

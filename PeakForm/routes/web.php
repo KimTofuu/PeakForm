@@ -194,3 +194,7 @@ Route::middleware('auth:sanctum')->prefix('api/workout')->group(function () {
 });
 
 Route::get('/workout-preview', [WorkoutController::class, 'workoutPreview'])->name('workout-preview');
+
+Route::post('/update-intake', [MealController::class, 'updateIntake'])->name('update_intake');
+Route::get('/intake/today', [MealController::class, 'getTodayIntake'])->name('get_today_intake');
+Route::get('/intake/latest', [MealController::class, 'latestIntake'])->name('intake.latest');

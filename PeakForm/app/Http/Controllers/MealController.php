@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MealPlan;
+use App\Models\DailyIntake;
 
 class MealController extends Controller
 {
@@ -104,5 +105,63 @@ class MealController extends Controller
         }
 
         return response()->json(['success' => false, 'message' => 'No meal plan found.']);
+    }
+
+    public function updateIntake(Request $request)
+    {
+        $request->validate([
+            'protein' => 'required|integer|min:0',
+            'carbs' => 'required|integer|min:0',
+            'fat' => 'required|integer|min:0',
+        ]);
+
+        $user = Auth::user();
+
+        $today = now()->toDateString();
+
+        $intake = DailyIntake::firstOrCreate(
+            ['user_id' => $user->id, 'date' => $today],
+            ['protein' => 0, 'carbs' => 0, 'fat' => 0]
+        );
+
+        $intake->increment('protein', $request->protein);
+        $intake->increment('carbs', $request->carbs);
+        $intake->increment('fat', $request->fat);
+
+        return response()->json([
+            'success' => true,
+            'data' => $intake
+        ]);
+    }
+
+    public function getTodayIntake()
+    {
+        $user = Auth::user();
+
+        $today = now()->toDateString();
+
+        $intake = DailyIntake::where('user_id', $user->id)->where('date', $today)->first();
+
+        return response()->json([
+            'success' => true,
+            'data' => $intake
+        ]);
+    }
+    public function latestIntake(Request $request)
+    {
+        $intake = DailyIntake::where('user_id', auth()->id())->latest()->first();
+
+        if ($intake) {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'protein' => $intake->protein,
+                    'carbs' => $intake->carbs,
+                    'fat' => $intake->fat
+                ]
+            ]);
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 }
