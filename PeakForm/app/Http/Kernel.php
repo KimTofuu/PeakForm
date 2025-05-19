@@ -3,6 +3,7 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Models\DailyIntake;
 
 class Kernel extends HttpKernel
 {
@@ -47,9 +48,15 @@ class Kernel extends HttpKernel
     ];
     protected function schedule(Schedule $schedule)
     {
+        // Meal reminders
         $schedule->command('meal:remind')->dailyAt('07:00');
         $schedule->command('meal:remind')->dailyAt('12:00');
         $schedule->command('meal:remind')->dailyAt('19:00');
+
+        // Delete old DailyIntake records
+        $schedule->call(function () {
+            DailyIntake::whereDate('created_at', '<', now()->toDateString())->delete();
+        })->dailyAt('00:00');
     }
 } 
 

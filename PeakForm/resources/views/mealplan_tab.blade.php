@@ -297,10 +297,139 @@ window.addEventListener('DOMContentLoaded', async () => {
           }
         }
       });
+
+      // ⬇️ Add this block to fetch and render the comparison chart
+      const intakeResponse = await fetch('{{ route("intake.latest") }}');
+      const intakeResult = await intakeResponse.json();
+
+      if (intakeResult.success && intakeResult.data) {
+        const updated = intakeResult.data;
+
+        const ctxCompare = document.getElementById('comparisonChart').getContext('2d');
+
+        if (window.comparisonChart instanceof Chart) {
+          window.comparisonChart.destroy();
+        }
+
+        window.comparisonChart = new Chart(ctxCompare, {
+          type: 'bar',
+          data: {
+            labels: ['Protein', 'Carbs', 'Fat'],
+            datasets: [
+              {
+                label: 'Target (g)',
+                data: [plan.proteinTarget, plan.carbsTarget, plan.fatTarget],
+                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+              },
+              {
+                label: 'Actual (g)',
+                data: [updated.protein, updated.carbs, updated.fat],
+                backgroundColor: 'rgba(255, 99, 132, 0.5)'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Target vs Actual Intake'
+              },
+              legend: {
+                position: 'bottom'
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
     }
   } catch (err) {
-    console.error('Failed to load latest meal plan:', err);
+    console.error('Failed to load latest meal plan or intake data:', err);
   }
 });
+document.getElementById('compareIntakeBtn').onclick = async () => {
+  const actualProtein = parseInt(document.getElementById('actualProtein').value);
+  const actualCarbs = parseInt(document.getElementById('actualCarbs').value);
+  const actualFat = parseInt(document.getElementById('actualFat').value);
+
+  if (isNaN(actualProtein) || isNaN(actualCarbs) || isNaN(actualFat)) {
+    alert("Please enter all values.");
+    return;
+  }
+
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+  try {
+    const response = await fetch('{{ route("update_intake") }}', {
+      method: 'POST',
+      headers: {
+        'X-CSRF-TOKEN': csrfToken,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        protein: actualProtein,
+        carbs: actualCarbs,
+        fat: actualFat
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      const updated = result.data;
+
+      const ctxCompare = document.getElementById('comparisonChart').getContext('2d');
+
+      if (window.comparisonChart && typeof window.comparisonChart.destroy === 'function') {
+        window.comparisonChart.destroy();
+      }
+
+      window.comparisonChart = new Chart(ctxCompare, {
+        type: 'bar',
+        data: {
+          labels: ['Protein', 'Carbs', 'Fat'],
+          datasets: [
+            {
+              label: 'Target (g)',
+              data: [parseInt(document.getElementById('protein').textContent), parseInt(document.getElementById('carbs').textContent), parseInt(document.getElementById('fat').textContent)],
+              backgroundColor: 'rgba(54, 162, 235, 0.5)'
+            },
+            {
+              label: 'Actual (g)',
+              data: [updated.protein, updated.carbs, updated.fat],
+              backgroundColor: 'rgba(255, 99, 132, 0.5)'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Target vs Actual Intake'
+            },
+            legend: {
+              position: 'bottom'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong saving your intake.");
+  }
+};
 </script>
 </html>
