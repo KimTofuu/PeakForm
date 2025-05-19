@@ -17,6 +17,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkoutProgressController;
+use App\Http\Controllers\ProgressController;
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -198,3 +199,6 @@ Route::get('/workout-preview', [WorkoutController::class, 'workoutPreview'])->na
 Route::post('/update-intake', [MealController::class, 'updateIntake'])->name('update_intake');
 Route::get('/intake/today', [MealController::class, 'getTodayIntake'])->name('get_today_intake');
 Route::get('/intake/latest', [MealController::class, 'latestIntake'])->name('intake.latest');
+
+Route::post('/progress', [ProgressController::class, 'store'])->name('progress.store');
+Route::get('/progress', [ProgressController::class, 'showProgressTab'])->name('progress_tab');
