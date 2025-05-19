@@ -22,7 +22,7 @@
           <a href="{{ route('overview_tab') }}">Overview</a>
           <a href="{{ route('progress_tab') }}">Progress</a>
           <a href="{{ route('workouts_tab') }}">Workouts</a>
-          <a href="{{ route('mealplan_tab') }}">Meal Plan</a>
+          <a href="{{ route('mealplan_tab') }}">Macros</a>
           <a href="{{ route('profile_tab') }}">Profile</a>
           <a class="active" href="{{ route('timer_tab') }}">Timer</a>
         </nav>
