@@ -195,17 +195,6 @@ class WorkoutController extends Controller
 
         return $plan;
     }
-    public function updateStep(Request $request)
-    {
-        foreach ($request->all() as $key => $value) {
-            if (in_array($key, ['goal', 'setup', 'intensity', 'level', 'days'])) {
-                session(["workout_$key" => $value]);
-            }
-        }
-
-        return redirect()->route('next_step'); // adjust dynamically
-    }
-
     
     public function storeGoal(Request $request)
     {
@@ -242,8 +231,6 @@ class WorkoutController extends Controller
         // dd($request->all());
         return redirect()->route('workout_plan_4');
     }
-
-
 
     public function storeDays(Request $request)
     {
@@ -287,7 +274,6 @@ class WorkoutController extends Controller
 
         // Generate workout split and store
         $splitDays = $this->generateAndSaveWorkout($data);
-
         // Save user input data along with the workout split
         $user = Auth::user();
         if ($user) {
@@ -336,49 +322,6 @@ class WorkoutController extends Controller
 
         return redirect()->route('workout-preview'); // user proceeds to next page
     }
-
-
-
-    // public function getWorkoutForDay(Request $request)
-    // {
-    //     $user = Auth::user();
-    //     if (!$user) {
-    //         return response()->json(['error' => 'User not authenticated.'], 403);
-    //     }
-
-    //     // Get the day number from the request
-    //     $dayNumber = $request->input('day');
-        
-    //     // Fetch the latest workout split for the user
-    //     $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
-        
-    //     if (!$workSplit) {
-    //         return response()->json(['error' => 'No workout plan found.'], 404);
-    //     }
-
-    //     // Decode the workout plan for the specified day
-    //     $days = [
-    //         'Day 1' => json_decode($workSplit->day1 ?? '[]'),
-    //         'Day 2' => json_decode($workSplit->day2 ?? '[]'),
-    //         'Day 3' => json_decode($workSplit->day3 ?? '[]'),
-    //         'Day 4' => json_decode($workSplit->day4 ?? '[]'),
-    //         'Day 5' => json_decode($workSplit->day5 ?? '[]'),
-    //         'Day 6' => json_decode($workSplit->day6 ?? '[]'),
-    //         'Day 7' => json_decode($workSplit->day7 ?? '[]'),
-    //     ];
-
-    //     $selectedDay = "Day $dayNumber";
-
-    //     if (isset($days[$selectedDay])) {
-    //         return response()->json([
-    //             'success' => true,
-    //             'day' => $selectedDay,
-    //             'exercises' => $days[$selectedDay],
-    //         ]);
-    //     }
-
-    //     return response()->json(['error' => 'Invalid day.'], 400);
-    // }
 
     public function workoutsTab()
     {
@@ -455,8 +398,6 @@ class WorkoutController extends Controller
             ]
         ]);
     }
-    
-
 
     public function edit()
     {

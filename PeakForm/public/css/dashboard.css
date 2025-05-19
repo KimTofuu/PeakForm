@@ -611,3 +611,31 @@ img {
   font-size: 1rem;
   margin: auto;
 }
+
+.progress-form input,
+.progress-form button {
+  padding: 8px;
+  margin: 5px;
+  font-size: 1em;
+}
+
+.progress-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.progress-table th, .progress-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.progress-table th {
+  background-color: #222;
+  color: white;
+}
+
+.progress-table td {
+  background-color: #fff;
+}

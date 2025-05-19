@@ -35,7 +35,6 @@
         </form>
       </div>
     </aside>
-
     <main class="main-content">
       <div class = "cards">
       <div class="middle">
@@ -43,11 +42,50 @@
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" >Progress</h2>
             </div>
-
             <div class ="progress_contents">
-              <div>
-                <div id="radialChart"></div>
+              <div class="progress_table_section">
+                <h3 style="font-family: 'Orbitron', sans-serif;">Track Your Progress</h3>
+
+                <!-- Add Entry Form -->
+                <form method="POST" action="{{ route('progress.store') }}" class="progress-form">
+                  @csrf
+                  <input type="date" name="recorded_at" required />
+                  <input type="number" name="weight" step="0.1" placeholder="Weight (kg)" required />
+                  <input type="number" name="body_fat" step="0.1" placeholder="Body Fat (%)" required />
+                  <input type="number" name="muscle_mass" step="0.1" placeholder="Muscle Mass (kg)" required />
+                  <button type="submit">Add Entry</button>
+                </form>
+
+                <!-- Table Displaying Progress -->
+                <table class="progress-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Weight (kg)</th>
+                      <th>Body Fat (%)</th>
+                      <th>Muscle Mass (kg)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @forelse($progressEntries as $entry)
+                      <tr>
+                        <td>{{ \Carbon\Carbon::parse($entry->created_at)->format('F j, Y') }}</td>                        <td>{{ $entry->weight }}</td>
+                        <td>{{ $entry->body_fat_percentage }}</td>
+                        <td>{{ $entry->muscle_mass }}</td>
+                      </tr>
+                    @empty
+                      <tr>
+                        <td colspan="4" style="text-align:center; font-style: italic; color: #666;">
+                          No progress entries found yet.
+                        </td>
+                      </tr>
+                    @endforelse
+                  </tbody>
+                </table>
               </div>
+              {{-- <div>
+                <div id="radialChart"></div>
+              </div> --}}
             </div>
           </div>
         </div>
