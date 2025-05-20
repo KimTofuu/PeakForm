@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="container">
-        <h2>Let’s Build Your Personalized Plan!</h2>
-        <img src="images/logo_4.png" alt="Dumbbell Icon" class="icon" />
+        <h2>Your workout preview!</h2>
+        <img src="images/logo_6.png" alt="Dumbbell Icon" class="icon" />
 
         <div class="workout-box">
         <div class="workouts-card">
@@ -38,10 +38,12 @@
               $dayCount++; // Increment the day number for each loop iteration
             @endphp
           @endforeach
+          
         </div>
         </div>
+        <br>
         <a href="{{ route('overview_tab') }}" class = "button_proceed">
-            <button>Proceed</button>
+          Proceed
         </a>
     </div>
 
