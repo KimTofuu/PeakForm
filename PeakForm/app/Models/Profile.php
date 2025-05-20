@@ -13,14 +13,13 @@ class Profile extends Model
 {
     use HasFactory;
 
+
+    protected $table = 'profiles';
     protected $fillable = [
         'user_id',
         'age',
         'gender',
         'weight',
-        'height',
-        'goal',
-        'activityLevel',
     ];
 
     public function user()
