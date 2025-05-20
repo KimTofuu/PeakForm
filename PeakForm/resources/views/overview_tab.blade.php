@@ -63,8 +63,14 @@
               <h2 style="font-family: 'Michroma', sans-serif;" >Progress</h2>
             </div>
             <div class ="progress_contents">
-              <div>
-                <div id="radialChart" style="height: 350px;"></div>
+              <div class = "progress_tab4">
+                <canvas id="comparisonChart" width="100%"></canvas>
+              </div>
+              <div class="intake-summary">
+                <h3 style="font-family: 'Michroma', sans-serif;">Macros Target</h3>
+                <p>Protein: <span id="protein">0</span> g</p>
+                <p>Carbs: <span id="carbs">0</span> g</p>
+                <p>Fat: <span id="fat">0</span> g</p>
               </div>
             </div>
           </div>
@@ -81,51 +87,11 @@
   </div>
 
   <script src="script.js"> </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
 </body>
 <script>
   let currentDay = 1;
-  let radialChart;
-
-  function renderRadialChart(dailyPercent, weeklyPercent) {
-    const options = {
-      series: [dailyPercent, weeklyPercent],
-      chart: {
-        height: 350,
-        type: 'radialBar',
-      },
-      plotOptions: {
-        radialBar: {
-          dataLabels: {
-            name: {
-              fontSize: '18px',
-            },
-            value: {
-              fontSize: '16px',
-              formatter: val => `${val}%`
-            },
-            total: {
-              show: true,
-              label: 'Total Progress',
-              formatter: () => `${Math.round((dailyPercent + weeklyPercent) / 2)}%`
-            }
-          }
-        }
-      },
-      labels: ['Today', 'This Week'],
-      colors: ['#00E396', '#FEB019'],
-    };
-
-    if (radialChart) {
-      radialChart.updateOptions(options);
-    } else {
-      const chartEl = document.querySelector("#radialChart");
-      if (!chartEl) return console.error("radialChart element not found!");
-      radialChart = new ApexCharts(chartEl, options);
-      radialChart.render();
-    }
-  }
 
  function updateProgressChart() {
     fetch('/api/workout/summary')
@@ -138,10 +104,6 @@
       })
       .catch(error => console.error("Failed to fetch workout summary", error));
   }
-
-
-  
-
   function loadWorkoutForDay(day) {
       fetch(`/api/workout/day?day=${day}`)
           .then(response => response.json())
@@ -244,5 +206,73 @@
     updateProgressChart();
     loadWorkoutForDay(currentDay);
   });
+
+  window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const responsePlan = await fetch('{{ route("mealplan.latest") }}');
+    const resultPlan = await responsePlan.json();
+
+    if (resultPlan.success) {
+      const plan = resultPlan.meal_plan;
+
+      document.getElementById('protein').textContent = plan.proteinTarget;
+      document.getElementById('carbs').textContent = plan.carbsTarget;
+      document.getElementById('fat').textContent = plan.fatTarget;
+
+      // Fetch actual intake data
+      const intakeResponse = await fetch('{{ route("intake.latest") }}');
+      const intakeResult = await intakeResponse.json();
+
+      if (intakeResult.success && intakeResult.data) {
+        const updated = intakeResult.data;
+
+        const ctxCompare = document.getElementById('comparisonChart').getContext('2d');
+
+        if (window.comparisonChart instanceof Chart) {
+          window.comparisonChart.destroy();
+        }
+
+        window.comparisonChart = new Chart(ctxCompare, {
+          type: 'bar',
+          data: {
+            labels: ['Protein', 'Carbs', 'Fat'],
+            datasets: [
+              {
+                label: 'Target (g)',
+                data: [plan.proteinTarget, plan.carbsTarget, plan.fatTarget],
+                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+              },
+              {
+                label: 'Actual (g)',
+                data: [updated.protein, updated.carbs, updated.fat],
+                backgroundColor: 'rgba(255, 99, 132, 0.5)'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Target vs Actual Intake'
+              },
+              legend: {
+                position: 'bottom'
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+    }
+  } catch (err) {
+    console.error('Failed to load latest meal plan or intake data:', err);
+  }
+});
+
 </script>
 </html>

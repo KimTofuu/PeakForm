@@ -202,3 +202,4 @@ Route::get('/intake/latest', [MealController::class, 'latestIntake'])->name('int
 
 Route::post('/progress', [ProgressController::class, 'store'])->name('progress.store');
 Route::get('/progress', [ProgressController::class, 'showProgressTab'])->name('progress_tab');
+
