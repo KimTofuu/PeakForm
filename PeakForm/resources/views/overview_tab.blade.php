@@ -81,7 +81,6 @@
   </div>
 
   <script src="script.js"> </script>
-  
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
 </body>
@@ -245,6 +244,5 @@
     updateProgressChart();
     loadWorkoutForDay(currentDay);
   });
-
 </script>
 </html>
