@@ -113,29 +113,30 @@
     </div>
 
 <!-- Form -->
-    <form>
+    <form action="/update-profile" method="POST">
+      @csrf
       <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" class="form-input" placeholder="Your name" />
+        <label for="age">Age</label>
+        value="{{ old('age', auth()->user()->profile?->age ?? '') }}" required />
       </div>
 
       <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" class="form-input" placeholder="you@example.com" />
+        <label for="weight">Weight (kg)</label>
+        value="{{ old('weight', auth()->user()->profile?->weight ?? '') }}" required />
       </div>
 
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" class="form-input" placeholder="••••••••" />
+        <label for="gender">Gender</label>
+        <select name="gender" id="gender" required>
+          <option value="male" {{ old('gender', auth()->user()->profile?->gender) === 'male' ? 'selected' : '' }}>Male</option>
+          <option value="female" {{ old('gender', auth()->user()->profile?->gender) === 'female' ? 'selected' : '' }}>Female</option>
+          <option value="other" {{ old('gender', auth()->user()->profile?->gender) === 'other' ? 'selected' : '' }}>Other</option>
+        </select>
       </div>
 
       <div class="modal-actions">
-        <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="btn btn-secondary">
-          Cancel
-        </button>
-        <button type="submit" class="btn btn-primary">
-          Save Changes
-        </button>
+        <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="btn btn-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
       </div>
     </form>
   </div>
