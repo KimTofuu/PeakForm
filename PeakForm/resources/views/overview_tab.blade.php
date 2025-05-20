@@ -243,7 +243,7 @@
                 backgroundColor: 'rgba(54, 162, 235, 0.5)'
               },
               {
-                label: 'Actual (g)',
+                label: 'Daily (g)',
                 data: [updated.protein, updated.carbs, updated.fat],
                 backgroundColor: 'rgba(255, 99, 132, 0.5)'
               }
@@ -254,7 +254,7 @@
             plugins: {
               title: {
                 display: true,
-                text: 'Target vs Actual Intake'
+                text: 'Target vs Daily Intake'
               },
               legend: {
                 position: 'bottom'

@@ -221,7 +221,7 @@
                   backgroundColor: 'rgba(54, 162, 235, 0.5)'
                 },
                 {
-                  label: 'Actual (g)',
+                  label: 'Daily (g)',
                   data: [actualProtein, actualCarbs, actualFat],
                   backgroundColor: 'rgba(255, 99, 132, 0.5)'
                 }
@@ -232,7 +232,7 @@
               plugins: {
                 title: {
                   display: true,
-                  text: 'Target vs Actual Intake'
+                  text: 'Target vs Daily Intake'
                 },
                 legend: {
                   position: 'bottom'
@@ -322,7 +322,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                 backgroundColor: 'rgba(54, 162, 235, 0.5)'
               },
               {
-                label: 'Actual (g)',
+                label: 'Daily (g)',
                 data: [updated.protein, updated.carbs, updated.fat],
                 backgroundColor: 'rgba(255, 99, 132, 0.5)'
               }
@@ -333,7 +333,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             plugins: {
               title: {
                 display: true,
-                text: 'Target vs Actual Intake'
+                text: 'Target vs Daily Intake'
               },
               legend: {
                 position: 'bottom'
@@ -412,7 +412,7 @@ document.getElementById('compareIntakeBtn').onclick = async () => {
           plugins: {
             title: {
               display: true,
-              text: 'Target vs Actual Intake'
+              text: 'Target vs Daily Intake'
             },
             legend: {
               position: 'bottom'
