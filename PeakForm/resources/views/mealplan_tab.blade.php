@@ -425,6 +425,9 @@ document.getElementById('compareIntakeBtn').onclick = async () => {
           }
         }
       });
+      document.getElementById('actualProtein').value = '';
+      document.getElementById('actualCarbs').value = '';
+      document.getElementById('actualFat').value = '';
     }
   } catch (err) {
     console.error(err);
