@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
-  
+  <style>body{overflow-y: hidden;}</style>
 </head>
 <body>
   <div class="container">
