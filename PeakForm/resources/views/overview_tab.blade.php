@@ -75,6 +75,11 @@
               </div>
               <div class = "progress_tab4">
                 <canvas id="comparisonChart" width="100%"></canvas>
+                <div class="dailyintake-inside">
+                  <p><strong>Protein:</strong> <span id="inProtein">{{ $daily_intake->protein ?? '-' }}</span> g</p>
+                  <p><strong>Carbs:</strong> <span id="inCarbs">{{ $daily_intake->carbs ?? '-' }}</span> g</p>
+                  <p><strong>Fat:</strong> <span id="inFat">{{ $daily_intake->fat ?? '-' }}</span> g</p>
+                </div>
               </div>
             </div>
           </div>
@@ -277,6 +282,18 @@
     console.error('Failed to load latest meal plan or intake data:', err);
   }
 });
-
+document.addEventListener('DOMContentLoaded', () => {
+    if (dailyIntake) {
+        document.getElementById('inProtein').textContent = dailyIntake.protein ?? '-';
+        document.getElementById('inCarbs').textContent = dailyIntake.carbs ?? '-';
+        document.getElementById('inFat').textContent = dailyIntake.fat ?? '-';
+    } else {
+        // Show placeholders if no data
+        document.getElementById('inCalories').textContent = '-';
+        document.getElementById('inProtein').textContent = '-';
+        document.getElementById('inCarbs').textContent = '-';
+        document.getElementById('inFat').textContent = '-';
+    }
+});
 </script>
 </html>

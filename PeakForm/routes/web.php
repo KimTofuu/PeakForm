@@ -209,3 +209,4 @@ Route::post('/update-profile', [AccountController::class, 'update'])->name('prof
 Route::delete('/daily-intake', [MealController::class, 'destroyToday'])->name('daily-intake.destroy');
 
 Route::get('/mealplan_tab', [MealController::class, 'showMealPlanTab'])->name('mealplan_tab');
+Route::get('/overview_tab', [MealController::class, 'showInOverview'])->name('overview_tab');
