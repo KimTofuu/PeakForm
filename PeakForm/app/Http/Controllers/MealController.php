@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MealPlan;
 use App\Models\DailyIntake;
+use Carbon\Carbon;
+
 
 class MealController extends Controller
 {
@@ -164,5 +166,19 @@ class MealController extends Controller
         } else {
             return response()->json(['success' => false]);
         }
+    }
+
+    public function destroyToday()
+    {
+        $user = Auth::user();
+        $today = Carbon::today();
+
+        $deleted = DailyIntake::where('user_id', $user->id)
+            ->whereDate('created_at', $today)
+            ->delete();
+
+        return response()->json([
+            'message' => $deleted ? 'Deleted successfully' : 'No record found'
+        ], $deleted ? 200 : 404);
     }
 }

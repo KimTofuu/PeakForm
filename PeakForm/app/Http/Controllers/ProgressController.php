@@ -12,7 +12,7 @@ class ProgressController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'recorded_at' => 'required|date',
+            'date_recorded' => 'required|date',
             'weight' => 'required|numeric',
             'body_fat' => 'required|numeric',
             'muscle_mass' => 'required|numeric',
