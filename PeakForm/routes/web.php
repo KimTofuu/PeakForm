@@ -205,3 +205,5 @@ Route::post('/progress', [ProgressController::class, 'store'])->name('progress.s
 Route::get('/progress', [ProgressController::class, 'showProgressTab'])->name('progress_tab');
 
 Route::post('/update-profile', [AccountController::class, 'update'])->name('profile.update');
+
+Route::delete('/daily-intake', [MealController::class, 'destroyToday'])->name('daily-intake.destroy');

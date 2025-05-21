@@ -436,5 +436,36 @@ document.getElementById('compareIntakeBtn').onclick = async () => {
     alert("Something went wrong saving your intake.");
   }
 };
+document.getElementById("ResetBtn").addEventListener("click", async () => {
+  const confirmed = confirm("Are you sure you want to reset today's intake?");
+  if (!confirmed) return;
+
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+  try {
+    const response = await fetch("/daily-intake", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": csrfToken,
+        "Accept": "application/json"
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Daily intake has been reset.");
+      document.getElementById("actualProtein").value = "";
+      document.getElementById("actualCarbs").value = "";
+      document.getElementById("actualFat").value = "";
+    } else {
+      alert("Failed to reset intake: " + data.message);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Something went wrong.");
+  }
+});
 </script>
 </html>

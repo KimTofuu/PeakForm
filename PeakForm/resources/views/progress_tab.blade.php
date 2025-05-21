@@ -71,7 +71,7 @@
                   <tbody>
                     @forelse($progressEntries as $entry)
                       <tr>
-                        <td>{{ \Carbon\Carbon::parse($entry->created_at)->format('F j, Y') }}</td>                        <td>{{ $entry->weight }}</td>
+                        <td>{{ \Carbon\Carbon::parse($entry->date_recorded)->format('F j, Y') }}</td>                        <td>{{ $entry->weight }}</td>
                         <td>{{ $entry->body_fat_percentage }}</td>
                         <td>{{ $entry->muscle_mass }}</td>
                       </tr>
