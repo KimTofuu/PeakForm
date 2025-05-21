@@ -11,21 +11,19 @@ class ProgressController extends Controller
 {
     public function store(Request $request)
     {
+        $user = Auth::user();
         $request->validate([
             'date_recorded' => 'required|date',
             'weight' => 'required|numeric',
-            'body_fat' => 'required|numeric',
+            'body_fat_percentage' => 'required|numeric',
             'muscle_mass' => 'required|numeric',
         ]);
 
-        $user = Auth::user();
-
-        // Adjust model/column names as needed
         ProgressEntry::create([
             'user_id' => $user->id,
-            'date_recorded' => $request->recorded_at,
+            'date_recorded' => $request->date_recorded,
             'weight' => $request->weight,
-            'body_fat_percentage' => $request->body_fat,
+            'body_fat_percentage' => $request->body_fat_percentage,
             'muscle_mass' => $request->muscle_mass,
         ]);
 
