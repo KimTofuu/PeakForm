@@ -37,14 +37,14 @@
     </aside>
     <main class="main-content">
       <div class = "cards">
-      <div class="middle">
-          <div class = "progress_tab">
+      <div class="middle2">
+          <div class = "progress_tab6">
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" >Progress</h2>
             </div>
             <div class ="progress_contents">
               <div class="progress_table_section">
-                <h3 style="font-family: 'Orbitron', sans-serif;">Track Your Progress</h3>
+                <h3 style="font-family: 'Inter', sans-serif; opacity: 50%;">Track Your Progress</h3>
 
                 <!-- Add Entry Form -->
                 <form method="POST" action="{{ route('progress.store') }}" class="progress-form">
@@ -55,7 +55,9 @@
                   <input type="number" name="muscle_mass" step="0.1" placeholder="Muscle Mass (kg)" required />
                   <button type="submit">Add Entry</button>
                 </form>
-
+              </div>
+            </div>
+          </div>
                 <!-- Table Displaying Progress -->
                 <table class="progress-table">
                   <thead>
@@ -82,12 +84,12 @@
                     @endforelse
                   </tbody>
                 </table>
-              </div>
+              
               {{-- <div>
                 <div id="radialChart"></div>
               </div> --}}
-            </div>
-          </div>
+            
+          
         </div>
       </div>
       </div>

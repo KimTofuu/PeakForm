@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   
 </head>
 <body>
@@ -42,11 +43,13 @@
           <div class="daily_tab">
             <h2 style="font-family: 'Michroma', sans-serif;">Today's Workout</h2>
             <div class="day-controls">
-              <button onclick="previousDay()">Previous</button>
               <span id="day-label">Day 1</span>
-              <button onclick="nextDay()">Next</button>
             </div> 
             <div id="workout-container" class="workout-list"></div>
+            <div class="day-controls2">
+            <button onclick="previousDay()" class="prev-btn">Previous</button>
+            <button onclick="nextDay()"  class="next-btn">Next</button>
+            </div>
           </div>
           <div class="actions">
             <div class = "actions_3">
@@ -60,17 +63,18 @@
         <div class="middle">
           <div class = "progress_tab">
             <div class = "header_content">
-              <h2 style="font-family: 'Michroma', sans-serif;" >Progress</h2>
+              <h2 style="font-family: 'Michroma', sans-serif;" >Macros</h2>
             </div>
             <div class ="progress_contents">
-              <div class = "progress_tab4">
-                <canvas id="comparisonChart" width="100%"></canvas>
-              </div>
+              
               <div class="intake-summary">
-                <h3 style="font-family: 'Michroma', sans-serif;">Macros Target</h3>
+                <h4 style="font-family: 'inter', sans-serif;  opacity: 50%; font-weight:100; margin-top: 2.8rem; margin-bottom: 2rem;">Macros Target</h4>
                 <p>Protein: <span id="protein">0</span> g</p>
                 <p>Carbs: <span id="carbs">0</span> g</p>
                 <p>Fat: <span id="fat">0</span> g</p>
+              </div>
+              <div class = "progress_tab4">
+                <canvas id="comparisonChart" width="100%"></canvas>
               </div>
             </div>
           </div>
@@ -170,14 +174,12 @@
           return;
       }
 
-      workoutContainer.innerHTML = exercises.map((exercise, index) => `
-          <div class="exercise-item">
-              <label>
-                  <input type="checkbox" id="exercise-${index}" />
-                  ${exercise.title}
-              </label>
-          </div>
-      `).join('');
+     workoutContainer.innerHTML = exercises.map((exercise, index) => `
+  <div class="exercise-item">
+    <input type="checkbox" id="exercise-${index}" data-title="${exercise.title}">
+    <label for="exercise-${index}">${exercise.title}</label>
+  </div>
+`).join('');
 
       fetch(`/api/workout/progress?day=${currentDay}`)
       .then(response => response.json())

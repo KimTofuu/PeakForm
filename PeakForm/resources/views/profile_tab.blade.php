@@ -46,15 +46,15 @@
               <h2 style="font-family: 'Michroma', sans-serif;" > Account </h2>
             </div>
             <div class = "workout_content">
-              Name: {{ $user->Fname }} {{ $user->Lname }}
+              <p style="opacity: 50%; font-size: 1rem;"> Name </p>{{ $user->Fname }} {{ $user->Lname }}
             </div>
 
             <div class = "workout_content">
-              Email Address: {{ $user->email }}
+              <p style="opacity: 50%; font-size: 1rem;"> Email Address </p> {{ $user->email }}
             </div>
 
             <div class = "workout_content">
-              Password: ********
+              <p style="opacity: 50%; font-size: 1rem;"> Password </p> ********
             </div>
           </div>
 
@@ -73,19 +73,19 @@
               <h2 style="font-family: 'Michroma', sans-serif;" > Profile </h2>
             </div>
             <div class = "workout_content">
-              Name: {{ $user->Fname }} {{ $user->Lname }}
+              <p style="opacity: 50%; font-size: 1rem;"> Name </p> {{ $user->Fname }} {{ $user->Lname }}
             </div>
 
             <div class = "workout_content">
-              Age:  {{ $user->age }}
+              <p style="opacity: 50%; font-size: 1rem;"> Age </p> {{ $user->age }}
             </div>
 
             <div class = "workout_content">
-              Gender: {{ $user->gender }}
+              <p style="opacity: 50%; font-size: 1rem;"> Gender </p> {{ $user->gender }}
             </div>
 
             <div class = "workout_content">
-              Current Weight:  
+              <p style="opacity: 50%; font-size: 1rem;"> Current Weight </p>
             </div>
 
           </div>

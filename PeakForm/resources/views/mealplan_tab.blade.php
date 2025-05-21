@@ -69,7 +69,7 @@
           <button id="compareIntakeBtn"  class="generate-btn" >Compare</button>
           </div>
         </div>
-        <div class = "progress_tab4">
+        <div class = "progress_tab5">
           <canvas id="comparisonChart" width="100%"></canvas>
         </div>
       </div>

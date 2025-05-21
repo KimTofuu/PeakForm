@@ -57,7 +57,9 @@
                     @endphp
                 <div class="workout_content_2">
                   <label>
-                    {{ $exercise }}
+                  <img src="images/push-up.jpg"> 
+                    {{ $exercise }} <br>
+                    
                     @if ($video)
                       <a href="{{ $video->youtube_url }}" target="_blank" class="video-link">
                         <button>View Video Tutorial</button>
