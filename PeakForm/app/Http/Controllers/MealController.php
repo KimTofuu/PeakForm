@@ -87,7 +87,7 @@ class MealController extends Controller
         };
 
         return [
-            'protein' => round(($calories * $splits['protein']) / 4, 2),
+            'protein' => round(($calories * $splits['protein']) / 5, 2),
             'carbs' => round(($calories * $splits['carbs']) / 4, 2),
             'fat' => round(($calories * $splits['fat']) / 9, 2),
         ];
@@ -180,5 +180,20 @@ class MealController extends Controller
         return response()->json([
             'message' => $deleted ? 'Deleted successfully' : 'No record found'
         ], $deleted ? 200 : 404);
+    }
+
+    public function showMealPlanTab()
+    {
+        $user = Auth::user();
+
+        // Get today's intake
+        $daily_intake = DailyIntake::where('user_id', $user->id)
+            ->whereDate('created_at', today())
+            ->first();
+
+        return view('mealplan_tab', [
+            'user' => $user,
+            'daily_intake' => $daily_intake,
+        ]);
     }
 }
