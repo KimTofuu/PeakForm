@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\MealPlan;
 use App\Models\DailyIntake;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class MealController extends Controller
@@ -173,13 +174,39 @@ class MealController extends Controller
         $user = Auth::user();
         $today = Carbon::today();
 
-        $deleted = DailyIntake::where('user_id', $user->id)
+        // Step 1: Get today's daily intake records
+        $intakes = DailyIntake::where('user_id', $user->id)
+            ->whereDate('created_at', $today)
+            ->get();
+
+        if ($intakes->isEmpty()) {
+            return response()->json([
+                'message' => 'No record found'
+            ], 404);
+        }
+
+        // Step 2: Save them to the recorded_intakes table
+        foreach ($intakes as $intake) {
+            DB::table('recorded_intakes')->insert([
+                'user_id' => $intake->user_id,
+                'date' => $today->toDateString(),
+                // 'calories' => $intake->calories,
+                'protein' => $intake->protein,
+                'carbs' => $intake->carbs,
+                'fat' => $intake->fat,
+                'created_at' => $intake->created_at,
+                'updated_at' => now(),
+            ]);
+        }
+
+        // Step 3: Delete from daily_intakes
+        DailyIntake::where('user_id', $user->id)
             ->whereDate('created_at', $today)
             ->delete();
 
         return response()->json([
-            'message' => $deleted ? 'Deleted successfully' : 'No record found'
-        ], $deleted ? 200 : 404);
+            'message' => 'Records moved and deleted successfully'
+        ], 200);
     }
 
     public function showMealPlanTab()
