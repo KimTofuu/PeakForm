@@ -71,8 +71,14 @@
           <button id="ResetBtn"  class="generate-btn" >Reset</button>
           </div>
         </div>
-        <div class = "progress_tab5">
+        <div class="progress_tab5">
           <canvas id="comparisonChart" width="100%"></canvas>
+          
+          <div class="dailyintake-inside">
+            <p><strong>Protein:</strong> <span id="inProtein">{{ $daily_intake->protein ?? '-' }}</span> g</p>
+            <p><strong>Carbs:</strong> <span id="inCarbs">{{ $daily_intake->carbs ?? '-' }}</span> g</p>
+            <p><strong>Fat:</strong> <span id="inFat">{{ $daily_intake->fat ?? '-' }}</span> g</p>
+          </div>
         </div>
       </div>
     </div>
@@ -122,6 +128,7 @@
   const openBtn = document.getElementById('openMealPlanModal');
   const modal = document.getElementById('mealPlanModal');
   const closeBtn = document.getElementById('closeMealPlanModal');
+  const dailyIntake = document.getElementById('dailyIntake');
 
   openBtn.onclick = () => modal.style.display = 'block';
   closeBtn.onclick = () => modal.style.display = 'none';
@@ -466,6 +473,19 @@ document.getElementById("ResetBtn").addEventListener("click", async () => {
     console.error("Error:", error);
     alert("Something went wrong.");
   }
+});
+document.addEventListener('DOMContentLoaded', () => {
+    if (dailyIntake) {
+        document.getElementById('inProtein').textContent = dailyIntake.protein ?? '-';
+        document.getElementById('inCarbs').textContent = dailyIntake.carbs ?? '-';
+        document.getElementById('inFat').textContent = dailyIntake.fat ?? '-';
+    } else {
+        // Show placeholders if no data
+        document.getElementById('inCalories').textContent = '-';
+        document.getElementById('inProtein').textContent = '-';
+        document.getElementById('inCarbs').textContent = '-';
+        document.getElementById('inFat').textContent = '-';
+    }
 });
 </script>
 </html>
