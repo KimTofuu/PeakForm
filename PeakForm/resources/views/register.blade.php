@@ -62,13 +62,15 @@
             @enderror
 
             <!-- Password Rules -->
-            <ul id="password-rules" style="list-style: none; padding: 5px 0 0 0; margin: 0; font-size: 13px; color: red;">
-                <li id="rule-length" class="rule">❌ At least 8 characters</li>
-                <li id="rule-upper" class="rule">❌ At least 1 uppercase letter</li>
-                <li id="rule-lower" class="rule">❌ At least 1 lowercase letter</li>
-                <li id="rule-number" class="rule">❌ At least 1 number</li>
-                <li id="rule-special" class="rule">❌ At least 1 special character (@$!%*?&)</li>
-            </ul>
+            <div id="password-feedback" style="display: none;">
+    <ul id="password-rules" style="list-style: none; padding:0; margin: 0; font-size: 13px; color: red;">
+        <li id="rule-length" class="rule">❌ At least 8 characters</li>
+        <li id="rule-upper" class="rule">❌ At least 1 uppercase letter</li>
+        <li id="rule-lower" class="rule">❌ At least 1 lowercase letter</li>
+        <li id="rule-number" class="rule">❌ At least 1 number</li>
+        <li id="rule-special" class="rule">❌ At least 1 special character (@$!%*?&)</li>
+    </ul>
+</div>
         </div>
 
 
@@ -195,29 +197,34 @@ Welcome to PeakForm. Your privacy is important to us. This Privacy <br> Policy o
     
     <script src="script.js"></script>
     <script>
-        function validatePassword() {
-            const password = document.getElementById("password").value;
+        const passwordInput = document.getElementById("password");
+    const feedbackBox = document.getElementById("password-feedback");
 
-            const rules = {
-                length: password.length >= 8,
-                upper: /[A-Z]/.test(password),
-                lower: /[a-z]/.test(password),
-                number: /[0-9]/.test(password),
-                special: /[@$!%*?&]/.test(password),
-            };
+    function validatePassword() {
+        const password = passwordInput.value;
+        const errors = [];
 
-            document.getElementById("rule-length").innerHTML = rules.length ? "✅ At least 8 characters" : "❌ At least 8 characters";
-            document.getElementById("rule-upper").innerHTML = rules.upper ? "✅ At least 1 uppercase letter" : "❌ At least 1 uppercase letter";
-            document.getElementById("rule-lower").innerHTML = rules.lower ? "✅ At least 1 lowercase letter" : "❌ At least 1 lowercase letter";
-            document.getElementById("rule-number").innerHTML = rules.number ? "✅ At least 1 number" : "❌ At least 1 number";
-            document.getElementById("rule-special").innerHTML = rules.special ? "✅ At least 1 special character (@$!%*?&)" : "❌ At least 1 special character (@$!%*?&)";
+        if (password.length < 8) errors.push("At least 8 characters");
+        if (!/[A-Z]/.test(password)) errors.push("At least 1 uppercase letter");
+        if (!/[a-z]/.test(password)) errors.push("At least 1 lowercase letter");
+        if (!/[0-9]/.test(password)) errors.push("At least 1 number");
+        if (!/[@$!%*?&]/.test(password)) errors.push("At least 1 special character (@$!%*?&)");
 
-            // Optional: Add color
-            for (let key in rules) {
-                const item = document.getElementById(`rule-${key}`);
-                item.style.color = rules[key] ? "green" : "red";
-            }
+        if (password.length === 0) {
+            feedbackBox.style.display = "none";
+        } else if (errors.length === 0) {
+            feedbackBox.style.display = "block";
+            feedbackBox.style.color = "green";
+            feedbackBox.innerHTML = "✅ Strong password";
+        } else {
+            feedbackBox.style.display = "block";
+            feedbackBox.style.color = "red";
+            feedbackBox.innerHTML = "<ul style='padding-left: 20px; margin: 0;'>" +
+                errors.map(err => `<li>❌ ${err}</li>`).join("") + "</ul>";
         }
+    }
+
+    passwordInput.addEventListener("input", validatePassword);
     </script>
 
 </body>

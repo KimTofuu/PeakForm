@@ -18,6 +18,7 @@ body {
   text-align: center;
   align-items: center;
   justify-content: center;
+  margin-bottom: 5rem;
 }
 
 h2 {
@@ -109,6 +110,7 @@ h2 {
 .button_proceed{
   margin-top: 0.5rem; 
   text-align: center;
+  margin-bottom: 3rem;
 }
 .button_proceed:hover,
 .proceed-button:hover {
@@ -171,15 +173,16 @@ input {
 }
 
 .workout-box {
-  display:flex;
-  flex-direction: row;
   width: 100%;
-  max-width: 37.5rem;
-  margin-top: 1.25rem;
+  margin-top: -3rem;
 }
 
 .workouts-card {
   padding: 2rem;
+   display: flex; /* Makes the children (daily_tab_2) arrange in a row */
+    flex-wrap: wrap; /* Allows cards to wrap to the next line if there isn't enough space */
+    gap: 20px; /* Adds space between the cards */
+    justify-content: center;
 }
 
 .daily_tab_2 {
@@ -195,6 +198,23 @@ input {
   text-align: center;
 }
 
+.daily_tab_3{
+  /* Set a width for your cards, and allow them to shrink/grow */
+    flex: 1 1 300px; /* flex-grow flex-shrink flex-basis. Adjust 300px as needed for your card width */
+    min-width: 280px; /* Minimum width to prevent cards from becoming too small */
+    max-width: 350px; /* Optional: Maximum width for larger screens */
+
+    /* Add styling for your cards (borders, padding, shadow, etc.) */
+     padding: 2rem;
+      font-size: 1.5rem;
+  box-shadow: 0 0 0.375rem rgba(0, 0, 0, 0.3), 0 -4px 0 0 #8FB031;
+  height: auto; 
+  display:flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1.25rem;
+  text-align: center;
+}
 .workout_content_2{
   text-align: center;
 }
@@ -301,5 +321,10 @@ input {
   width: 100%;
   margin-top: 1.25rem;
   text-align: center;
+}
+
+.daily_tab_3 {
+   min-width: 400px; /* Minimum width to prevent cards from becoming too small */
+    max-width: 500px;
 }
 }

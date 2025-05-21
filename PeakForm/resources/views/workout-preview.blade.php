@@ -18,7 +18,7 @@
           @endphp
 
           @foreach ($workouts as $exercises)
-            <div class="daily_tab_2">
+            <div class="daily_tab_3">
               <div class="header_content">
                 <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $dayCount }}</h2> <!-- Day 1, Day 2, ... -->
               </div>

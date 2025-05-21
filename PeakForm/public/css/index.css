@@ -7,7 +7,6 @@
 }
 
 html {
-	scroll-behavior: smooth;
 	font-size: 16px; /* 1rem = 16px */
 }
 
@@ -18,8 +17,7 @@ body {
 
 /* HEADER */
 #header {
-	width: 100%;
-	height: 50rem;
+	
 	background: #FAF9F6;
 	background-size: cover;
 	background-position: center;
@@ -27,7 +25,6 @@ body {
 
 .container {
 	padding: 0.625rem 10%;
-  max-width: 2000px;
   width: 100%;
   margin: 0 auto; 
 }
@@ -412,12 +409,20 @@ footer {
 	margin-bottom: 2.5rem;
 }
 
+.header_welcome img{
+	position: absolute;
+	left: 70%;
+	width: 50%; 
+	height: 90%;
+	top: 8%;
+}
 .proceed_options {
 	color: black;
 	display: flex;
 	flex-wrap: wrap;
 	background-color: #FAF9F6;
 	flex-direction: row;
+	text-align: center;
 }
 
 .proceed_options span {
@@ -428,12 +433,15 @@ footer {
 
 .proceed_opt,
 .training_opt {
-	flex-basis: 30%;
-	background-color: #c9d89c;
-	border-radius: 1.25rem;
+	flex-basis: 40%;
 	text-align: center;
-	height: 15rem;
-	width: 15rem;
+	height: 20rem;
+	padding: 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  box-shadow: 0 0 0.375rem rgba(0, 0, 0, 0.3), 0 -4px 0 0 #8FB031;
+  height: auto;
+  right:50%; 
 }
 
 .proceed_opt h4 {
@@ -480,14 +488,22 @@ footer {
 
 
 @media(min-width: 1920px) {
-    html {
-        font-size: 18px;
-    }
 
-    .container {
-        padding: 0.625rem 7%;
-    }
+html {
+	font-size: 18px;
+}
 
+body {
+	background: white;
+	color: #fff;
+}
+
+.container {
+	padding: 0.625rem 5%;
+  margin: 0 auto; 
+}
+    
+    
     .logo {
         max-width: 30rem;
     }
@@ -511,9 +527,9 @@ footer {
     }
 
     .col_1 {
-        flex-basis: 55%;
+        flex-basis: 60%;
         margin-top: 1.25rem;
-        margin-left: -3%;
+        margin-left: 0rem;
     }
 
     .col_1 h1 {
@@ -640,7 +656,7 @@ footer {
     .training_opt {
         flex-basis: 45%;
         height: 22rem;
-		margin-left: 2.5rem;
+		margin-left: 0rem;
 		margin-top: 3rem;
     }
 
@@ -667,4 +683,18 @@ footer {
         margin-top: 3rem;
         margin-left: -2rem;
     }
+
+	.button-up {
+	bottom: 12%;
+	right: 12%;
+}
+
+.header_welcome img{
+	position: absolute;
+	left: 70%;
+	width: 50%; 
+	height: 90%;
+	top: 8%;
+}
+
 }

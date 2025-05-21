@@ -20,20 +20,15 @@
         <div class = "header_welcome">
             <h1> Welcome, {{$user->Fname}}! <br> to PeakForm </h1>
             <p> Your personalized path to peak performance! </p>
+            <img src="images/bowl.png">
         </div>
-
+        
         <div class = "proceed_options">
             <div class = "proceed_opt">
                 <h4> Let's build your Workout </h4>
                 <a href="{{ route('workout_plan_1') }}" class = "button_proceed">
                     <button>Proceed</button>
                 </a>
-            </div>
-            <div class = "training_opt">
-                <h4> or you want to train first <br> <span> click and hold </span>  </h4>
-                <div class = "training_img">
-                    <img src = "images/Lift.png" class = "welcome_logo">
-                </div>
             </div>
         </div>
     </div>
