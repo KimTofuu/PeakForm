@@ -196,4 +196,18 @@ class MealController extends Controller
             'daily_intake' => $daily_intake,
         ]);
     }
+    public function showInOverview()
+    {
+        $user = Auth::user();
+
+        // Get today's intake
+        $daily_intake = DailyIntake::where('user_id', $user->id)
+            ->whereDate('created_at', today())
+            ->first();
+
+        return view('overview_tab', [
+            'user' => $user,
+            'daily_intake' => $daily_intake,
+        ]);
+    }
 }

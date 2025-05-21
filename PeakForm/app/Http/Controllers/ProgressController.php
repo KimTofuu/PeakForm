@@ -42,3 +42,5 @@ public function showProgressTab()
         return view('progress_tab', compact('user', 'progressEntries'));
     }
 }
+
+
