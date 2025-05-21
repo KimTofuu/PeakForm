@@ -67,6 +67,7 @@
           <label> <input type="number" id="actualCarbs" min="0" placeholder="Carbs (g)"></label><br>
           <label> <input type="number" id="actualFat" min="0" placeholder="Fat (g)"></label><br>
           <button id="compareIntakeBtn"  class="generate-btn" >Compare</button>
+          <button id="ResetBtn"  class="generate-btn" >Reset</button>
           </div>
         </div>
         <div class = "progress_tab5">
