@@ -8,23 +8,22 @@
   <link rel="stylesheet" href="{{ asset('css/workout_plan.css') }}">
 </head>
 <body>
-  <div class="container">
-    <h2>Let’s Build Your Personalized Plan!</h2>
-    <img src="{{ asset('images/logo_6.png') }}" alt="Dumbbell Icon" class="icon" />
+  <div class="container2">
+    <img src="images/logo_9.png" class="logo_top">
 
     <form action="{{ route('workout_plan_2') }}" method="POST">
       @csrf
       <div class="form-box">
         <p class="question">What best describes your workout setup? <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="Full Gym Setup"> <b>Full Gym Setup</b> <img src="images/fullGym.png"> </button>
-          <button type="button" class="goal-button" data-goal="Home / Minimal Setup"> <b>Home / Minimal Setup</b> <img src="images/homeGym.png"> </button>
+          <button type="button" class="goal-button" data-goal="Full Gym Setup"> <img src="images/fullGym.png"> </button>
+          <button type="button" class="goal-button" data-goal="Home / Minimal Setup"><img src="images/homeGym.png"> </button>
         </div>
       </div>
 
       <input type="hidden" name="setup" id="selected-setup" />
 
-      <button type="submit" class="proceed-button">Proceed</button>
+      <button type="submit" class="proceed-button"><img src="images/proceed.png"></button>
     </form>
   </div>
 

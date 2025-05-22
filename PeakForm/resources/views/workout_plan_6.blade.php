@@ -9,22 +9,21 @@
 </head>
 <body>
   <div class="container">
-    <h2>Let’s Build Your Personalized Plan!</h2>
-    <img src="{{ asset('images/logo_6.png') }}" alt="Dumbbell Icon" class="icon" />
+    <img src="images/logo_9.png" class="logo_top">
 
     <form action="{{ route('workout_plan_6') }}" method="POST">
       @csrf
       <div class="form-box">
         <p class="question">Select your Workout Routine Type <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="PPL"> <b> Push-Pull-Legs (PPL) </b> <br> <span> Push (chest, shoulders, triceps), Pull (back, biceps), and Legs </span>  <img src="images/PPL.png"> </button>
-          <button type="button" class="goal-button" data-goal="Upper/Lower"> <b> Upper/Lower </b> <br> <span> Alternates between upper and lower body days </span> <img src="images/upperLower.png"> </button>
-          <button type="button" class="goal-button" data-goal="Full Body"><b> Full Body </b> <br> <span>  Trains all major muscle groups in one session </span> <img src="images/fullBody.png"></button>
+          <button type="button" class="goal-button" data-goal="PPL"> <img src="images/PPL.png"> </button>
+          <button type="button" class="goal-button" data-goal="Upper/Lower"> <img src="images/upperLower.png"> </button>
+          <button type="button" class="goal-button" data-goal="Full Body"> <img src="images/fullBody.png"></button>
         </div>
       </div>
 
       <input type="hidden" name="splitType" id="selected-splitType" />
-      <button type="submit" class="proceed-button"> Proceed </button>
+      <button type="submit" class="proceed-button"> <img src="images/proceed.png"> </button>
     </form>
   </div>
 

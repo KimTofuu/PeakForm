@@ -9,8 +9,7 @@
 </head>
 <body>
   <div class="container">
-    <h2>Let’s Build Your Personalized Plan!</h2>
-    <img src="{{ asset('images/logo_6.png') }}" alt="Dumbbell Icon" class="icon" />
+    <img src="images/logo_9.png" class="logo_top">
 
     <form action="{{ route('workout_plan_4') }}" method="POST">
       @csrf
@@ -24,7 +23,7 @@
       </div>
 
       <input type="hidden" name="days" id="selected-days" />
-      <button type="submit" class="proceed-button">Proceed</button>
+      <button type="submit" class="proceed-button"><img src="images/proceed.png"></button>
     </form>
   </div>
 
