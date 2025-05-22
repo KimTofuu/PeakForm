@@ -8,8 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Your workout preview!</h2>
-        <img src="images/logo_6.png" alt="Dumbbell Icon" class="icon" />
+        <img src="images/logo_9.png" class="logo_top">
 
         <div class="workout-box">
         <div class="workouts-card">
@@ -42,8 +41,8 @@
         </div>
         </div>
         <br>
-        <a href="{{ route('overview_tab') }}" class = "button_proceed">
-          Proceed
+        <a href="{{ route('overview_tab') }}" >
+          <button class = "proceed-button"><img src="images/proceed.png"></button>
         </a>
     </div>
 

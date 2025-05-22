@@ -23,6 +23,8 @@ document.querySelectorAll(".goal-button").forEach(button => {
   });
 });
 
+
+
 function mapLabelToBackend(label) {
   const map = {
     // Goal step

@@ -9,22 +9,21 @@
 </head>
 <body>
   <div class="container">
-    <h2>Let’s Build Your Personalized Plan!</h2>
-    <img src="{{ asset('images/logo_6.png') }}" alt="Dumbbell Icon" class="icon" />
+    <img src="images/logo_9.png" class="logo_top">
 
     <form action="{{ route('workout_plan_5') }}" method="POST">
       @csrf
       <div class="form-box">
         <p class="question">Select Level of Expertise <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="beginner">  <b> Beginner </b> <br> <span> New to working out or returning after a long break. </span> <br> <img src="images/beginner.png">  </button>
-          <button type="button" class="goal-button" data-goal="intermediate"> <b> Intermediate </b> <br> <span> 6 months to 2 years of consistent training. </span> <br> <img src="images/moderateIntensity.png">  </button>
-          <button type="button" class="goal-button" data-goal="advanced"><b> Advanced </b> <br> <span>  2+ years of consistent and structured training. </span> <br> <img src="images/highIntensity.png">  </button>
+          <button type="button" class="goal-button" data-goal="beginner"> <img src="images/beginner.png">  </button>
+          <button type="button" class="goal-button" data-goal="intermediate"><img src="images/intermediate.png">  </button>
+          <button type="button" class="goal-button" data-goal="advanced"> <img src="images/advanced.png">  </button>
         </div>
       </div>
 
       <input type="hidden" name="level" id="selected-level" />
-      <button type="submit" class="proceed-button"> Proceed </button>
+      <button type="submit" class="proceed-button"><img src="images/proceed.png"></button>
     </form>
   </div>
 

@@ -8,25 +8,25 @@
   <link rel="stylesheet" href="{{ asset('css/workout_plan.css') }}">
 </head>
 <body>
+
   <div class="container">
-    <h2>Let’s Build Your Personalized Plan!</h2>
-    <img src="{{ asset('images/logo_6.png') }}" alt="Dumbbell Icon" class="icon" />
     
+  <img src="images/logo_9.png" class="logo_top">
 
     <form action="{{ route('workout_plan_1') }}" method="POST">
       @csrf
       <div class="form-box">
         <p class="question">What’s your primary goal? <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="Lose Fat"> <b>Lose Fat</b> <img src="images/loseFat.png"> </button>
-          <button type="button" class="goal-button" data-goal="Build Muscle"><b>Build Muscle</b> <img src="images/buildMuscle.png"> </button>
-          <button type="button" class="goal-button" data-goal="Get Toned"><b>Get Toned</b> <img src="images/getToned.png"> </button>
+          <button type="button" class="goal-button" data-goal="Lose Fat"><img src="images/loseFat.png"> </button>
+          <button type="button" class="goal-button" data-goal="Build Muscle"><img src="images/buildMuscle.png"> </button>
+          <button type="button" class="goal-button" data-goal="Get Toned"><img src="images/getToned.png"> </button>
         </div>
       </div>
 
       <input type="hidden" name="goal" id="selected-goal" />
 
-      <button type="submit" class="proceed-button">Proceed</button>
+      <button type="submit" class="proceed-button"><img src="images/proceed.png"></button>
     </form>
   </div>
 

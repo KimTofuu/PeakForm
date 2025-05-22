@@ -12,14 +12,14 @@
 <body>
     <div id = "header">
         <nav>
-           <img src="images/logo_7.png" class = "logo">
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#FAQs">FAQs</a></li>
+           <img src="images/logo_9.png" class = "logo">
+            <ul class="nav-list">
+                <li><a href="#about"><img src="images/About.png"></a><div class="tooltip-text">Abouts<div></li>
+                <li><a href="#features"><img src="images/Features.png"><div class="tooltip-text">Features<div></a></li>
+                <li><a href="#FAQs"><img src="images/FAQs.png"><div class="tooltip-text">FAQs<div></a></li>
                 <li>
-                    <a href="{{ route('login') }}">
-                        <button>Log in</button>
+                    <a href="{{ route('login') }}" class="login-btn" style="top:-0.2rem; margin-left:4rem; margin-right: 2.5rem;" >
+                        <button style="background: none; border: none; padding: 0; margin: 0;"><img src="images/LogIn-btn.png" ></button>
                     </a>
                 </li>
             </ul>
@@ -39,13 +39,12 @@
                     </a>
                 </div>
                 <div class="col_2">
-                    <img src='images/bowl.png'>
+                    <img src="images/workout-1.png">
                 </div>
             </div>
-            <img src='images/dumbell.png' id = "dumbbell">
         </div>
 
-        <a class="button-up" href="#header"> <i class="fa-solid fa-arrow-up"></i> </a>
+        <a class="button-up" href="#header" style="display: none;"> <i class="fa-solid fa-arrow-up"></i> </a>
 
     </div>
     
@@ -189,6 +188,30 @@
 
 
     <script src="script.js"></script>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const button = document.querySelector(".button-up");
+    const trigger = document.getElementById("about");
+
+    window.addEventListener("scroll", () => {
+      const triggerTop = trigger.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      // Show if we've scrolled past the trigger element
+      if (triggerTop <= windowHeight - 100) {
+        button.style.display = "block";
+      } else {
+        button.style.display = "none";
+      }
+
+      if (triggerTop <= windowHeight - 100) {
+        button.classList.add("visible");
+        } else {
+         button.classList.remove("visible");
+        }
+    });
+  });
+</script>
 
 </body>
 </html>

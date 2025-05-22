@@ -9,22 +9,21 @@
 </head>
 <body>
   <div class="container">
-    <h2>Let’s Build Your Personalized Plan!</h2>
-    <img src="{{ asset('images/logo_6.png') }}" alt="Dumbbell Icon" class="icon" />
+    <img src="images/logo_9.png" class="logo_top">
 
     <form action="{{ route('workout_plan_3') }}" method="POST">
       @csrf
       <div class="form-box">
         <p class="question">Select workout intensity <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="High Intensity"> <b>High Intensity</b> <img src="images/highIntensity.png"> </button>
-          <button type="button" class="goal-button" data-goal="Moderate"> <b>Moderate</b> <img src="images/moderateIntensity.png"> </button>
-          <button type="button" class="goal-button" data-goal="Low Intensity"> <b>Low Intensity</b> <img src="images/lowIntensity.png"> </button>
+          <button type="button" class="goal-button" data-goal="High Intensity"> <img src="images/highIntensity.png"> </button>
+          <button type="button" class="goal-button" data-goal="Moderate">  <img src="images/moderateIntensity.png"> </button>
+          <button type="button" class="goal-button" data-goal="Low Intensity">  <img src="images/lowIntensity.png"> </button>
         </div>
       </div>
 
       <input type="hidden" name="intensity" id="selected-intensity" />
-      <button type="submit" class="proceed-button"> Proceed </button>
+      <button type="submit" class="proceed-button"><img src="images/proceed.png"></button>
     </form>
   </div>
 
