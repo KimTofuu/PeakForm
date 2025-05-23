@@ -110,7 +110,7 @@ class WorkoutController extends Controller
             ],
             'intermediate' => [
                 'push' => ['Pike Push-Ups', 'Chair Dips', 'Handstand Holds', 'Resistance Band Press'],
-                'pull' => ['Inverted Rows (Under Table)', 'Band Pull-Aparts', 'Towel Curls', 'Superman Pulls'],
+                'pull' => ['Inverted Rows', 'Band Pull-Aparts', 'Towel Curls', 'Superman Pulls'],
                 'legs' => ['Bulgarian Split Squats', 'Jump Squats', 'Wall Sits', 'Step-Ups'],
             ],
             'advanced' => [
@@ -485,5 +485,51 @@ class WorkoutController extends Controller
         //     'success' => true,
         //     'exercises' => $final,
         // ]);
+    }
+
+     public function getWorkoutForOverview(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated.'], 403);
+        }
+
+        // Get the day number from the request
+        $dayNumber = $request->input('day');
+
+        // Fetch the latest workout split for the user
+        $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
+
+        if (!$workSplit) {
+            return response()->json(['error' => 'No workout plan found.'], 404);
+        }
+
+        // Decode the workout plan for the specified day
+        $days = [
+            'Day 1' => json_decode($workSplit->day1 ?? '[]'),
+            'Day 2' => json_decode($workSplit->day2 ?? '[]'),
+            'Day 3' => json_decode($workSplit->day3 ?? '[]'),
+            'Day 4' => json_decode($workSplit->day4 ?? '[]'),
+            'Day 5' => json_decode($workSplit->day5 ?? '[]'),
+            'Day 6' => json_decode($workSplit->day6 ?? '[]'),
+            'Day 7' => json_decode($workSplit->day7 ?? '[]'),
+        ];
+
+        $selectedDay = "Day $dayNumber";
+        $rawExercises = $days[$selectedDay];
+        $formattedExercises = collect($rawExercises)->map(function ($exercise) {
+            return ['title' => $exercise];
+        });
+
+
+        if (isset($days[$selectedDay])) {
+            return response()->json([
+                'success' => true,
+                'day' => $selectedDay,
+                'exercises' => $formattedExercises,
+            ]);
+        }
+
+        return response()->json(['error' => 'Invalid day.'], 400);
     }
 }

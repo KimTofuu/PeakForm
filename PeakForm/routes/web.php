@@ -210,3 +210,5 @@ Route::delete('/daily-intake', [MealController::class, 'destroyToday'])->name('d
 
 Route::get('/mealplan_tab', [MealController::class, 'showMealPlanTab'])->name('mealplan_tab');
 Route::get('/overview_tab', [MealController::class, 'showInOverview'])->name('overview_tab');
+
+Route::get('/api/workout/day', [WorkoutController::class, 'getWorkoutForOverview']);
