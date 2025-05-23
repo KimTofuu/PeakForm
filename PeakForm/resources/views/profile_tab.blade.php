@@ -61,7 +61,7 @@
           <div class="actions">
             <div class = "actions_3">
               <a onclick="document.getElementById('editModal').classList.remove('hidden')"  class="btn play"> 
-                <button> Edit Account </button>
+                <button> Change Password </button>
               </a>
             </div>
           </div>
@@ -73,21 +73,16 @@
               <h2 style="font-family: 'Michroma', sans-serif;" > Profile </h2>
             </div>
             <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Name </p> {{ $user->Fname }} {{ $user->Lname }}
+              <p style="opacity: 50%; font-size: 1rem;"> Age </p> {{ $profile->age }}
             </div>
 
             <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Age </p> {{ $user->age }}
+              <p style="opacity: 50%; font-size: 1rem;"> Gender </p> {{ ucfirst($profile->gender) }}
             </div>
 
             <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Gender </p> {{ $user->gender }}
+              <p style="opacity: 50%; font-size: 1rem;"> Current Weight </p> {{ $profile->weight }} kg
             </div>
-
-            <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Current Weight </p>
-            </div>
-
           </div>
 
           <div class="actions">
@@ -108,39 +103,51 @@
   <!-- Modal Box -->
   <div class="modal-box">
     <div class="modal-header">
-      <h2>Edit Account</h2>
+      <h2>Change Password</h2>
       <button onclick="document.getElementById('editModal').classList.add('hidden')" class="modal-close">&times;</button>
     </div>
 
-<!-- Form -->
-    <form action="/update-profile" method="POST">
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    <!-- Change Password Form -->
+    <form action="/change-password" method="POST">
       @csrf
       <div class="form-group">
-        <label for="age">Age</label>
-        value="{{ old('age', auth()->user()->profile?->age ?? '') }}" required />
+        <label for="current_password">Current Password</label>
+        <input type="password" id="current_password" name="current_password" class="form-input" placeholder="Enter current password" required />
       </div>
 
       <div class="form-group">
-        <label for="weight">Weight (kg)</label>
-        value="{{ old('weight', auth()->user()->profile?->weight ?? '') }}" required />
+        <label for="new_password">New Password</label>
+        <input type="password" id="new_password" name="new_password" class="form-input" placeholder="Enter new password" required />
       </div>
 
       <div class="form-group">
-        <label for="gender">Gender</label>
-        <select name="gender" id="gender" required>
-          <option value="male" {{ old('gender', auth()->user()->profile?->gender) === 'male' ? 'selected' : '' }}>Male</option>
-          <option value="female" {{ old('gender', auth()->user()->profile?->gender) === 'female' ? 'selected' : '' }}>Female</option>
-          <option value="other" {{ old('gender', auth()->user()->profile?->gender) === 'other' ? 'selected' : '' }}>Other</option>
-        </select>
+        <label for="new_password_confirmation">Confirm New Password</label>
+        <input type="password" id="new_password_confirmation" name="new_password_confirmation" class="form-input" placeholder="Confirm new password" required />
       </div>
 
       <div class="modal-actions">
         <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="btn btn-secondary">Cancel</button>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="submit" class="btn btn-primary">Change Password</button>
       </div>
     </form>
   </div>
 </div>
+
 
 <!-- Modal -->
 <div id="profileModal" class="modal-overlay hidden">

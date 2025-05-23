@@ -7,46 +7,46 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class ProfileController extends Controller
 {
     public function update(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'age' => 'required|integer|min:0',
-            'gender' => 'required|string',
-            'weight' => 'required|numeric|min:0',
-            'height' => 'nullable|numeric|min:0',
-            'goal' => 'nullable|string|max:255',
-            'activityLevel' => 'nullable|string|max:255',
-        ]);
-
         $user = Auth::user();
-        if (!$user) {
-            return redirect()->back()->withErrors(['error' => 'User not authenticated.']);
-        }
 
-        [$fname, $lname] = explode(' ', $request->name . ' ', 2);
-
-        Profile::where('user_id', $user->id)->update([
-            'Fname' => $fname,
-            'Lname' => trim($lname),
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'age' => 'nullable|integer|min:0',
+            'gender' => 'nullable|string|max:50',
+            'weight' => 'nullable|numeric|min:0',
         ]);
 
-        Profile::updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'age' => $request->age,
-                'gender' => $request->gender,
-                'weight' => $request->weight,
-                'height' => $request->height,
-                'goal' => $request->goal,
-                'activityLevel' => $request->activityLevel,
-            ]
-        );
+        // Split name into first and last (optional, adjust as needed)
+        $nameParts = preg_split('/\s+/', trim($validated['name']));
+        $fname = count($nameParts) > 1 ? implode(' ', array_slice($nameParts, 0, -1)) : $validated['name'];
+        $lname = count($nameParts) > 1 ? end($nameParts) : '';
 
-        return redirect()->back()->with('success', 'Profile updated successfully.');
+        $profile = Profile::firstOrNew(['user_id' => $user->id]);
+        $profile->Fname = $fname;
+        $profile->Lname = $lname;
+        $profile->age = $validated['age'];
+        $profile->gender = $validated['gender'];
+        $profile->weight = $validated['weight'];
+        $profile->save();
+
+        return back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function show()
+    {
+        $user = Auth::user();
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        return view('profile_tab', [
+            'user' => $user,
+            'profile' => $profile,
+        ]);
     }
 }

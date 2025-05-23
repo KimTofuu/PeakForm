@@ -88,5 +88,37 @@ class AuthController extends Controller
 
         return redirect()->route('index')->with('message', 'Logged out successfully.');
     }
+
+    public function changePassword(Request $request)
+    {
+        $fields = $request->validate([
+            'current_password' => 'required',
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*?&]/',
+                'confirmed'
+            ],
+        ]);
+
+        $user = Auth::user(); // Make sure this is an instance of App\Models\User
+        $user = User::find($user->id);
+        if (!$user) {
+            return back()->withErrors(['auth' => 'User not authenticated.']);
+        }
+
+        if (!Hash::check($fields['current_password'], $user->password)) {
+            return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+        }
+
+        $user->password = Hash::make($fields['new_password']);
+        $user->save();
+
+        return back()->with('success', 'Password changed successfully.');
+    }
 }
  
