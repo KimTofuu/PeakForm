@@ -53,18 +53,17 @@
                       @php
                           $normalized = strtolower(trim($exercise));
                           $video = $videoList[$normalized] ?? null;
-                          // dump($normalized, $videoList->keys());
-                          // dump($videoList->keys()->all());
+                          $imageName = $exercise . '.jpg';
+                          $imagePath = asset('images/exercisePics/' . $imageName);
                       @endphp
                       <div class="workout_content_2">
                           <label>
-                              <img src="images/push-up.jpg"> 
+                              <img src="{{ $imagePath }}" alt="{{ $exercise }}" style="width:60px; height:60px; object-fit:cover;">
                               {{ $exercise }} <br>
                           </label>
                           @php
                               $embedUrl = '';
                               if ($video && $video->youtube_url) {
-                                  // Try to match both youtube.com/watch?v= and youtu.be/ and also handle extra params
                                   if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $video->youtube_url, $matches)) {
                                       $embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
                                   }
