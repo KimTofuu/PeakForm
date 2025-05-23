@@ -40,45 +40,55 @@
     
         <div class="left_side_1">
           @php
-            $dayCount = 1; // Initialize a counter for day numbers
+              $dayCount = 1;
           @endphp
 
           @foreach ($workouts as $exercises)
-            <div class="daily_tab_2">
-              <div class="header_content">
-                <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $dayCount }}</h2> 
-              </div>
+              <div class="daily_tab_2">
+                  <div class="header_content">
+                      <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $dayCount }}</h2> 
+                  </div>
 
-              @forelse ($exercises as $exercise)
-                    @php
-                      $normalized = strtolower(trim($exercise));
-                      $video = $videoList[$normalized] ?? null;
-                      // dd($video);
-                    @endphp
-                <div class="workout_content_2">
-                  <label>
-                  <img src="images/push-up.jpg"> 
-                    {{ $exercise }} <br>
-                    
-                    @if ($video)
-                      <a href="{{ $video->youtube_url }}" target="_blank" class="video-link">
-                        <button>View Video Tutorial</button>
-                      </a>
-                    @else
-                      <span style="color: gray;">No video available</span>
-                    @endif
-                  </label>
-                </div>
-              @empty
-                <p>No exercises for this day.</p>
-              @endforelse
-            </div>
-            @php
-              $dayCount++; // Increment the day number for each loop iteration
-            @endphp
+                  @forelse ($exercises as $exercise)
+                      @php
+                          $normalized = strtolower(trim($exercise));
+                          $video = $videoList[$normalized] ?? null;
+                          // dump($normalized, $videoList->keys());
+                          // dump($videoList->keys()->all());
+                      @endphp
+                      <div class="workout_content_2">
+                          <label>
+                              <img src="images/push-up.jpg"> 
+                              {{ $exercise }} <br>
+                          </label>
+                          @php
+                              $embedUrl = '';
+                              if ($video && $video->youtube_url) {
+                                  // Try to match both youtube.com/watch?v= and youtu.be/ and also handle extra params
+                                  if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $video->youtube_url, $matches)) {
+                                      $embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
+                                  }
+                              }
+                          @endphp
+                          @if($embedUrl)
+                            <button type="button" onclick="showVideo('{{ $embedUrl }}', '{{ $video->youtube_url }}')">Watch Video</button>
+                        @endif
+                      </div>
+                  @empty
+                      <p>No exercises for this day.</p>
+                  @endforelse
+              </div>
+              @php $dayCount++; @endphp
           @endforeach
         </div>
-
+        <div id="videoModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; z-index:1000; padding:20px; border-radius:8px;">
+          <button onclick="closeVideo()" style="float:right;">Close</button>
+          <iframe id="videoFrame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+          <div id="fallbackLink" style="margin-top:10px; text-align:center; display:none;">
+              <a id="originalVideoLink" href="#" target="_blank" style="color:#007bff;">Can't see the video? Click here to watch on YouTube</a>
+          </div>
+      </div>
+        <div id="modalBackdrop" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:999;" onclick="closeVideo()"></div>
         <div class = "right_side_2">
           <div class="goals_plan">
             <div class="header_content">
@@ -140,6 +150,28 @@
             }
         });
     }
+    function showVideo(embedUrl, originalUrl) {
+    var iframe = document.getElementById('videoFrame');
+    var modal = document.getElementById('videoModal');
+    var backdrop = document.getElementById('modalBackdrop');
+    var fallbackLink = document.getElementById('fallbackLink');
+    var originalVideoLink = document.getElementById('originalVideoLink');
+
+    iframe.src = embedUrl;
+    modal.style.display = 'block';
+    backdrop.style.display = 'block';
+
+    // Always show the fallback link with the correct URL
+    fallbackLink.style.display = 'block';
+    originalVideoLink.href = originalUrl;
+}
+
+function closeVideo() {
+    var iframe = document.getElementById('videoFrame');
+    document.getElementById('videoModal').style.display = 'none';
+    document.getElementById('modalBackdrop').style.display = 'none';
+    iframe.src = '';
+}
   </script>
   <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
   <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  

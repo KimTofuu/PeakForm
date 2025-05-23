@@ -332,7 +332,8 @@ class WorkoutController extends Controller
             return view('workouts_tab', [
                 'user' => $user,
                 'workouts' => [],
-                'input' => []
+                'input' => [],
+                 'videoList' => collect(),
             ]);
         }
 
@@ -345,6 +346,11 @@ class WorkoutController extends Controller
             'Saturday' => json_decode($workSplit->day6 ?? '[]'),
             'Sunday' => json_decode($workSplit->day7 ?? '[]'),
         ];
+
+        $videoList = WorkoutVideo::all()->keyBy(function ($item) {
+            return strtolower(trim($item->title));
+        });
+
 
         return view('workouts_tab', [
             'user' => $user,
@@ -357,7 +363,8 @@ class WorkoutController extends Controller
                 'setup' => $workSplit->setup,
                 'days' => $workSplit->days,
                 'splitType' => $workSplit->splitType,
-            ]
+            ],
+            'videoList' => $videoList,
         ]);
     }
 
@@ -370,7 +377,8 @@ class WorkoutController extends Controller
             return view('workout-preview', [
                 'user' => $user,
                 'workouts' => [],
-                'input' => []
+                'input' => [],
+                'videoList' => collect(),
             ]);
         }
 
@@ -384,6 +392,10 @@ class WorkoutController extends Controller
             'Sunday' => json_decode($workSplit->day7 ?? '[]'),
         ];
 
+        $videoList = WorkoutVideo::all()->keyBy(function ($item) {
+            return strtolower(trim($item->title));
+        });
+
         return view('workout-preview', [
             'user' => $user,
             'workouts' => $workouts,
@@ -395,7 +407,8 @@ class WorkoutController extends Controller
                 'setup' => $workSplit->setup,
                 'days' => $workSplit->days,
                 'splitType' => $workSplit->splitType,
-            ]
+            ],
+            'videoList' => $videoList,
         ]);
     }
 
@@ -413,37 +426,64 @@ class WorkoutController extends Controller
     public function getWorkoutForDay(Request $request)
     {
         $user = Auth::user();
-        $day = $request->query('day', 1);
+        // $day = $request->query('day', 1);
 
         $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
 
-        $field = 'day' . $day;
-        $exercises = json_decode($workSplit->{$field} ?? '[]', true);
+        // $field = 'day' . $day;
+        // $exercises = json_decode($workSplit->{$field} ?? '[]', true);
+
+        
 
         $videoList = WorkoutVideo::all()->keyBy(function ($item) {
             return strtolower(trim($item->title));
         });
 
-        $final = [];
+        $workouts = [
+            'Monday' => json_decode($workSplit->day1 ?? '[]'),
+            'Tuesday' => json_decode($workSplit->day2 ?? '[]'),
+            'Wednesday' => json_decode($workSplit->day3 ?? '[]'),
+            'Thursday' => json_decode($workSplit->day4 ?? '[]'),
+            'Friday' => json_decode($workSplit->day5 ?? '[]'),
+            'Saturday' => json_decode($workSplit->day6 ?? '[]'),
+            'Sunday' => json_decode($workSplit->day7 ?? '[]'),
+        ];
 
-        foreach ($exercises as $exercise) {
-            $title = strtolower(trim($exercise));
-            if ($videoList->has($title)) {
-                $final[] = [
-                    'title' => $exercise,
-                    'video_url' => $videoList[$title]->video_url,
-                ];
-            } else {
-                $final[] = [
-                    'title' => $exercise,
-                    'not_found' => true,
-                ];
-            }
-        }
-
-        return response()->json([
-            'success' => true,
-            'exercises' => $final,
+        $input = [
+            'goal' => $workSplit->goal,
+            'fitness_level' => $workSplit->fitness_level,
+            'equipment' => $workSplit->equipment,
+            'intensity' => $workSplit->intensity,
+            'setup' => $workSplit->setup,
+            'days' => $workSplit->days,
+            'splitType' => $workSplit->splitType,
+        ];
+        
+        return view('workouts_tab', [
+            'user' => $user,
+            'workouts' => $workouts,
+            'input' => $input,
+            'videoList' => $videoList,
         ]);
+
+        // foreach ($exercises as $exercise) {
+        //     $title = strtolower(trim($exercise));
+        //     if ($videoList->has($title)) {
+        //         $final[] = [
+        //             'title' => $exercise,
+        //             'video_url' => $videoList[$title]->video_url,
+        //         ];
+        //     } else {
+        //         $final[] = [
+        //             'title' => $exercise,
+        //             'not_found' => true,
+        //         ];
+        //     }
+        // }
+
+        // return response()->json([
+        //     'success' => true,
+        //     'exercises' => $final,
+        // ]);
     }
 }
