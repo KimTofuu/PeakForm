@@ -204,7 +204,7 @@ Route::get('/intake/latest', [MealController::class, 'latestIntake'])->name('int
 Route::post('/progress', [ProgressController::class, 'store'])->name('progress.store');
 Route::get('/progress', [ProgressController::class, 'showProgressTab'])->name('progress_tab');
 
-Route::post('/update-profile', [AccountController::class, 'update'])->name('profile.update');
+Route::post('/update-profile', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::delete('/daily-intake', [MealController::class, 'destroyToday'])->name('daily-intake.destroy');
 
@@ -212,3 +212,6 @@ Route::get('/mealplan_tab', [MealController::class, 'showMealPlanTab'])->name('m
 Route::get('/overview_tab', [MealController::class, 'showInOverview'])->name('overview_tab');
 
 Route::get('/api/workout/day', [WorkoutController::class, 'getWorkoutForOverview']);
+
+Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile_tab');

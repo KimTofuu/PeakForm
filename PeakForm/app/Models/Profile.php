@@ -15,12 +15,7 @@ class Profile extends Model
 
 
     protected $table = 'profiles';
-    protected $fillable = [
-        'user_id',
-        'age',
-        'gender',
-        'weight',
-    ];
+    protected $fillable = ['user_id', 'Fname', 'Lname', 'age', 'gender', 'weight'];
 
     public function user()
     {
