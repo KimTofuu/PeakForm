@@ -46,11 +46,11 @@
               <h2 style="font-family: 'Michroma', sans-serif;" > Account </h2>
             </div>
             <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Name </p>{{ $user->Fname }} {{ $user->Lname }}
+              <p style="opacity: 50%; font-size: 1rem;"> Name </p>{{ optional($user)->Fname }} {{ optional($user)->Lname }}
             </div>
 
             <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Email Address </p> {{ $user->email }}
+              <p style="opacity: 50%; font-size: 1rem;"> Email Address </p> {{ optional($user)->email }}
             </div>
 
             <div class = "workout_content">
@@ -73,15 +73,15 @@
               <h2 style="font-family: 'Michroma', sans-serif;" > Profile </h2>
             </div>
             <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Age </p> {{ $profile->age }}
+              <p style="opacity: 50%; font-size: 1rem;"> Age </p> {{ optional($profile)->age }}
             </div>
 
             <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Gender </p> {{ ucfirst($profile->gender) }}
+              <p style="opacity: 50%; font-size: 1rem;"> Gender </p> {{ ucfirst(optional($profile)->gender) }}
             </div>
 
             <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Current Weight </p> {{ $profile->weight }} kg
+              <p style="opacity: 50%; font-size: 1rem;"> Current Weight </p> {{ optional($profile)->weight }} kg
             </div>
           </div>
 
