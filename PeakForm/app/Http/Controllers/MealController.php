@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MealPlan;
 use App\Models\DailyIntake;
+use App\Models\RecordedIntake;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -235,6 +236,28 @@ class MealController extends Controller
         return view('overview_tab', [
             'user' => $user,
             'daily_intake' => $daily_intake,
+        ]);
+    }
+    public function intakeHistory(Request $request)
+    {
+        $user = Auth::user();
+        $history = RecordedIntake::where('user_id', $user->id)
+            ->orderBy('date', 'desc')
+            ->get(['date', 'protein', 'carbs', 'fat']);
+
+        // Build a plain array with formatted date
+        $history = $history->map(function ($item) {
+            return [
+                'date' => \Carbon\Carbon::parse($item->date)->format('M d, Y'),
+                'protein' => $item->protein,
+                'carbs' => $item->carbs,
+                'fat' => $item->fat,
+            ];
+        })->values();
+
+        return response()->json([
+            'success' => true,
+            'data' => $history
         ]);
     }
 }

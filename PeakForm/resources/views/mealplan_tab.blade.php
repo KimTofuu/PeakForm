@@ -9,7 +9,14 @@
   <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
-  <style>body{overflow-y: hidden;}</style>
+  <style>
+    body{overflow-y: hidden;}
+    #intakeHistoryTable th,
+    #intakeHistoryTable td {
+        text-align: center;
+        vertical-align: middle;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -69,6 +76,7 @@
           <label> <input type="number" id="actualFat" min="0" placeholder="Fat (g)"></label><br>
           <button id="compareIntakeBtn"  class="generate-btn" style="margin-top: 1rem; margin-right: 0.5rem;">Compare</button>
           <button id="ResetBtn"  class="generate-btn" style="margin-top: 1rem; margin-left: 0.5rem;" >Reset</button>
+          <button id="viewHistoryBtn" class="generate-btn" style="margin-top: 1rem; margin-left: 0.5rem;">View Intake History</button>
           </div>
         </div>
         <div class="progress_tab5">
@@ -122,7 +130,25 @@
     </div>
   </div>
   </div>
-
+<div id="intakeHistoryModal" class="modal" style="display:none;">
+  <div class="modal-content" style="max-width:600px;">
+    <span class="close" id="closeIntakeHistoryModal" style="float:right;cursor:pointer;">&times;</span>
+    <h2>Intake History</h2>
+    <table id="intakeHistoryTable" style="width:100%;color:#222;background:#fff;border-radius:8px;">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Protein (g)</th>
+          <th>Carbs (g)</th>
+          <th>Fat (g)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Intake history rows will be injected here -->
+      </tbody>
+    </table>
+  </div>
+</div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -514,5 +540,46 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('inFat').textContent = '-';
     }
 });
+document.getElementById('viewHistoryBtn').onclick = async function() {
+  const modal = document.getElementById('intakeHistoryModal');
+  const tableBody = document.getElementById('intakeHistoryTable').querySelector('tbody');
+  tableBody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+
+  modal.style.display = 'block';
+
+  try {
+    const response = await fetch('{{ route("intake.history") }}');
+    const result = await response.json();
+
+    if (result.success && Array.isArray(result.data) && result.data.length > 0) {
+      tableBody.innerHTML = '';
+      result.data.forEach(row => {
+        tableBody.innerHTML += `
+          <tr>
+            <td>${row.date}</td>
+            <td>${row.protein}</td>
+            <td>${row.carbs}</td>
+            <td>${row.fat}</td>
+          </tr>
+        `;
+      });
+    } else {
+      tableBody.innerHTML = '<tr><td colspan="4">No intake history found.</td></tr>';
+    }
+  } catch (err) {
+    tableBody.innerHTML = '<tr><td colspan="4">Failed to load history.</td></tr>';
+  }
+};
+
+document.getElementById('closeIntakeHistoryModal').onclick = function() {
+  document.getElementById('intakeHistoryModal').style.display = 'none';
+};
+
+window.onclick = function(event) {
+  const modal = document.getElementById('intakeHistoryModal');
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+};
 </script>
 </html>
