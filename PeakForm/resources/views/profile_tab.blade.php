@@ -13,8 +13,8 @@
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
-        <img src="images/logo_6.png" class="avatar">
-        <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
+        <img src="images/logo_8.png" class="avatar">
+        <p class="name"  style="font-family: 'Michroma', sans-serif; color:#fafafa;" >{{$user->Fname}} {{$user->Lname}}</p>
         <hr />
       </div>
       <nav class="nav-menu">
@@ -31,7 +31,7 @@
           <form method="GET" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">
-              <img src="images/log_out.png" alt="Log Out">
+              <img src="images/log_out2.png" alt="Log Out">
             </button>
           </form>
         </div>
@@ -41,20 +41,20 @@
       <div class="cards">
     
         <div class="first-side">
-          <div class = "daily_tab">
+          <div class = "daily_tab" style="align-items: start; text-align: left;">
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" > Account </h2>
             </div>
-            <div class = "workout_content">
+            <div class = "workout_content" style="color:white; align-items: left;">
               <p style="opacity: 50%; font-size: 1rem;"> Name </p>{{ optional($user)->Fname }} {{ optional($user)->Lname }}
             </div>
 
-            <div class = "workout_content">
+            <div class = "workout_content" style="color:white; text-align:left;">
               <p style="opacity: 50%; font-size: 1rem;"> Email Address </p> {{ optional($user)->email }}
             </div>
 
-            <div class = "workout_content">
-              <p style="opacity: 50%; font-size: 1rem;"> Password </p> ********
+            <div class = "workout_content" style="color:white; text-align:left;"> 
+              <p style="opacity: 50%; font-size: 1rem;"> Password </p> ************
             </div>
           </div>
 
@@ -68,19 +68,19 @@
         </div>
 
         <div class="second-side">
-          <div class = "daily_tab">
+          <div class = "daily_tab" style="align-items: start; text-align: left;">
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" > Profile </h2>
             </div>
-            <div class = "workout_content">
+            <div class = "workout_content" style="color:white; text-align:left;">
               <p style="opacity: 50%; font-size: 1rem;"> Age </p> {{ optional($profile)->age }}
             </div>
 
-            <div class = "workout_content">
+            <div class = "workout_content" style="color:white; text-align:left;">
               <p style="opacity: 50%; font-size: 1rem;"> Gender </p> {{ ucfirst(optional($profile)->gender) }}
             </div>
 
-            <div class = "workout_content">
+            <div class = "workout_content" style="color:white; text-align:left;" >
               <p style="opacity: 50%; font-size: 1rem;"> Current Weight </p> {{ optional($profile)->weight }} kg
             </div>
           </div>

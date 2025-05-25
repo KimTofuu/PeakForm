@@ -19,15 +19,11 @@
 
 <div class = "main-cont">
     <div class = "left_space">
-        <img src= "images/logo_7.png">
-        <h1>Your Personalized Path <br> to Peak Performance.</h1>
-        <p>Unlock your full potential with PeakForm’s personalized fitness and <br> nutrition plans. 
-            From adaptive workouts to easy meal suggestions,
-            <br> everything you need to succeed is at your fingertips.
-        </p>
+        <img src= "images/logo_9.png" class="logo-login">
+        <img src= "images/workout-7.png" class="icon-login">
     </div>
 
-    <div class = "right_space">
+    <div class = "right_space" style="color:white;">
     <div class="login-container3">
         <form method="POST" action="{{ route('password.update') }}">
             @csrf

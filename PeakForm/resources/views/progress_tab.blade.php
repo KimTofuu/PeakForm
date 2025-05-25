@@ -14,8 +14,8 @@
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
-        <img src="images/logo_6.png" class="avatar">
-        <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
+        <img src="images/logo_8.png" class="avatar">
+        <p class="name"  style="font-family: 'Michroma', sans-serif; color:#fafafa;" >{{$user->Fname}} {{$user->Lname}}</p>
         <hr />
       </div>
       <nav class="nav-menu">
@@ -30,7 +30,7 @@
         <form method="GET" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="logout-btn">
-            <img src="images/log_out.png" alt="Log Out">
+            <img src="images/log_out2.png" alt="Log Out">
           </button>
         </form>
       </div>
@@ -42,9 +42,9 @@
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" >Progress</h2>
             </div>
-            <div class ="progress_contents">
+            <div class ="progress_contents" style="text-align: left;">
               <div class="progress_table_section">
-                <h3 style="font-family: 'Inter', sans-serif; opacity: 50%;">Track Your Progress</h3>
+                <h3 style="font-family: 'Inter', sans-serif; opacity: 50%; color:white;" >Track Your Progress</h3>
 
                 <!-- Add Entry Form -->
                 <form method="POST" action="{{ route('progress.store') }}" class="progress-form">

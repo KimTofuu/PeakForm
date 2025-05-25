@@ -14,8 +14,8 @@
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
-          <img src="images/logo_6.png" class="avatar">
-          <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
+          <img src="images/logo_8.png" class="avatar">
+          <p class="name"  style="font-family: 'Michroma', sans-serif; color:#fafafa;" >{{$user->Fname}} {{$user->Lname}}</p>
           <hr />
         </div>
         <nav class="nav-menu">
@@ -30,20 +30,20 @@
           <form method="GET" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">
-              <img src="images/log_out.png" alt="Log Out">
+              <img src="images/log_out2.png" alt="Log Out">
             </button>
           </form>
         </div>
     </aside>
 
-    <main class="main-content">
+    <main class="main-content" style="display: flex; justify-content: center;">
       <div class="cards">
     
 
           <div class="timer_tab">
             <div>
-              <h2 style="font-family: 'Michroma', sans-serif;" >Timer</h2>
-              <div id="timer" style="font-family: 'Michroma', sans-serif; margin-bottom: 3rem;">05:00</div>
+              <h2 style="font-family: 'Michroma', sans-serif; color:white;">Timer</h2>
+              <div id="timer" style="font-family: 'Michroma', sans-serif; margin-bottom: 3rem; color:white;">05:00</div>
 
                 <button id="startBtn">Start</button>
                 <button id="stopBtn">Stop</button>

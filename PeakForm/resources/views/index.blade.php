@@ -15,11 +15,11 @@
            <img src="images/logo_9.png" class = "logo">
             <ul class="nav-list">
                 <li><a href="#about"><img src="images/About.png"></a><div class="tooltip-text">Abouts<div></li>
-                <li><a href="#features"><img src="images/Features.png"><div class="tooltip-text">Features<div></a></li>
-                <li><a href="#FAQs"><img src="images/FAQs.png"><div class="tooltip-text">FAQs<div></a></li>
+                <li><a href="#features"><img src="images/Features.png"><div class="tooltip-text">Features</div></a></li>
+                <li><a href="#FAQs"><img src="images/FAQs.png"><div class="tooltip-text">FAQs</div></a></li>
                 <li>
-                    <a href="{{ route('login') }}" class="login-btn" style="top:-0.2rem; margin-left:4rem; margin-right: 2.5rem;" >
-                        <button style="background: none; border: none; padding: 0; margin: 0;"><img src="images/LogIn-btn.png" ></button>
+                    <a href="{{ route('login') }}" style="margin-right: 2rem;" >
+                        <button class="login-btn"> Log In </button>
                     </a>
                 </li>
             </ul>
@@ -39,7 +39,7 @@
                     </a>
                 </div>
                 <div class="col_2">
-                    <img src="images/workout-1.png">
+                    <img src="images/workout-4.png">
                 </div>
             </div>
         </div>
