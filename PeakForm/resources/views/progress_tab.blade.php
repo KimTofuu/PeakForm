@@ -56,9 +56,9 @@
                     value="{{ \Carbon\Carbon::now()->toDateString() }}"
                     max="{{ \Carbon\Carbon::now()->toDateString() }}"
                   />
-                  <input type="number" name="weight" step="0.1" placeholder="Weight (kg)" required />
-                  <input type="number" name="body_fat_percentage" step="0.1" placeholder="Body Fat (%)" required />
-                  <input type="number" name="muscle_mass" step="0.1" placeholder="Muscle Mass (kg)" required />
+                  <input type="number" name="weight" step="0.01" placeholder="Weight (kg)" required />
+                  <input type="number" name="body_fat_percentage" step="0.01" placeholder="Body Fat (%)" required />
+                  <input type="number" name="muscle_mass" step="0.01" placeholder="Muscle Mass (kg)" required />
                   <button type="submit">Add Entry</button>
                 </form>
               </div>
