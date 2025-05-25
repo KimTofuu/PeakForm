@@ -1,0 +1,28 @@
+name: Deploy Laravel Subdir
+
+on:
+  push:
+    branches:
+      - main  # or your branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./peakform
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'  # Match your Laravel version
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --no-progress
+
+      - name: Trigger Laravel Cloud Deploy
+        run: |
+          curl -X POST https://cloud.laravel.com/deploy/9efecdde-bfcf-4b37-8564-e2da8921dbb7/tOAlKMLzNnd6SoUp
