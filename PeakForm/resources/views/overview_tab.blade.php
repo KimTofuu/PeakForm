@@ -96,7 +96,9 @@
       </div>
     </main>
   </div>
-
+  <!-- Loading Screen -->
+  <div id="loader-wrapper">
+<img src="{{ asset('images/logo_6.png') }}" alt="Loading..." class="dumbbell-loader" style="width:150px;height:150px;"></div>
   <script src="script.js"> </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -172,25 +174,26 @@
       });
   }
 
-  function displayWorkout(exercises) {
-      const workoutContainer = document.getElementById('workout-container');
-      const dayLabel = document.getElementById('day-label');
+function displayWorkout(exercises) {
+  return new Promise((resolve) => {
+    const workoutContainer = document.getElementById('workout-container');
+    const dayLabel = document.getElementById('day-label');
 
-      dayLabel.textContent = `Day ${currentDay}`;
+    dayLabel.textContent = `Day ${currentDay}`;
 
-      if (!exercises || exercises.length === 0) {
-          workoutContainer.innerHTML = '<p>It is rest day! Enjoy your break.</p>';
-          return;
-      }
+    if (!exercises || exercises.length === 0) {
+      workoutContainer.innerHTML = '<p>It is rest day! Enjoy your break.</p>';
+      return resolve(); // still resolve even if it's a rest day
+    }
 
-     workoutContainer.innerHTML = exercises.map((exercise, index) => `
-  <div class="exercise-item">
-    <input type="checkbox" id="exercise-${index}" data-title="${exercise.title}">
-    <label for="exercise-${index}">${exercise.title}</label>
-  </div>
-`).join('');
+    workoutContainer.innerHTML = exercises.map((exercise, index) => `
+      <div class="exercise-item">
+        <input type="checkbox" id="exercise-${index}" data-title="${exercise.title}">
+        <label for="exercise-${index}">${exercise.title}</label>
+      </div>
+    `).join('');
 
-      fetch(`/api/workout/progress?day=${currentDay}`)
+    fetch(`/api/workout/progress?day=${currentDay}`)
       .then(response => response.json())
       .then(data => {
         if (data.success && data.completed) {
@@ -200,90 +203,27 @@
             if (checkbox) checkbox.checked = true;
           });
         }
-      });
 
-      workoutContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-      cb.addEventListener('change', () => {
-        const completed = [...document.querySelectorAll('input[type="checkbox"]')]
-          .filter(cb => cb.checked)
-          .map(cb => cb.dataset.title);
-        saveProgress(currentDay, completed);
-        updateProgressChart(); // optionally refresh the chart
-      });
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    updateProgressChart();
-    loadWorkoutForDay(currentDay);
-  });
-
-  window.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const responsePlan = await fetch('{{ route("mealplan.latest") }}');
-    const resultPlan = await responsePlan.json();
-
-    if (resultPlan.success) {
-      const plan = resultPlan.meal_plan;
-
-      document.getElementById('protein').textContent = plan.proteinTarget;
-      document.getElementById('carbs').textContent = plan.carbsTarget;
-      document.getElementById('fat').textContent = plan.fatTarget;
-
-      // Fetch actual intake data
-      const intakeResponse = await fetch('{{ route("intake.latest") }}');
-      const intakeResult = await intakeResponse.json();
-
-      if (intakeResult.success && intakeResult.data) {
-        const updated = intakeResult.data;
-
-        const ctxCompare = document.getElementById('comparisonChart').getContext('2d');
-
-        if (window.comparisonChart instanceof Chart) {
-          window.comparisonChart.destroy();
-        }
-
-        window.comparisonChart = new Chart(ctxCompare, {
-          type: 'bar',
-          data: {
-            labels: ['Protein', 'Carbs', 'Fat'],
-            datasets: [
-              {
-                label: 'Target (g)',
-                data: [plan.proteinTarget, plan.carbsTarget, plan.fatTarget],
-                backgroundColor: '#f06595' 
-              },
-              {
-                label: 'Daily (g)',
-                data: [updated.protein, updated.carbs, updated.fat],
-                backgroundColor: '#00e676'
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              title: {
-                display: true,
-                text: 'Target vs Daily Intake'
-              },
-              legend: {
-                position: 'bottom'
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
+        // Set up listeners after marking progress
+        workoutContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.addEventListener('change', () => {
+            const completed = [...document.querySelectorAll('input[type="checkbox"]')]
+              .filter(cb => cb.checked)
+              .map(cb => cb.dataset.title);
+            saveProgress(currentDay, completed);
+            updateProgressChart(); // optionally refresh the chart
+          });
         });
-      }
-    }
-  } catch (err) {
-    console.error('Failed to load latest meal plan or intake data:', err);
-  }
-});
+
+        resolve(); // progress fetch complete
+      })
+      .catch(err => {
+        console.error('Failed to load progress:', err);
+        resolve(); // still resolve so loader doesn't hang forever
+      });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     if (dailyIntake) {
         document.getElementById('inProtein').textContent = dailyIntake.protein ?? '-';
@@ -297,5 +237,112 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('inFat').textContent = '-';
     }
 });
+
+async function initPageData() {
+  try {
+    await Promise.all([
+      updateProgressChart(),
+      loadWorkoutForDay(currentDay),
+      loadMealAndIntakeData()
+    ]);
+  } catch (err) {
+    console.error("Error loading initial data:", err);
+  } finally {
+    const loader = document.getElementById('loader-wrapper');
+    loader.style.opacity = '0';
+    setTimeout(() => loader.style.display = 'none', 500);
+  }
+}
+
+
+// Modify your functions slightly to return promises
+
+function updateProgressChart() {
+  return fetch('/api/workout/summary')
+    .then(res => res.json())
+    .then(data => {
+      const dailyPercent = data.daily_percent ?? 0;
+      const weeklyPercent = data.weekly_percent ?? 0;
+      renderRadialChart(dailyPercent, weeklyPercent);
+    });
+}
+
+function loadWorkoutForDay(day) {
+  return fetch(`/api/workout/day?day=${day}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        return displayWorkout(data.exercises); // return the promise
+      } else {
+        console.error('Error loading workout: ', data.error);
+      }
+    });
+}
+
+
+async function loadMealAndIntakeData() {
+  const responsePlan = await fetch('{{ route("mealplan.latest") }}');
+  const resultPlan = await responsePlan.json();
+
+  if (resultPlan.success) {
+    const plan = resultPlan.meal_plan;
+
+    document.getElementById('protein').textContent = plan.proteinTarget;
+    document.getElementById('carbs').textContent = plan.carbsTarget;
+    document.getElementById('fat').textContent = plan.fatTarget;
+
+    const intakeResponse = await fetch('{{ route("intake.latest") }}');
+    const intakeResult = await intakeResponse.json();
+
+    if (intakeResult.success && intakeResult.data) {
+      const updated = intakeResult.data;
+
+      const ctxCompare = document.getElementById('comparisonChart').getContext('2d');
+
+      if (window.comparisonChart instanceof Chart) {
+        window.comparisonChart.destroy();
+      }
+
+      window.comparisonChart = new Chart(ctxCompare, {
+        type: 'bar',
+        data: {
+          labels: ['Protein', 'Carbs', 'Fat'],
+          datasets: [
+            {
+              label: 'Target (g)',
+              data: [plan.proteinTarget, plan.carbsTarget, plan.fatTarget],
+              backgroundColor: '#f06595'
+            },
+            {
+              label: 'Daily (g)',
+              data: [updated.protein, updated.carbs, updated.fat],
+              backgroundColor: '#00e676'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Target vs Daily Intake'
+            },
+            legend: {
+              position: 'bottom'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initPageData);
+
 </script>
 </html>
