@@ -15,8 +15,8 @@
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
-        <img src="images/logo_6.png" class="avatar">
-        <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
+        <img src="images/logo_8.png" class="avatar">
+        <p class="name"  style="font-family: 'Michroma', sans-serif; color:#fafafa;" >{{$user->Fname}} {{$user->Lname}}</p>
         <hr />
       </div>
       <nav class="nav-menu">
@@ -31,7 +31,7 @@
         <form method="GET" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="logout-btn">
-            <img src="images/log_out.png" alt="Log Out">
+            <img src="images/log_out2.png" alt="Log Out">
           </button>
         </form>
       </div>
@@ -41,13 +41,13 @@
   <main class = "main-content">
     <div class="cards">
       <div class="first-side">
-        <div class="progress_tab2">
-          <button id="openMealPlanModal" class="generate-btn">Generate Macros</button>
+        <div class="progress_tab2" >
+          <button id="openMealPlanModal" class="generate-btn" style="margin-bottom:0.5rem;">Generate Macros</button>
         
 
   <!-- Meal Plan Output Will Be Injected Here -->
-  <div id="mealPlanSummary" class="meal-summary hidden">
-    <h2>Generated Meal Plan</h2>
+  <div id="mealPlanSummary" class="meal-summary hidden" style="color:white;">
+    <h2 style="margin-bottom:0.5rem; opacity: 60%;">Generated Meal Plan</h2>
     <p><strong>Name:</strong> <span id="planName"></span></p>
     <p><strong>Calories:</strong> <span id="calories"></span></p>
     <p><strong>Protein:</strong> <span id="protein"></span> g</p>
@@ -61,23 +61,23 @@
 
 
       <div class="second-side">
-        <div class = "progress_tab3">
-          <h3>Enter Your Actual Daily Intake</h3>
-          <div class = "mealplan-label">
+        <div class = "progress_tab3" style="color:white;">
+          <h3 style="margin-bottom: 0.2rem; margin-top: 1rem; font-size: 1.5rem; margin-bottom:0.5rem; opacity: 60%;">Enter Your Actual Daily Intake</h3>
+          <div class = "mealplan-label" style="color:white;">
           <label> <input type="number" id="actualProtein" min="0" placeholder="Protein (g)"></label><br>
           <label> <input type="number" id="actualCarbs" min="0" placeholder="Carbs (g)"></label><br>
           <label> <input type="number" id="actualFat" min="0" placeholder="Fat (g)"></label><br>
-          <button id="compareIntakeBtn"  class="generate-btn" >Compare</button>
-          <button id="ResetBtn"  class="generate-btn" >Reset</button>
+          <button id="compareIntakeBtn"  class="generate-btn" style="margin-top: 1rem; margin-right: 0.5rem;">Compare</button>
+          <button id="ResetBtn"  class="generate-btn" style="margin-top: 1rem; margin-left: 0.5rem;" >Reset</button>
           </div>
         </div>
         <div class="progress_tab5">
           <canvas id="comparisonChart" width="100%"></canvas>
           
-          <div class="dailyintake-inside">
-            <p><strong>Protein:</strong> <span id="inProtein">{{ $daily_intake->protein ?? '-' }}</span> g</p>
-            <p><strong>Carbs:</strong> <span id="inCarbs">{{ $daily_intake->carbs ?? '-' }}</span> g</p>
-            <p><strong>Fat:</strong> <span id="inFat">{{ $daily_intake->fat ?? '-' }}</span> g</p>
+          <div class="dailyintake-inside" style="color:white;">
+            <p style="margin-right:2rem;"><strong>Protein:</strong> <span id="inProtein">{{ $daily_intake->protein ?? '-' }}</span> g</p>
+            <p style="margin-right:2rem;"><strong>Carbs:</strong> <span id="inCarbs">{{ $daily_intake->carbs ?? '-' }}</span> g</p>
+            <p style="margin-right:2rem;"><strong>Fat:</strong> <span id="inFat">{{ $daily_intake->fat ?? '-' }}</span> g</p>
           </div>
         </div>
       </div>
@@ -124,6 +124,8 @@
   </div>
 
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   const openBtn = document.getElementById('openMealPlanModal');
   const modal = document.getElementById('mealPlanModal');
@@ -444,8 +446,17 @@ document.getElementById('compareIntakeBtn').onclick = async () => {
   }
 };
 document.getElementById("ResetBtn").addEventListener("click", async () => {
-  const confirmed = confirm("Are you sure you want to reset today's intake?");
-  if (!confirmed) return;
+  const result = await Swal.fire({
+    title: 'Reset Intake?',
+    text: "Are you sure you want to reset today's intake?",
+    showCancelButton: true,
+    confirmButtonColor: '#00bfff',
+    cancelButtonColor: '#ccc',
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'Cancel'
+  });
+
+  if (!result.isConfirmed) return;
 
   const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -462,18 +473,34 @@ document.getElementById("ResetBtn").addEventListener("click", async () => {
     const data = await response.json();
 
     if (response.ok) {
-      alert("Daily intake has been reset.");
+      Swal.fire({
+        title: 'Reset Successful',
+        text: "Daily intake has been reset.",
+        confirmButtonColor: '#00bfff'
+      });
+
       document.getElementById("actualProtein").value = "";
       document.getElementById("actualCarbs").value = "";
       document.getElementById("actualFat").value = "";
     } else {
-      alert("Failed to reset intake: " + data.message);
+      Swal.fire({
+        title: 'Error',
+        text: "Failed to reset intake: " + (data.message || 'Unknown error'),
+        icon: 'error',
+        confirmButtonColor: '#00bfff'
+      });
     }
   } catch (error) {
     console.error("Error:", error);
-    alert("Something went wrong.");
+    Swal.fire({
+      title: 'Error',
+      text: 'Something went wrong.',
+      icon: 'error',
+      confirmButtonColor: '#00bfff'
+    });
   }
 });
+
 document.addEventListener('DOMContentLoaded', () => {
     if (dailyIntake) {
         document.getElementById('inProtein').textContent = dailyIntake.protein ?? '-';

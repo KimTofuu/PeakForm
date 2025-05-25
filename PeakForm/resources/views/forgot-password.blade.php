@@ -16,17 +16,13 @@
 
 <div class = "main-cont">
     <div class = "left_space">
-        <img src= "images/logo_7.png">
-        <h1>Your Personalized Path <br> to Peak Performance.</h1>
-        <p>Unlock your full potential with PeakForm’s personalized fitness and <br> nutrition plans. 
-            From adaptive workouts to easy meal suggestions,
-            <br> everything you need to succeed is at your fingertips.
-        </p>
+        <img src= "images/logo_9.png" class="logo-login">
+        <img src= "images/workout-7.png" class="icon-login">
     </div>
 
     <div class = "right_space">
-    <div class="login-container2">
-        <h2>Reset Password</h2>
+    <div class="login-container2" style="border-radius: 2rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+        <h2 style="color:white;">Reset Password</h2>
 
         @if (session('status'))
             <div style="color: green;">{{ session('status') }}</div>

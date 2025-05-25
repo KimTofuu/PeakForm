@@ -13,17 +13,20 @@
 
     <form action="{{ route('workout_plan_2') }}" method="POST">
       @csrf
-      <div class="form-box">
+      <div class="form-box" style = "width: 35rem;">
         <p class="question">What best describes your workout setup? <br><span>(Select one)</span></p>
         <div class="goal-options">
-          <button type="button" class="goal-button" data-goal="Full Gym Setup"> <img src="images/fullGym.png"> </button>
-          <button type="button" class="goal-button" data-goal="Home / Minimal Setup"><img src="images/homeGym.png"> </button>
+          <button type="button" class="goal-button" data-goal="Full Gym Setup" > <img src="images/fullGym.png"> </button>
+          <button type="button" class="goal-button" data-goal="Home / Minimal Setup" ><img src="images/homeGym.png" > </button>
         </div>
       </div>
 
       <input type="hidden" name="setup" id="selected-setup" />
 
-      <button type="submit" class="proceed-button"><img src="images/proceed.png"></button>
+      <button type="submit" class="proceed-button">
+        <img src="images/proceed.png" alt="Proceed">
+        <span class="button-text">Proceed</span>
+    </button>
     </form>
   </div>
 

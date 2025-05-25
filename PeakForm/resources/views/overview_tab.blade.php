@@ -15,8 +15,8 @@
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
-        <img src="images/logo_6.png" class="avatar">
-        <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
+        <img src="images/logo_8.png" class="avatar">
+        <p class="name"  style="font-family: 'Michroma', sans-serif; color:#fafafa;" >{{$user->Fname}} {{$user->Lname}}</p>
         <hr />
         </div>
         <nav class="nav-menu">
@@ -31,7 +31,7 @@
           <form method="GET" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">
-              <img src="images/log_out.png" alt="Log Out">
+              <img src="images/log_out2.png" alt="Log Out">
             </button>
           </form>
         </div>
@@ -43,12 +43,14 @@
           <div class="daily_tab">
             <h2 style="font-family: 'Michroma', sans-serif;">Today's Workout</h2>
             <div class="day-controls">
-              <span id="day-label">Day 1</span>
+              <button onclick="previousDay()" class="prev-btn">Previous</button>
+              <span id="day-label" style="color:white;">Day 1</span>
+              <button onclick="nextDay()"  class="next-btn">Next</button>
             </div> 
             <div id="workout-container" class="workout-list"></div>
             <div class="day-controls2">
-            <button onclick="previousDay()" class="prev-btn">Previous</button>
-            <button onclick="nextDay()"  class="next-btn">Next</button>
+            
+            
             </div>
           </div>
           <div class="actions">
@@ -68,13 +70,13 @@
             <div class ="progress_contents">
               
               <div class="intake-summary">
-                <h4 style="font-family: 'inter', sans-serif;  opacity: 50%; font-weight:100; margin-top: 2.8rem; margin-bottom: 2rem;">Macros Target</h4>
+                <h4 style="font-family: 'inter', sans-serif;  opacity: 50%; font-weight:100; margin-top: 0.5rem; margin-bottom: 0.5rem;">Macros Target</h4>
                 <p>Protein: <span id="protein">0</span> g</p>
                 <p>Carbs: <span id="carbs">0</span> g</p>
                 <p>Fat: <span id="fat">0</span> g</p>
               </div>
-              <div class = "progress_tab4">
-                <canvas id="comparisonChart" width="100%"></canvas>
+              <div class = "progress_tab4" style = "color: #fafafa;">
+                <canvas id="comparisonChart" width="100%" ></canvas>
                 <div class="dailyintake-inside">
                   <p><strong>Protein:</strong> <span id="inProtein">{{ $daily_intake->protein ?? '-' }}</span> g</p>
                   <p><strong>Carbs:</strong> <span id="inCarbs">{{ $daily_intake->carbs ?? '-' }}</span> g</p>
@@ -85,8 +87,8 @@
           </div>
           <div class="actions">
             <div class = "actions_3">
-              <a href="{{ route('workouts_tab') }}" class="btn edit">
-                <button> Edit Workout Plan </button>
+              <a href="{{ route('mealplan_tab') }}" class="btn edit">
+                <button> Edit Macros Intake </button>
               </a>
             </div>
           </div>
@@ -249,12 +251,12 @@
               {
                 label: 'Target (g)',
                 data: [plan.proteinTarget, plan.carbsTarget, plan.fatTarget],
-                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+                backgroundColor: '#f06595' 
               },
               {
                 label: 'Daily (g)',
                 data: [updated.protein, updated.carbs, updated.fat],
-                backgroundColor: 'rgba(255, 99, 132, 0.5)'
+                backgroundColor: '#00e676'
               }
             ]
           },

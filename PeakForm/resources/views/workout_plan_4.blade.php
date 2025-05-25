@@ -23,7 +23,10 @@
       </div>
 
       <input type="hidden" name="days" id="selected-days" />
-      <button type="submit" class="proceed-button"><img src="images/proceed.png"></button>
+      <button type="submit" class="proceed-button">
+        <img src="images/proceed.png" alt="Proceed">
+        <span class="button-text">Proceed</span>
+    </button>
     </form>
   </div>
 

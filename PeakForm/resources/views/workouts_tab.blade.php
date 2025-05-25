@@ -13,8 +13,8 @@
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
-        <img src="images/logo_6.png" class="avatar">
-        <p class="name"  style="font-family: 'Michroma', sans-serif;" >{{$user->Fname}} {{$user->Lname}}</p>
+        <img src="images/logo_8.png" class="avatar">
+        <p class="name"  style="font-family: 'Michroma', sans-serif; color:#fafafa;" >{{$user->Fname}} {{$user->Lname}}</p>
         <hr />
       </div>
       <nav class="nav-menu">
@@ -29,7 +29,7 @@
         <form method="GET" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="logout-btn">
-            <img src="images/log_out.png" alt="Log Out">
+            <img src="images/log_out2.png" alt="Log Out">
           </button>
         </form>
       </div>
@@ -46,7 +46,7 @@
           @foreach ($workouts as $exercises)
               <div class="daily_tab_2">
                   <div class="header_content">
-                      <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $dayCount }}</h2> 
+                      <h2 style="font-family: 'Michroma', sans-serif; color:white;" >Day {{ $dayCount }}</h2> 
                   </div>
 
                   @forelse ($exercises as $exercise)
@@ -56,9 +56,9 @@
                           $imageName = $exercise . '.jpg';
                           $imagePath = asset('images/exercisePics/' . $imageName);
                       @endphp
-                      <div class="workout_content_2">
+                      <div class="workout_content_2" style="width: 100%; display: flex; justify-content: space-between; color:white;" >
                           <label>
-                              <img src="{{ $imagePath }}" alt="{{ $exercise }}" style="width:60px; height:60px; object-fit:cover;">
+                              <img src="{{ $imagePath }}" alt="{{ $exercise }}" style="width:90px; height:60px; object-fit:cover; border-radius:0.2rem;">
                               {{ $exercise }} <br>
                           </label>
                           @php
@@ -70,18 +70,18 @@
                               }
                           @endphp
                           @if($embedUrl)
-                            <button type="button" onclick="showVideo('{{ $embedUrl }}', '{{ $video->youtube_url }}')">Watch Video</button>
+                            <button type="button" class="watch-btn" onclick="showVideo('{{ $embedUrl }}', '{{ $video->youtube_url }}')" style="padding:0.5rem 1rem; background-color: #00bfff; border-radius: 0.5rem; border: none; color: white;">Watch Video</button>
                         @endif
                       </div>
                   @empty
-                      <p>No exercises for this day.</p>
+                      <p style="color:white;">No exercises for this day.</p>
                   @endforelse
               </div>
               @php $dayCount++; @endphp
           @endforeach
         </div>
         <div id="videoModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; z-index:1000; padding:20px; border-radius:8px;">
-          <button onclick="closeVideo()" style="float:right;">Close</button>
+          <button onclick="closeVideo()" style="float:right; padding:0.5rem 1rem; background-color: #00bfff; border: none; border-radius: 0.3rem; color: white; margin-left: 1rem;">Close</button>
           <iframe id="videoFrame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
           <div id="fallbackLink" style="margin-top:10px; text-align:center; display:none;">
               <a id="originalVideoLink" href="#" target="_blank" style="color:#007bff;">Can't see the video? Click here to watch on YouTube</a>
@@ -91,27 +91,27 @@
         <div class = "right_side_2">
           <div class="goals_plan">
             <div class="header_content">
-              <h2 style="font-family: 'Michroma', sans-serif;">Goals / Plan</h2>
+              <h2 style="font-family: 'Michroma', sans-serif; color:white;">Goals / Plan</h2>
             </div>
-            <div class="goals_contents">
+            <div class="goals_contents" style="width:100%;">
               <p>
                 Goal: {{ ucwords(str_replace('_', ' ', $input['goal'])) }}
               </p>
             </div>
 
-            <div class="goals_contents">
+            <div class="goals_contents" style="width:100%;">
               <p>
                 Setup: {{ ucwords(str_replace('_', ' ', $input['setup'])) }}
               </p>
             </div>
 
-            <div class="goals_contents">
+            <div class="goals_contents" style="width:100%;">
               <p>
                 Workout Type: {{ ucwords(str_replace('_', ' ', $input['splitType'])) }}
               </p>
             </div>
 
-            <div class="goals_contents">
+            <div class="goals_contents" style="width:100%;">
               <p>
                 <b>{{ $input['days'] }}</b> Days / Week Workout
               </p>
@@ -139,7 +139,7 @@
             title: 'Update Preferences?',
             text: "Are you sure you want to update your workout preferences?",
             showCancelButton: true,
-            confirmButtonColor: '#8FB031',
+            confirmButtonColor: '#00bfff',
             cancelButtonColor: '#ccc',
             confirmButtonText: 'Yes',
             cancelButtonText: 'Cancel'

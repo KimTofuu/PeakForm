@@ -6,7 +6,7 @@
   <title>Workout Preview</title>
   <link rel="stylesheet" href="{{ asset('css/workout_plan.css') }}">
 </head>
-<body>
+<body style="background-image: url('../images/background-18.jpg'); background-size: auto 120%;  background-position: center; background-repeat: no-repeat; overflow-x:hidden;">
     <div class="container">
         <img src="images/logo_9.png" class="logo_top">
 
@@ -19,17 +19,17 @@
           @foreach ($workouts as $exercises)
             <div class="daily_tab_3">
               <div class="header_content">
-                <h2 style="font-family: 'Michroma', sans-serif;">Day {{ $dayCount }}</h2> <!-- Day 1, Day 2, ... -->
+                <h2 style="font-family: 'Michroma', sans-serif;color:#1c7ed6; font-size:1.9rem;" >Day {{ $dayCount }}</h2> <!-- Day 1, Day 2, ... -->
               </div>
 
               @forelse ($exercises as $exercise)
                 <div class="workout_content_2">
-                  <label>
+                  <label style="color:#1a1a1a;">
                     {{ $exercise }}
                   </label>
                 </div>
               @empty
-                <p>No exercises for this day.</p>
+                <p style="color:#1a1a1a;">No exercises for this day.</p>
               @endforelse
             </div>
 
@@ -42,7 +42,10 @@
         </div>
         <br>
         <a href="{{ route('overview_tab') }}" >
-          <button class = "proceed-button"><img src="images/proceed.png"></button>
+          <button type="submit" class="proceed-button">
+          <img src="images/proceed.png" alt="Proceed">
+          <span class="button-text">Proceed</span>
+          </button>
         </a>
     </div>
 

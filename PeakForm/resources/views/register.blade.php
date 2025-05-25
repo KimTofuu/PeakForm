@@ -15,13 +15,8 @@
 
 <div class = "main-cont">
     <div class = "left_space">
-        <img src= "images/logo_7.png">
-        <h1>Your Personalized Path <br> to Peak Performance.</h1>
-        <p>Unlock your full potential with PeakForm’s personalized fitness and <br> nutrition plans. 
-            From adaptive workouts to easy meal suggestions,
-            <br> everything you need to succeed is at your fingertips.
-        </p>
-        
+        <img src= "images/logo_9.png" class="logo-login">
+        <img src= "images/workout-7.png" class="icon-login">
     </div>
 
     <div class = "right_space">
@@ -63,7 +58,7 @@
 
             <!-- Password Rules -->
             <div id="password-feedback" style="display: none;">
-    <ul id="password-rules" style="list-style: none; padding:0; margin: 0; font-size: 13px; color: red;">
+    <ul id="password-rules" style="list-style: none; padding:0; margin: 0;">
         <li id="rule-length" class="rule">❌ At least 8 characters</li>
         <li id="rule-upper" class="rule">❌ At least 1 uppercase letter</li>
         <li id="rule-lower" class="rule">❌ At least 1 lowercase letter</li>
@@ -171,7 +166,7 @@ Welcome to PeakForm. Your privacy is important to us. This Privacy <br> Policy o
     </div>
     
     <div class="mid_register"> 
-        <button type="submit" class="signup-btn"> Register </button>
+        <button type="submit" class="signup-btn"> <img src="images/proceed-2.png"><span class="button-text">Proceed</span></button>
     </div>    
 
 </form>
@@ -214,13 +209,13 @@ Welcome to PeakForm. Your privacy is important to us. This Privacy <br> Policy o
             feedbackBox.style.display = "none";
         } else if (errors.length === 0) {
             feedbackBox.style.display = "block";
-            feedbackBox.style.color = "green";
-            feedbackBox.innerHTML = "✅ Strong password";
+            feedbackBox.style.color = "#69db7c";
+            feedbackBox.innerHTML = "Strong password";
         } else {
             feedbackBox.style.display = "block";
             feedbackBox.style.color = "red";
-            feedbackBox.innerHTML = "<ul style='padding-left: 20px; margin: 0;'>" +
-                errors.map(err => `<li>❌ ${err}</li>`).join("") + "</ul>";
+            feedbackBox.innerHTML = "<ul style='padding-left: 20px; margin: 0; font-size: 0.8rem; color: #f472b6; position: absolute; z-index: 2; background-color:rgba(77, 77, 77, 1); width: 100%; border-radius:0.5rem;'>" +
+                errors.map(err => `<li style='margin: 0.5rem 0.5rem;'> ${err}</li>`).join("") + "</ul>";
         }
     }
 
