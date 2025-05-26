@@ -101,10 +101,22 @@
       </div>
       </div>
     </main>
-
+<div id="loader-wrapper" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:#111;display:flex;align-items:center;justify-content:center;">
+  <div class="loader"></div>
+</div>
     <script src="script.js"> </script>
   
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait for DOM and (optionally) images to load
+    setTimeout(function() {
+        const loader = document.getElementById('loader-wrapper');
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.display = 'none', 500);
+    }, 300); // You can adjust the timeout or remove it if not needed
+});
+</script>
 </html>

@@ -10,6 +10,9 @@
   <style>body{overflow-y: hidden;}</style>
 </head>
 <body>
+  <div id="loader-wrapper" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:#111;display:flex;align-items:center;justify-content:center;">
+  <div class="loader"></div>
+</div>
   <div class="container">
     <aside class="sidebar">
       <div class="profile-section">
@@ -171,6 +174,13 @@ function closeVideo() {
     document.getElementById('modalBackdrop').style.display = 'none';
     iframe.src = '';
 }
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        const loader = document.getElementById('loader-wrapper');
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.display = 'none', 500);
+    }, 300); // Adjust delay if needed
+});
   </script>
   <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
   <script src="https://files.bpcontent.cloud/2025/04/26/11/20250426115151-6TMZVHFH.js"></script>  
