@@ -159,7 +159,7 @@ class WorkoutController extends Controller
             $plan['Day 2'] = array_slice($lower, 0, 4);
             if ($days >= 3) $plan['Day 3'] = array_slice($upper, 2, 4);
             if ($days >= 4) $plan['Day 4'] = array_slice($lower, 2, 4);
-            if ($days >= 5) $plan['Day 5'] = ['HIIT', 'Planks', 'Side Planks', 'Bird Dogs'];
+            if ($days >= 5) $plan['Day 5'] = ['Leg Raises', 'Planks', 'Side Planks', 'Bird Dogs'];
             if ($days >= 6) $plan['Day 6'] = ['Mobility Work', 'Foam Rolling', 'Stretching'];
             if ($days >= 7) $plan['Day 7'] = ['Rest Day'];
         }
