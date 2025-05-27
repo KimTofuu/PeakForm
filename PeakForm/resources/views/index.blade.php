@@ -24,7 +24,7 @@
                 </li>
             </ul>
         </nav>
-    </header>
+    </div>
     
     <div id="header-text">
         <div class="container">
@@ -39,7 +39,7 @@
                     </a>
                 </div>
                 <div class="col_2">
-                    <img src="images/workout-4.png">
+                    <img src="images/workout-1.png">
                 </div>
             </div>
         </div>
@@ -50,8 +50,8 @@
     
 
     <div id="about">
-        <h2>About</h2>
         <div class="container_2">
+            <h2>About</h2>
             <div class="row_2">
                 <div class="col_3">
                     <img src="images/phone_left.png">
@@ -68,14 +68,13 @@
                     <img src="images/phone_right.png">
                 </div>
             </div>
-            <img src='images/bowl_v2.png' id = "bowl_v2">
         </div>
     </div>
     
 
     <div id="features">
-        <h2>Features</h2>
         <div class="container_3">
+        <h2>Features</h2>
             <div class="row_3">
                 <div class="col_6">
                     <img src="images/planner.png">
@@ -97,29 +96,26 @@
                 </div>
                 <div class="col_9">
                     <img src="images/meal_planner.png">
-                    <h3>Personalized Meal Planner</h3>
-                    <p>Generate customized meal plans that align with dietary needs, fitness goals, 
-                    and calorie requirements.</p>
+                    <h3>Google Account Authentication</h3>
+                    <p>Google Account Authentication is a secure and reliable feature that ensures only authorized 
+                    users can access your Google services and personal data.</p>
                 </div>
             </div>
             <div class="row_4">
                 <div class="col_10">
                     <img src="images/protein.png">
-                    <h3>Daily Protein Intake Recommendation</h3>
-                    <p>Receive tailored protein intake suggestions based on body weight, fitness goals, 
-                        and workout intensity.</p>
+                    <h3>Workout / Rest Timer </h3>
+                    <p>Helps users stay on track by automatically managing workout and rest intervals for more efficient and effective training sessions.</p>
                 </div>
                 <div class="col_11">
                     <img src="images/muscle.png">
-                    <h3>Muscle Recovery and Injury Prevention Tips</h3>
-                    <p>Gain expert advice on post-workout recovery, stretching routines, and injury prevention 
-                    strategies.</p>
+                    <h3>Macro Intake Tracker</h3>
+                    <p>Enables users to track their daily intake of proteins, fats, and carbohydrates, supporting precise management of nutrition and fitness goals.</p>
                 </div>
                 <div class="col_12">
                     <img src="images/meal_tracker.png">
-                    <h3>Food Intake Tracker</h3>
-                    <p>Log daily food consumption to track calorie intake and maintain a balanced diet for optimal 
-                    fitness results.</p>
+                    <h3>AI Chatbot</h3>
+                    <p>Provides instant, conversational assistance by answering questions, offering recommendations, and helping users navigate tasks efficiently.</p>
                 </div>
                 <div class="col_13">
                     <img src="images/video.png">

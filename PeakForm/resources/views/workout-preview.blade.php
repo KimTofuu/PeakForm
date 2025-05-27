@@ -24,7 +24,7 @@
 
               @forelse ($exercises as $exercise)
                 <div class="workout_content_2">
-                  <label style="color:#1a1a1a;">
+                  <label style="color:#1a1a1a; ">
                     {{ $exercise }}
                   </label>
                 </div>

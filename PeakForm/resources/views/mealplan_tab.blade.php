@@ -69,14 +69,14 @@
 
       <div class="second-side">
         <div class = "progress_tab3" style="color:white;">
-          <h3 style="margin-bottom: 0.2rem; margin-top: 1rem; font-size: 1.5rem; margin-bottom:0.5rem; opacity: 60%;">Enter Your Actual Daily Intake</h3>
+          <h3 style="margin-bottom: 0.2rem; margin-top: 1rem; font-size: 1rem; margin-bottom:0.5rem; opacity: 60%;">Enter Your Actual Daily Intake</h3>
           <div class = "mealplan-label" style="color:white;">
           <label> <input type="number" id="actualProtein" min="0" placeholder="Protein (g)"></label><br>
           <label> <input type="number" id="actualCarbs" min="0" placeholder="Carbs (g)"></label><br>
           <label> <input type="number" id="actualFat" min="0" placeholder="Fat (g)"></label><br>
-          <button id="compareIntakeBtn"  class="generate-btn" style="margin-top: 1rem; margin-right: 0.5rem;">Compare</button>
-          <button id="ResetBtn"  class="generate-btn" style="margin-top: 1rem; margin-left: 0.5rem;" >Reset</button>
-          <button id="viewHistoryBtn" class="generate-btn" style="margin-top: 1rem; margin-left: 0.5rem;">View Intake History</button>
+          <button id="compareIntakeBtn"  class="generate-btn" style="margin-top: 1rem; margin-right: 0.5rem; padding: 0.5rem 0.7rem;">Compare</button>
+          <button id="ResetBtn"  class="generate-btn" style="margin-top: 1rem; margin-left: 0.5rem; padding: 0.5rem 0.7rem;" >Reset</button>
+          <button id="viewHistoryBtn" class="generate-btn" style="margin-top: 1rem; margin-left: 0.5rem; padding: 0.5rem 0.7rem;">View Intake History</button>
           </div>
         </div>
         <div class="progress_tab5">

@@ -78,30 +78,46 @@ window.onclick = function(event) {
 
 
   document.addEventListener('DOMContentLoaded', function () {
+    const beepSound = new Audio('https://www.soundjay.com/button/beep-07.wav'); // You can use your own .mp3 or .wav
+
       let time = 300; // default 5 minutes
       let originalTime = time;
       let interval = null;
       const timerDisplay = document.getElementById('timer');
+      const circle = document.querySelector('.progress-ring__circle');
+      const radius = circle.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+
+      circle.style.strokeDasharray = `${circumference}`;
+      circle.style.strokeDashoffset = `${circumference}`;
+
+    function setCircleProgress(timeLeft) {
+    const offset = circumference - (timeLeft / originalTime) * circumference;
+    circle.style.strokeDashoffset = offset;
+}
+
 
       function updateDisplay() {
           const minutes = Math.floor(time / 60);
           const seconds = time % 60;
           timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+          setCircleProgress(time);
       }
 
       function startTimer() {
-          if (interval) return; // avoid double interval
-          interval = setInterval(() => {
-              if (time <= 0) {
-                  clearInterval(interval);
-                  interval = null;
-                  timerDisplay.textContent = "Time's up!";
-                  return;
-              }
-              time--;
-              updateDisplay();
-          }, 1000);
-      }
+    if (interval) return; // avoid double interval
+    interval = setInterval(() => {
+        if (time <= 0) {
+            clearInterval(interval);
+            interval = null;
+            beepSound.play().catch(e => console.log("Beep blocked by browser:", e));
+            timerDisplay.textContent = "Time's up!";
+            return;
+        }
+        time--;
+        updateDisplay();
+    }, 1000);
+}
 
       function stopTimer() {
           clearInterval(interval);

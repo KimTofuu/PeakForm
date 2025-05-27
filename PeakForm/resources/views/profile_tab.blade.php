@@ -185,7 +185,7 @@
       <div class="form-group">
           <label for="profileWeight">Current Weight (kg)</label>
           <input type="number" id="profileWeight" name="weight" class="form-input" placeholder="e.g. 70"
-                value="{{ $user->weight }}" />
+            value="{{ $user->weight }}" min="20" max="300" step="0.01" />
       </div>
 
       <div class="modal-actions">

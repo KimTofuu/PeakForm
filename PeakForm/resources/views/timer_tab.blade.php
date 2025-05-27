@@ -42,8 +42,13 @@
 
           <div class="timer_tab">
             <div>
-              <h2 style="font-family: 'Michroma', sans-serif; color:white;">Timer</h2>
-              <div id="timer" style="font-family: 'Michroma', sans-serif; margin-bottom: 3rem; color:white;">05:00</div>
+              <h2 style="font-family: 'Michroma', sans-serif; color:white;margin-bottom:2rem;">Timer</h2>
+              <div class="circle-timer">
+                <svg class="progress-ring" width="240" height="240">
+                  <circle class="progress-ring__circle" stroke="#00bfff" stroke-width="10" fill="transparent" r="100" cx="120" cy="120"/>
+                </svg>
+                <div id="timer" class="timer-text">05:00</div>
+              </div>
 
                 <button id="startBtn">Start</button>
                 <button id="stopBtn">Stop</button>
