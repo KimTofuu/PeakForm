@@ -20,7 +20,7 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'age' => 'nullable|integer|min:0',
             'gender' => 'nullable|string|max:50',
-            'weight' => 'nullable|numeric|min:0',
+            'weight' => 'nullable|numeric|min:20|max:300',
         ]);
 
         // Split name into first and last (optional, adjust as needed)
