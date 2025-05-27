@@ -499,16 +499,24 @@ document.getElementById("ResetBtn").addEventListener("click", async () => {
     const data = await response.json();
 
     if (response.ok) {
-      Swal.fire({
-        title: 'Reset Successful',
-        text: "Daily intake has been reset.",
-        confirmButtonColor: '#00bfff'
-      });
+  Swal.fire({
+    title: 'Reset Successful',
+    text: "Daily intake has been reset.",
+    confirmButtonColor: '#00bfff'
+  });
 
-      document.getElementById("actualProtein").value = "";
-      document.getElementById("actualCarbs").value = "";
-      document.getElementById("actualFat").value = "";
-    } else {
+  document.getElementById("actualProtein").value = "";
+  document.getElementById("actualCarbs").value = "";
+  document.getElementById("actualFat").value = "";
+
+  // Get target values from the DOM
+  const targetProtein = parseInt(document.getElementById('protein').textContent) || 0;
+  const targetCarbs = parseInt(document.getElementById('carbs').textContent) || 0;
+  const targetFat = parseInt(document.getElementById('fat').textContent) || 0;
+
+  // Refresh the chart with zeroes for actuals
+  updateComparisonChart(targetProtein, targetCarbs, targetFat, 0, 0, 0);
+} else {
       Swal.fire({
         title: 'Error',
         text: "Failed to reset intake: " + (data.message || 'Unknown error'),
@@ -581,5 +589,46 @@ window.onclick = function(event) {
     modal.style.display = 'none';
   }
 };
+function updateComparisonChart(targetProtein, targetCarbs, targetFat, actualProtein = 0, actualCarbs = 0, actualFat = 0) {
+  const ctxCompare = document.getElementById('comparisonChart').getContext('2d');
+  if (window.comparisonChart && typeof window.comparisonChart.destroy === 'function') {
+    window.comparisonChart.destroy();
+  }
+  window.comparisonChart = new Chart(ctxCompare, {
+    type: 'bar',
+    data: {
+      labels: ['Protein', 'Carbs', 'Fat'],
+      datasets: [
+        {
+          label: 'Target (g)',
+          data: [targetProtein, targetCarbs, targetFat],
+          backgroundColor: 'rgba(54, 162, 235, 0.5)'
+        },
+        {
+          label: 'Actual (g)',
+          data: [actualProtein, actualCarbs, actualFat],
+          backgroundColor: 'rgba(255, 99, 132, 0.5)'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Target vs Daily Intake'
+        },
+        legend: {
+          position: 'bottom'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
 </script>
 </html>
