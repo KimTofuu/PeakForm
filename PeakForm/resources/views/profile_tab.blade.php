@@ -129,8 +129,16 @@
     <form action="/change-password" method="POST">
       @csrf
       <div class="form-group">
-        <label for="current_password">Current Password</label>
+        {{-- <label for="current_password">Current Password</label>
         <input type="password" id="current_password" name="current_password" class="form-input" placeholder="Enter current password" required />
+      </div> --}}
+          <label for="current_password">Current Password</label>
+          <input type="password" id="current_password" name="current_password" class="form-input" placeholder="Enter current password" required />
+          @error('current_password')
+              <div class="alert alert-danger" style="color: #dc3545; font-size: 0.9em;">
+                  {{ $message }}
+              </div>
+          @enderror
       </div>
 
       <div class="form-group">
