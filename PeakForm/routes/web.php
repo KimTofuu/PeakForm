@@ -96,10 +96,10 @@ Route::middleware('auth:sanctum')->group(function () {
     })->name('welcome_page');
 
     Route::get('/mealplan_tab', [MealController::class, 'showMealPlanTab'])->name('mealplan_tab');
-    Route::get('/mealplan_tab', function () {
-        $user = Auth::user();
-        return view('mealplan_tab', compact('user'));
-    })->name('mealplan_tab');
+    // Route::get('/mealplan_tab', function () {
+    //     $user = Auth::user();
+    //     return view('mealplan_tab', compact('user'));
+    // })->name('mealplan_tab');
 
     Route::get('/profile_tab', function () {
         $user = Auth::user();
