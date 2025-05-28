@@ -156,7 +156,7 @@
   const openBtn = document.getElementById('openMealPlanModal');
   const modal = document.getElementById('mealPlanModal');
   const closeBtn = document.getElementById('closeMealPlanModal');
-  const dailyIntake = document.getElementById('dailyIntake');
+  window.dailyIntake = @json($daily_intake);
 
   openBtn.onclick = () => modal.style.display = 'block';
   closeBtn.onclick = () => modal.style.display = 'none';
@@ -231,7 +231,7 @@
               }
             }
           });
-          document.getElementById('compareIntakeBtn').onclick = () => {
+          document.getElementById('compareIntakeBtn').onclick = async () => {
           const actualProtein = parseInt(document.getElementById('actualProtein').value);
           const actualCarbs = parseInt(document.getElementById('actualCarbs').value);
           const actualFat = parseInt(document.getElementById('actualFat').value);
@@ -245,6 +245,31 @@
           // Destroy old comparison chart if exists
           if (window.comparisonChart && typeof window.comparisonChart.destroy === 'function') {
             window.comparisonChart.destroy();
+          }
+
+          // After a successful compare (inside your fetch/axios .then or after response.ok)
+          if (response.ok) {
+              // Suppose you get the updated values from the response:
+              // let data = await response.json();
+              // let updated = data.daily_intake;
+
+              // For example, if you get the new values from the form:
+              const protein = document.getElementById('actualProtein').value || 0;
+              const carbs = document.getElementById('actualCarbs').value || 0;
+              const fat = document.getElementById('actualFat').value || 0;
+
+              // Update the DOM
+              document.getElementById('inProtein').textContent = protein;
+              document.getElementById('inCarbs').textContent = carbs;
+              document.getElementById('inFat').textContent = fat;
+
+              // Optionally update window.dailyIntake
+              window.dailyIntake = {
+                  protein: protein,
+                  carbs: carbs,
+                  fat: fat
+              };
+              
           }
 
           window.comparisonChart = new Chart(ctxCompare, {
@@ -420,6 +445,7 @@ document.getElementById('compareIntakeBtn').onclick = async () => {
 
     if (result.success) {
       const updated = result.data;
+      await reloadIntakeAndChart();
 
       const ctxCompare = document.getElementById('comparisonChart').getContext('2d');
 
@@ -509,13 +535,16 @@ document.getElementById("ResetBtn").addEventListener("click", async () => {
   document.getElementById("actualCarbs").value = "";
   document.getElementById("actualFat").value = "";
 
+  
+
   // Get target values from the DOM
   const targetProtein = parseInt(document.getElementById('protein').textContent) || 0;
   const targetCarbs = parseInt(document.getElementById('carbs').textContent) || 0;
   const targetFat = parseInt(document.getElementById('fat').textContent) || 0;
 
   // Refresh the chart with zeroes for actuals
-  updateComparisonChart(targetProtein, targetCarbs, targetFat, 0, 0, 0);
+  await updateComparisonChart(targetProtein, targetCarbs, targetFat, 0, 0, 0);
+  await reloadIntakeAndChart();
 } else {
       Swal.fire({
         title: 'Error',
@@ -536,13 +565,11 @@ document.getElementById("ResetBtn").addEventListener("click", async () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (dailyIntake) {
-        document.getElementById('inProtein').textContent = dailyIntake.protein ?? '-';
-        document.getElementById('inCarbs').textContent = dailyIntake.carbs ?? '-';
-        document.getElementById('inFat').textContent = dailyIntake.fat ?? '-';
+    if (window.dailyIntake) {
+        document.getElementById('inProtein').textContent = window.dailyIntake.protein ?? '-';
+        document.getElementById('inCarbs').textContent = window.dailyIntake.carbs ?? '-';
+        document.getElementById('inFat').textContent = window.dailyIntake.fat ?? '-';
     } else {
-        // Show placeholders if no data
-        document.getElementById('inCalories').textContent = '-';
         document.getElementById('inProtein').textContent = '-';
         document.getElementById('inCarbs').textContent = '-';
         document.getElementById('inFat').textContent = '-';
@@ -629,6 +656,38 @@ function updateComparisonChart(targetProtein, targetCarbs, targetFat, actualProt
       }
     }
   });
+}
+async function reloadIntakeAndChart() {
+  try {
+    // Fetch latest meal plan and intake
+    const planResponse = await fetch('{{ route("mealplan.latest") }}');
+    const planResult = await planResponse.json();
+
+    const intakeResponse = await fetch('{{ route("intake.latest") }}');
+    const intakeResult = await intakeResponse.json();
+
+    if (planResult.success && intakeResult.success && intakeResult.data) {
+      const plan = planResult.meal_plan;
+      const intake = intakeResult.data;
+
+      // Update DOM values
+      document.getElementById('inProtein').textContent = intake.protein ?? '-';
+      document.getElementById('inCarbs').textContent = intake.carbs ?? '-';
+      document.getElementById('inFat').textContent = intake.fat ?? '-';
+
+      // Update chart
+      updateComparisonChart(
+        plan.proteinTarget,
+        plan.carbsTarget,
+        plan.fatTarget,
+        intake.protein,
+        intake.carbs,
+        intake.fat
+      );
+    }
+  } catch (err) {
+    console.error('Failed to reload intake/chart:', err);
+  }
 }
 </script>
 </html>

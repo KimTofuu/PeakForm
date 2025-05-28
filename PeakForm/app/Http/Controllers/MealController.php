@@ -213,8 +213,6 @@ class MealController extends Controller
     public function showMealPlanTab()
     {
         $user = Auth::user();
-
-        // Get today's intake
         $daily_intake = DailyIntake::where('user_id', $user->id)
             ->whereDate('created_at', today())
             ->first();
