@@ -12,7 +12,7 @@ class legSeeder extends Seeder
         $exercises = [
             ['title' => 'Leg Raises',
                 'youtube_url' => 'https://www.youtube.com/watch?v=d8BITjLpD1o',
-                'muscle_group' => 'Legs',
+                'muscle_group' => 'Glutes',
                 'creator' => 'www.sportsinjuryclinic.net',
             ],
         ];

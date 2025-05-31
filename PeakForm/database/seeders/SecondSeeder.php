@@ -10,14 +10,14 @@ class SecondSeeder extends Seeder
     public function run()
     {
         $exercises = [
-            ['title' => ' Planks',
+            ['title' => 'Planks',
                 'youtube_url' => 'https://www.youtube.com/watch?v=pvIjsG5Svck',
-                'muscle_group' => 'Legs',
+                'muscle_group' => 'Abdomen',
                 'creator' => 'Childrens Hospital Colorado',
             ],
             ['title' => 'Side Planks',
                 'youtube_url' => 'https://www.youtube.com/watch?v=N_s9em1xTqU',
-                'muscle_group' => 'Legs',
+                'muscle_group' => 'Obliques',
                 'creator' => 'Childrens Hospital Colorado',
             ],
             ['title' => 'Bird Dogs',
