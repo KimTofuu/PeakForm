@@ -191,10 +191,11 @@ function displayWorkout(exercises) {
       if (exercise.sets && exercise.reps) {
         details = ` <span class="exercise-details">(${exercise.sets} sets x ${exercise.reps} reps)</span>`;
       }
+      let muscle = exercise.muscle_group ? `<br><span class="muscle-group">Target: ${exercise.muscle_group}</span>` : '';
       return `
         <div class="exercise-item">
           <input type="checkbox" id="exercise-${index}" data-title="${exercise.title}">
-          <label for="exercise-${index}">${exercise.title}${details}</label>
+          <label for="exercise-${index}">${exercise.title}${details}${muscle}</label>
         </div>
       `;
     }).join('');

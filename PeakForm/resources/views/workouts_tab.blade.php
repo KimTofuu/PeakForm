@@ -67,6 +67,13 @@
                         <label>
                             <img src="{{ $imagePath }}" alt="{{ $title }}" style="width:90px; height:60px; object-fit:cover; border-radius:0.2rem;">
                             {{ $title }}
+                            @php
+                                $muscle = is_array($exercise) && isset($exercise['muscle_group']) ? $exercise['muscle_group'] : null;
+                            @endphp
+
+                            @if($muscle)
+                                <span class="muscle-group">Target: {{ $muscle }}</span>
+                            @endif
                             @if($sets && $reps)
                                  <span class="exercise-details">({{ $sets }} sets x {{ $reps }} reps)</span>
                             @endif

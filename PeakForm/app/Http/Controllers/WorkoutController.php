@@ -347,7 +347,7 @@ class WorkoutController extends Controller
                 'user' => $user,
                 'workouts' => [],
                 'input' => [],
-                 'videoList' => collect(),
+                'videoList' => collect(),
             ]);
         }
 
@@ -365,6 +365,18 @@ class WorkoutController extends Controller
             return strtolower(trim($item->title));
         });
 
+         // Attach muscle_group to each exercise
+        foreach ($workouts as &$day) {
+            foreach ($day as &$exercise) {
+                if (is_array($exercise) && isset($exercise['title'])) {
+                    $normalized = strtolower(trim($exercise['title']));
+                    if (isset($videoList[$normalized]) && isset($videoList[$normalized]->muscle_group)) {
+                        $exercise['muscle_group'] = $videoList[$normalized]->muscle_group;
+                    }
+                }
+            }
+        }
+        unset($day, $exercise); // break reference
 
         return view('workouts_tab', [
             'user' => $user,
@@ -508,17 +520,13 @@ class WorkoutController extends Controller
             return response()->json(['error' => 'User not authenticated.'], 403);
         }
 
-        // Get the day number from the request
         $dayNumber = $request->input('day');
-
-        // Fetch the latest workout split for the user
         $workSplit = WorkSplit::where('user_id', $user->id)->latest()->first();
 
         if (!$workSplit) {
             return response()->json(['error' => 'No workout plan found.'], 404);
         }
 
-        // Decode the workout plan for the specified day
         $days = [
             'Day 1' => json_decode($workSplit->day1 ?? '[]', true),
             'Day 2' => json_decode($workSplit->day2 ?? '[]', true),
@@ -529,27 +537,30 @@ class WorkoutController extends Controller
             'Day 7' => json_decode($workSplit->day7 ?? '[]', true),
         ];
 
-        $selectedDay = "Day $dayNumber";
-        $rawExercises = $days[$selectedDay];
-        $formattedExercises = collect($rawExercises)->map(function ($exercise) {
-            // If $exercise is a string (e.g., "Rest Day"), wrap it
-            if (is_string($exercise)) {
-                return ['title' => $exercise, 'sets' => null, 'reps' => null];
-            }
-            // If $exercise is already an array, return as is
-            return $exercise;
+        $videoList = WorkoutVideo::all()->keyBy(function ($item) {
+            return strtolower(trim($item->title));
         });
 
+        $selectedDay = "Day $dayNumber";
+        $rawExercises = $days[$selectedDay];
 
-        if (isset($days[$selectedDay])) {
-            return response()->json([
-                'success' => true,
-                'day' => $selectedDay,
-                'exercises' => $formattedExercises,
-            ]);
-        }
+        // Attach muscle_group to each exercise
+        $formattedExercises = collect($rawExercises)->map(function ($exercise) use ($videoList) {
+            if (is_string($exercise)) {
+                return ['title' => $exercise, 'sets' => null, 'reps' => null, 'muscle_group' => null];
+            }
+            if (is_array($exercise) && isset($exercise['title'])) {
+                $normalized = strtolower(trim($exercise['title']));
+                $exercise['muscle_group'] = isset($videoList[$normalized]) ? $videoList[$normalized]->muscle_group : null;
+            }
+            return $exercise;
+        })->values();
 
-        return response()->json(['error' => 'Invalid day.'], 400);
+        return response()->json([
+            'success' => true,
+            'day' => $selectedDay,
+            'exercises' => $formattedExercises,
+        ]);
     }
 
     private function getRepsAndSets($goal, $intensity)

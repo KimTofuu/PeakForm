@@ -12,7 +12,7 @@ class BackSeeder extends Seeder
         $exercises = [
             ['title' => 'Back Extensions',
                 'youtube_url' => 'https://www.youtube.com/watch?v=ENXyYltB7CM',
-                'muscle_group' => 'Pull',
+                'muscle_group' => 'Back',
                 'creator' => 'Rehab My Patient',
             ],
         ];
