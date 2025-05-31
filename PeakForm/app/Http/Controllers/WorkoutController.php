@@ -91,6 +91,8 @@ class WorkoutController extends Controller
     {
         $level = $data['level'];
         $setup = $data['setup'];
+        $goal = $data['goal'];
+        $intensity = $data['intensity'];
 
         $plan = [
             'Day 1' => null,
@@ -138,45 +140,57 @@ class WorkoutController extends Controller
             ],
         ];
 
+        $repsSets = $this->getRepsAndSets($goal, $intensity);
+
+        $wrapExercises = function($exerciseList) use ($repsSets) {
+            return array_map(function($exercise) use ($repsSets) {
+                return [
+                    'title' => $exercise,
+                    'sets' => $repsSets['sets'],
+                    'reps' => $repsSets['reps'],
+                ];
+            }, $exerciseList);
+        };
+
         // Choose correct source based on setup
         $exerciseSource = ($setup === 'home') ? $homeExercises : $gymExercises;
         $lvl = $exerciseSource[$level] ?? $exerciseSource['beginner'];
 
         if ($splitType === 'PPL') {
-            $plan['Day 1'] = $lvl['push'];
-            $plan['Day 2'] = $lvl['pull'];
-            $plan['Day 3'] = $lvl['legs'];
-            if ($days >= 4) $plan['Day 4'] = $lvl['push'];
-            if ($days >= 5) $plan['Day 5'] = $lvl['pull'];
-            if ($days >= 6) $plan['Day 6'] = $lvl['legs'];
+            $plan['Day 1'] = $wrapExercises($lvl['push']);
+            $plan['Day 2'] = $wrapExercises($lvl['pull']);
+            $plan['Day 3'] = $wrapExercises($lvl['legs']);
+            if ($days >= 4) $plan['Day 4'] = $wrapExercises($lvl['push']);
+            if ($days >= 5) $plan['Day 5'] = $wrapExercises($lvl['pull']);
+            if ($days >= 6) $plan['Day 6'] = $wrapExercises($lvl['legs']);
             if ($days >= 7) $plan['Day 7'] = ['Rest Day'];
         }
 
         elseif ($splitType === 'Upper Lower') {
-            $upper = array_merge($lvl['push'], $lvl['pull']);
-            $lower = $lvl['legs'];
-            $plan['Day 1'] = array_slice($upper, 0, 4);
-            $plan['Day 2'] = array_slice($lower, 0, 4);
-            if ($days >= 3) $plan['Day 3'] = array_slice($upper, 2, 4);
-            if ($days >= 4) $plan['Day 4'] = array_slice($lower, 2, 4);
+            $upper = $wrapExercises(array_merge($lvl['push'], $lvl['pull']));
+            $lower = $wrapExercises($lvl['legs']);
+            $plan['Day 1'] = $wrapExercises(array_slice($upper, 0, 4));
+            $plan['Day 2'] = $wrapExercises(array_slice($lower, 0, 4));
+            if ($days >= 3) $plan['Day 3'] = $wrapExercises(array_slice($upper, 2, 4));
+            if ($days >= 4) $plan['Day 4'] = $wrapExercises(array_slice($lower, 2, 4));
             if ($days >= 5) $plan['Day 5'] = ['Leg Raises', 'Planks', 'Side Planks', 'Bird Dogs'];
             if ($days >= 6) $plan['Day 6'] = ['Mobility Work', 'Foam Rolling', 'Stretching'];
             if ($days >= 7) $plan['Day 7'] = ['Rest Day'];
         }
 
         elseif ($splitType === 'Full Body') {
-            $combined = array_merge($lvl['push'], $lvl['pull'], $lvl['legs']);
+            $combined = $wrapExercises(array_merge($lvl['push'], $lvl['pull'], $lvl['legs']));
             shuffle($combined);
 
             $exerciseCount = count($combined);
 
             for ($i = 1; $i <= $days; $i++) {
                 $start = (($i - 1) * 4) % $exerciseCount;
-                $dayExercises = array_slice($combined, $start, 4);
+                $dayExercises = $wrapExercises(array_slice($combined, $start, 4));
 
                 // If slice goes beyond array end, wrap around
                 if (count($dayExercises) < 4) {
-                    $dayExercises = array_merge($dayExercises, array_slice($combined, 0, 4 - count($dayExercises)));
+                    $dayExercises = $wrapExercises(array_merge($dayExercises, array_slice($combined, 0, 4 - count($dayExercises))));
                 }
 
                 $plan["Day $i"] = $dayExercises;
@@ -338,13 +352,13 @@ class WorkoutController extends Controller
         }
 
         $workouts = [
-            'Monday' => json_decode($workSplit->day1 ?? '[]'),
-            'Tuesday' => json_decode($workSplit->day2 ?? '[]'),
-            'Wednesday' => json_decode($workSplit->day3 ?? '[]'),
-            'Thursday' => json_decode($workSplit->day4 ?? '[]'),
-            'Friday' => json_decode($workSplit->day5 ?? '[]'),
-            'Saturday' => json_decode($workSplit->day6 ?? '[]'),
-            'Sunday' => json_decode($workSplit->day7 ?? '[]'),
+            'Monday' => json_decode($workSplit->day1 ?? '[]', true),
+            'Tuesday' => json_decode($workSplit->day2 ?? '[]', true),
+            'Wednesday' => json_decode($workSplit->day3 ?? '[]', true),
+            'Thursday' => json_decode($workSplit->day4 ?? '[]', true),
+            'Friday' => json_decode($workSplit->day5 ?? '[]', true),
+            'Saturday' => json_decode($workSplit->day6 ?? '[]', true),
+            'Sunday' => json_decode($workSplit->day7 ?? '[]', true),
         ];
 
         $videoList = WorkoutVideo::all()->keyBy(function ($item) {
@@ -383,13 +397,13 @@ class WorkoutController extends Controller
         }
 
         $workouts = [
-            'Monday' => json_decode($workSplit->day1 ?? '[]'),
-            'Tuesday' => json_decode($workSplit->day2 ?? '[]'),
-            'Wednesday' => json_decode($workSplit->day3 ?? '[]'),
-            'Thursday' => json_decode($workSplit->day4 ?? '[]'),
-            'Friday' => json_decode($workSplit->day5 ?? '[]'),
-            'Saturday' => json_decode($workSplit->day6 ?? '[]'),
-            'Sunday' => json_decode($workSplit->day7 ?? '[]'),
+            'Monday' => json_decode($workSplit->day1 ?? '[]', true),
+            'Tuesday' => json_decode($workSplit->day2 ?? '[]', true),
+            'Wednesday' => json_decode($workSplit->day3 ?? '[]', true),
+            'Thursday' => json_decode($workSplit->day4 ?? '[]', true),
+            'Friday' => json_decode($workSplit->day5 ?? '[]', true),
+            'Saturday' => json_decode($workSplit->day6 ?? '[]', true),
+            'Sunday' => json_decode($workSplit->day7 ?? '[]', true),
         ];
 
         $videoList = WorkoutVideo::all()->keyBy(function ($item) {
@@ -440,13 +454,13 @@ class WorkoutController extends Controller
         });
 
         $workouts = [
-            'Monday' => json_decode($workSplit->day1 ?? '[]'),
-            'Tuesday' => json_decode($workSplit->day2 ?? '[]'),
-            'Wednesday' => json_decode($workSplit->day3 ?? '[]'),
-            'Thursday' => json_decode($workSplit->day4 ?? '[]'),
-            'Friday' => json_decode($workSplit->day5 ?? '[]'),
-            'Saturday' => json_decode($workSplit->day6 ?? '[]'),
-            'Sunday' => json_decode($workSplit->day7 ?? '[]'),
+            'Monday' => json_decode($workSplit->day1 ?? '[]', true),
+            'Tuesday' => json_decode($workSplit->day2 ?? '[]', true),
+            'Wednesday' => json_decode($workSplit->day3 ?? '[]', true),
+            'Thursday' => json_decode($workSplit->day4 ?? '[]', true),
+            'Friday' => json_decode($workSplit->day5 ?? '[]', true),
+            'Saturday' => json_decode($workSplit->day6 ?? '[]', true),
+            'Sunday' => json_decode($workSplit->day7 ?? '[]', true),
         ];
 
         $input = [
@@ -506,19 +520,24 @@ class WorkoutController extends Controller
 
         // Decode the workout plan for the specified day
         $days = [
-            'Day 1' => json_decode($workSplit->day1 ?? '[]'),
-            'Day 2' => json_decode($workSplit->day2 ?? '[]'),
-            'Day 3' => json_decode($workSplit->day3 ?? '[]'),
-            'Day 4' => json_decode($workSplit->day4 ?? '[]'),
-            'Day 5' => json_decode($workSplit->day5 ?? '[]'),
-            'Day 6' => json_decode($workSplit->day6 ?? '[]'),
-            'Day 7' => json_decode($workSplit->day7 ?? '[]'),
+            'Day 1' => json_decode($workSplit->day1 ?? '[]', true),
+            'Day 2' => json_decode($workSplit->day2 ?? '[]', true),
+            'Day 3' => json_decode($workSplit->day3 ?? '[]', true),
+            'Day 4' => json_decode($workSplit->day4 ?? '[]', true),
+            'Day 5' => json_decode($workSplit->day5 ?? '[]', true),
+            'Day 6' => json_decode($workSplit->day6 ?? '[]', true),
+            'Day 7' => json_decode($workSplit->day7 ?? '[]', true),
         ];
 
         $selectedDay = "Day $dayNumber";
         $rawExercises = $days[$selectedDay];
         $formattedExercises = collect($rawExercises)->map(function ($exercise) {
-            return ['title' => $exercise];
+            // If $exercise is a string (e.g., "Rest Day"), wrap it
+            if (is_string($exercise)) {
+                return ['title' => $exercise, 'sets' => null, 'reps' => null];
+            }
+            // If $exercise is already an array, return as is
+            return $exercise;
         });
 
 
@@ -531,5 +550,25 @@ class WorkoutController extends Controller
         }
 
         return response()->json(['error' => 'Invalid day.'], 400);
+    }
+
+    private function getRepsAndSets($goal, $intensity)
+    {
+        $base = [
+            'build muscle' => ['sets' => 4, 'reps' => 10],
+            'fat loss' => ['sets' => 3, 'reps' => 15],
+            'strength' => ['sets' => 5, 'reps' => 5],
+        ];
+
+        $adjustment = [
+            'low' => 0,
+            'medium' => 1,
+            'high' => 2,
+        ];
+
+        $sets = ($base[$goal]['sets'] ?? 3) + ($adjustment[$intensity] ?? 0);
+        $reps = ($base[$goal]['reps'] ?? 10) - ($adjustment[$intensity] ?? 0);
+
+        return ['sets' => $sets, 'reps' => $reps];
     }
 }
