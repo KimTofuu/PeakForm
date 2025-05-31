@@ -53,33 +53,40 @@
                   </div>
 
                   @forelse ($exercises as $exercise)
-                      @php
-                          $normalized = strtolower(trim($exercise));
-                          $video = $videoList[$normalized] ?? null;
-                          $imageName = $exercise . '.jpg';
-                          $imagePath = asset('images/exercisePics/' . $imageName);
-                      @endphp
-                      <div class="workout_content_2" style="width: 100%; display: flex; justify-content: space-between; color:white;" >
-                          <label>
-                              <img src="{{ $imagePath }}" alt="{{ $exercise }}" style="width:90px; height:60px; object-fit:cover; border-radius:0.2rem;">
-                              {{ $exercise }} <br>
-                          </label>
-                          @php
-                              $embedUrl = '';
-                              if ($video && $video->youtube_url) {
-                                  if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $video->youtube_url, $matches)) {
-                                      $embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
-                                  }
-                              }
-                          @endphp
-                          @if($embedUrl)
+                    @php
+                        // If $exercise is an array, get title/sets/reps, else treat as string (e.g., Rest Day)
+                        $title = is_array($exercise) ? $exercise['title'] : $exercise;
+                        $sets = is_array($exercise) && isset($exercise['sets']) ? $exercise['sets'] : null;
+                        $reps = is_array($exercise) && isset($exercise['reps']) ? $exercise['reps'] : null;
+                        $normalized = strtolower(trim($title));
+                        $video = $videoList[$normalized] ?? null;
+                        $imageName = $title . '.jpg';
+                        $imagePath = asset('images/exercisePics/' . $imageName);
+                    @endphp
+                    <div class="workout_content_2" style="width: 100%; display: flex; justify-content: space-between; color:white;" >
+                        <label>
+                            <img src="{{ $imagePath }}" alt="{{ $title }}" style="width:90px; height:60px; object-fit:cover; border-radius:0.2rem;">
+                            {{ $title }}
+                            @if($sets && $reps)
+                                 <span class="exercise-details">({{ $sets }} sets x {{ $reps }} reps)</span>
+                            @endif
+                            <br>
+                        </label>
+                        @php
+                            $embedUrl = '';
+                            if ($video && $video->youtube_url) {
+                                if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $video->youtube_url, $matches)) {
+                                    $embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
+                                }
+                            }
+                        @endphp
+                        @if($embedUrl)
                             <button type="button" class="watch-btn" onclick="showVideo('{{ $embedUrl }}', '{{ $video->youtube_url }}')" style="padding:0.5rem 1rem; background-color: #00bfff; border-radius: 0.5rem; border: none; color: white;">Watch Video</button>
                         @endif
-                      </div>
-                  @empty
-                      <p style="color:white;">No exercises for this day.</p>
-                  @endforelse
-              </div>
+                    </div>
+                @empty
+                    <p style="color:white;">No exercises for this day.</p>
+                @endforelse
               @php $dayCount++; @endphp
           @endforeach
         </div>

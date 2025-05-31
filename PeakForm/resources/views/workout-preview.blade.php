@@ -23,13 +23,16 @@
               </div>
 
               @forelse ($exercises as $exercise)
-                <div class="workout_content_2">
-                  <label style="color:#1a1a1a; ">
-                    {{ $exercise }}
-                  </label>
-                </div>
+                  <div class="workout_content_2">
+                    <label style="color:#1a1a1a;">
+                      {{ is_array($exercise) ? $exercise['title'] : $exercise }}
+                      @if(is_array($exercise) && isset($exercise['sets'], $exercise['reps']) && $exercise['sets'] && $exercise['reps'])
+                        ({{ $exercise['sets'] }} sets x {{ $exercise['reps'] }} reps)
+                      @endif
+                    </label>
+                  </div>
               @empty
-                <p style="color:#1a1a1a;">No exercises for this day.</p>
+                  <p style="color:#1a1a1a;">No exercises for this day.</p>
               @endforelse
             </div>
 

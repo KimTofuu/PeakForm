@@ -186,12 +186,18 @@ function displayWorkout(exercises) {
       return resolve(); // still resolve even if it's a rest day
     }
 
-    workoutContainer.innerHTML = exercises.map((exercise, index) => `
-      <div class="exercise-item">
-        <input type="checkbox" id="exercise-${index}" data-title="${exercise.title}">
-        <label for="exercise-${index}">${exercise.title}</label>
-      </div>
-    `).join('');
+    workoutContainer.innerHTML = exercises.map((exercise, index) => {
+      let details = '';
+      if (exercise.sets && exercise.reps) {
+        details = ` <span class="exercise-details">(${exercise.sets} sets x ${exercise.reps} reps)</span>`;
+      }
+      return `
+        <div class="exercise-item">
+          <input type="checkbox" id="exercise-${index}" data-title="${exercise.title}">
+          <label for="exercise-${index}">${exercise.title}${details}</label>
+        </div>
+      `;
+    }).join('');
 
     fetch(`/api/workout/progress?day=${currentDay}`)
       .then(response => response.json())
