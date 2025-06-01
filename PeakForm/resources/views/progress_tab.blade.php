@@ -48,7 +48,29 @@
             <div class ="progress_contents" style="text-align: left;">
               <div class="progress_table_section">
                 <h3 style="font-family: 'Inter', sans-serif; opacity: 50%; color:white;" >Track Your Progress</h3>
-
+                <button id="openGoalModal" type="button" class="modal-btn">Set/Edit Goal</button>
+                
+                <div id="goalModal" class="modal" style="display:none;">
+                  <div class="modal-content">
+                    <span class="close" id="closeGoalModal">&times;</span>
+                    <form method="POST" action="{{ route('progress.goal') }}" class="progress-form">
+                      @csrf
+                      @php
+                          $goal = strtolower(trim(str_replace('_', ' ', $userGoal ?? '')));
+                      @endphp
+                      @if($goal === 'gain muscle')  
+                        <input type="number" name="goal_muscle_mass" step="0.01" placeholder="Goal Muscle Mass (kg)" required />
+                      @elseif($goal === 'lose fat')
+                        <input type="number" name="goal_body_fat_percentage" step="0.01" placeholder="Goal Body Fat (%)" required />
+                      @elseif($goal === 'maintenance')
+                        <input type="number" name="goal_body_fat_percentage" step="0.01" placeholder="Goal Body Fat (%)" required />
+                      @else
+                        <p style="color: #fff;">Set your goal in your profile to enable goal input.</p>
+                      @endif
+                      <button type="submit">Set Goal</button>
+                    </form>
+                  </div>
+                </div>
                 <!-- Add Entry Form -->
                 <form method="POST" action="{{ route('progress.store') }}" class="progress-form">
                   @csrf
@@ -103,6 +125,32 @@
         </div>
       </div>
       </div>
+      {{-- Runner Progress Visualization --}}
+      <div class="runner-track-container">
+        <div class="progress-info" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <div>
+                <strong>Current:</strong>
+                {{ $currentProgress ?? '-' }}
+            </div>
+            <div>
+                <strong>Goal:</strong>
+                {{ $goalValue ?? '-' }}
+            </div>
+        </div>
+        {{-- Milestones --}}
+        @foreach([25, 50, 75] as $milestone)
+          <div class="milestone" style="left: {{ $milestone }}%;">
+            📍
+            <span class="milestone-label">{{ $milestone }}%</span>
+          </div>
+        @endforeach
+
+        {{-- Runner --}}
+        <div class="runner" style="left: {{ $progress }}%;">🏃‍♂️</div>
+
+        {{-- Finish Line --}}
+        <div class="finish-line">🏁</div>
+    </div>
     </main>
     <script src="script.js"> </script>
   
@@ -118,5 +166,17 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => loader.style.display = 'none', 500);
     }, 300); // You can adjust the timeout or remove it if not needed
 });
+
+document.getElementById('openGoalModal').onclick = function() {
+  document.getElementById('goalModal').style.display = 'block';
+};
+document.getElementById('closeGoalModal').onclick = function() {
+  document.getElementById('goalModal').style.display = 'none';
+};
+window.onclick = function(event) {
+  if (event.target == document.getElementById('goalModal')) {
+    document.getElementById('goalModal').style.display = 'none';
+  }
+};
 </script>
 </html>

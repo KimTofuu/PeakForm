@@ -144,8 +144,17 @@ class WorkoutController extends Controller
 
         $wrapExercises = function($exerciseList) use ($repsSets) {
             return array_map(function($exercise) use ($repsSets) {
+                // If already an array with a 'title' key, keep as is
+                if (is_array($exercise) && isset($exercise['title'])) {
+                    return [
+                        'title' => ['title' => $exercise['title']],
+                        'sets' => $repsSets['sets'],
+                        'reps' => $repsSets['reps'],
+                    ];
+                }
+                // Otherwise, wrap as usual
                 return [
-                    'title' => $exercise,
+                    'title' => ['title' => $exercise],
                     'sets' => $repsSets['sets'],
                     'reps' => $repsSets['reps'],
                 ];
@@ -173,8 +182,8 @@ class WorkoutController extends Controller
             $plan['Day 2'] = $wrapExercises(array_slice($lower, 0, 4));
             if ($days >= 3) $plan['Day 3'] = $wrapExercises(array_slice($upper, 2, 4));
             if ($days >= 4) $plan['Day 4'] = $wrapExercises(array_slice($lower, 2, 4));
-            if ($days >= 5) $plan['Day 5'] = ['Leg Raises', 'Planks', 'Side Planks', 'Bird Dogs'];
-            if ($days >= 6) $plan['Day 6'] = ['Mobility Work', 'Foam Rolling', 'Stretching'];
+            if ($days >= 5) $plan['Day 5'] = $wrapExercises(['Leg Raises', 'Planks', 'Side Planks', 'Bird Dogs']);
+            if ($days >= 6) $plan['Day 6'] = $wrapExercises(['Mobility Work', 'Foam Rolling', 'Stretching']);
             if ($days >= 7) $plan['Day 7'] = ['Rest Day'];
         }
 
@@ -369,9 +378,19 @@ class WorkoutController extends Controller
         foreach ($workouts as &$day) {
             foreach ($day as &$exercise) {
                 if (is_array($exercise) && isset($exercise['title'])) {
-                    $normalized = strtolower(trim($exercise['title']));
-                    if (isset($videoList[$normalized]) && isset($videoList[$normalized]->muscle_group)) {
-                        $exercise['muscle_group'] = $videoList[$normalized]->muscle_group;
+                    $title = $exercise['title'];
+                    // Keep unwrapping until $title is not an array
+                    while (is_array($title) && isset($title['title'])) {
+                        $title = $title['title'];
+                    }
+                    if (is_string($title)) {
+                        $normalized = strtolower(trim($title));
+                        if (isset($videoList[$normalized]) && isset($videoList[$normalized]->muscle_group)) {
+                            $exercise['muscle_group'] = $videoList[$normalized]->muscle_group;
+                        }
+                    } else {
+                        // fallback if title is still not a string
+                        $exercise['muscle_group'] = null;
                     }
                 }
             }
@@ -550,8 +569,16 @@ class WorkoutController extends Controller
                 return ['title' => $exercise, 'sets' => null, 'reps' => null, 'muscle_group' => null];
             }
             if (is_array($exercise) && isset($exercise['title'])) {
-                $normalized = strtolower(trim($exercise['title']));
-                $exercise['muscle_group'] = isset($videoList[$normalized]) ? $videoList[$normalized]->muscle_group : null;
+                $title = $exercise['title'];
+                while (is_array($title) && isset($title['title'])) {
+                    $title = $title['title'];
+                }
+                if (is_string($title)) {
+                    $normalized = strtolower(trim($title));
+                    $exercise['muscle_group'] = isset($videoList[$normalized]) ? $videoList[$normalized]->muscle_group : null;
+                } else {
+                    $exercise['muscle_group'] = null;
+                }
             }
             return $exercise;
         })->values();

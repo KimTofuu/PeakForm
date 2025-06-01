@@ -25,9 +25,15 @@
               @forelse ($exercises as $exercise)
                   <div class="workout_content_2">
                     <label style="color:#1a1a1a;">
-                      {{ is_array($exercise) ? $exercise['title'] : $exercise }}
-                      @if(is_array($exercise) && isset($exercise['sets'], $exercise['reps']) && $exercise['sets'] && $exercise['reps'])
-                        ({{ $exercise['sets'] }} sets x {{ $exercise['reps'] }} reps)
+                      @if(is_array($exercise) && isset($exercise['title']))
+                        {{ is_array($exercise['title']) && isset($exercise['title']['title']) ? $exercise['title']['title'] : (is_string($exercise['title']) ? $exercise['title'] : '[Unknown Exercise]') }}
+                        @if(isset($exercise['sets'], $exercise['reps']) && $exercise['sets'] && $exercise['reps'])
+                          ({{ $exercise['sets'] }} sets x {{ $exercise['reps'] }} reps)
+                        @endif
+                      @elseif(is_string($exercise))
+                        {{ $exercise }}
+                      @else
+                        [Unknown Exercise]
                       @endif
                     </label>
                   </div>

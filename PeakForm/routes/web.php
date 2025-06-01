@@ -174,4 +174,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/overview_tab', [MealController::class, 'showInOverview'])->name('overview_tab');
     Route::get('/api/workout/day', [WorkoutController::class, 'getWorkoutForOverview']);
     Route::get('/intake-history', [MealController::class, 'intakeHistory'])->name('intake.history');
+    Route::post('/progress/goal', [ProgressController::class, 'storeGoal'])->name('progress.goal');
 });

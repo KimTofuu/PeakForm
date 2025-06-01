@@ -175,6 +175,7 @@
   }
 
 function displayWorkout(exercises) {
+  console.log("displayWorkout called with:", exercises);
   return new Promise((resolve) => {
     const workoutContainer = document.getElementById('workout-container');
     const dayLabel = document.getElementById('day-label');
@@ -183,19 +184,32 @@ function displayWorkout(exercises) {
 
     if (!exercises || exercises.length === 0) {
       workoutContainer.innerHTML = '<p>It is rest day! Enjoy your break.</p>';
-      return resolve(); // still resolve even if it's a rest day
+      return resolve();
     }
 
     workoutContainer.innerHTML = exercises.map((exercise, index) => {
+      // Get the exercise title
+      let exerciseTitle = exercise.title;
+      if (typeof exerciseTitle === 'object' && exerciseTitle !== null && 'title' in exerciseTitle) {
+        exerciseTitle = exerciseTitle.title;
+      }
+      if (typeof exerciseTitle !== 'string') {
+        exerciseTitle = '[Unknown Exercise]';
+      }
+
+      // Get sets and reps, prefer root, fallback to nested
+      let sets = exercise.sets ?? (exercise.title && exercise.title.sets);
+      let reps = exercise.reps ?? (exercise.title && exercise.title.reps);
+
       let details = '';
-      if (exercise.sets && exercise.reps) {
-        details = ` <span class="exercise-details">(${exercise.sets} sets x ${exercise.reps} reps)</span>`;
+      if (sets && reps) {
+        details = ` <span class="exercise-details">(${sets} sets x ${reps} reps)</span>`;
       }
       let muscle = exercise.muscle_group ? `<br><span class="muscle-group">Target: ${exercise.muscle_group}</span>` : '';
       return `
         <div class="exercise-item">
-          <input type="checkbox" id="exercise-${index}" data-title="${exercise.title}">
-          <label for="exercise-${index}">${exercise.title}${details}${muscle}</label>
+          <input type="checkbox" id="exercise-${index}" data-title="${exerciseTitle}">
+          <label for="exercise-${index}">${exerciseTitle}${details}${muscle}</label>
         </div>
       `;
     }).join('');
@@ -211,22 +225,21 @@ function displayWorkout(exercises) {
           });
         }
 
-        // Set up listeners after marking progress
         workoutContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => {
           cb.addEventListener('change', () => {
             const completed = [...document.querySelectorAll('input[type="checkbox"]')]
               .filter(cb => cb.checked)
               .map(cb => cb.dataset.title);
             saveProgress(currentDay, completed);
-            updateProgressChart(); // optionally refresh the chart
+            updateProgressChart();
           });
         });
 
-        resolve(); // progress fetch complete
+        resolve();
       })
       .catch(err => {
         console.error('Failed to load progress:', err);
-        resolve(); // still resolve so loader doesn't hang forever
+        resolve();
       });
   });
 }
@@ -246,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function initPageData() {
+  console.log("initPageData called");
   try {
     await Promise.all([
       updateProgressChart(),
@@ -275,9 +289,11 @@ function updateProgressChart() {
 }
 
 function loadWorkoutForDay(day) {
+  console.log("loadWorkoutForDay called with day:", day);
   return fetch(`/api/workout/day?day=${day}`)
     .then(response => response.json())
     .then(data => {
+      console.log("API /api/workout/day response:", data);
       if (data.success) {
         return displayWorkout(data.exercises); // return the promise
       } else {
