@@ -54,19 +54,26 @@
 
                   @forelse ($exercises as $exercise)
                     @php
-                        // If $exercise is an array, get title/sets/reps, else treat as string (e.g., Rest Day)
+                        // Unwrap $title until it's a string
                         $title = is_array($exercise) ? $exercise['title'] : $exercise;
+                        $titleString = $title;
+                        while (is_array($titleString) && isset($titleString['title'])) {
+                            $titleString = $titleString['title'];
+                        }
+                        if (!is_string($titleString)) {
+                            $titleString = '[Unknown Exercise]';
+                        }
                         $sets = is_array($exercise) && isset($exercise['sets']) ? $exercise['sets'] : null;
                         $reps = is_array($exercise) && isset($exercise['reps']) ? $exercise['reps'] : null;
-                        $normalized = strtolower(trim($title));
+                        $normalized = strtolower(trim($titleString));
                         $video = $videoList[$normalized] ?? null;
-                        $imageName = $title . '.jpg';
+                        $imageName = $titleString . '.jpg';
                         $imagePath = asset('images/exercisePics/' . $imageName);
                     @endphp
                     <div class="workout_content_2" style="width: 100%; display: flex; justify-content: space-between; color:white;" >
                         <label>
-                            <img src="{{ $imagePath }}" alt="{{ $title }}" style="width:90px; height:60px; object-fit:cover; border-radius:0.2rem;">
-                            {{ $title }}
+                            <img src="{{ $imagePath }}" alt="{{ $titleString }}" style="width:90px; height:60px; object-fit:cover; border-radius:0.2rem;">
+                            {{ $titleString }}
                             @php
                                 $muscle = is_array($exercise) && isset($exercise['muscle_group']) ? $exercise['muscle_group'] : null;
                             @endphp
