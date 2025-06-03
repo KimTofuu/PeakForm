@@ -175,4 +175,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/api/workout/day', [WorkoutController::class, 'getWorkoutForOverview']);
     Route::get('/intake-history', [MealController::class, 'intakeHistory'])->name('intake.history');
     Route::post('/progress/goal', [ProgressController::class, 'storeGoal'])->name('progress.goal');
+    Route::post('/profile/update-from-macros', [ProfileController::class, 'updateFromMacros'])->name('profile.updateFromMacros');
 });

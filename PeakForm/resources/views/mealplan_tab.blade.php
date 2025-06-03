@@ -101,7 +101,7 @@
     <div class="modal-content">
       <span class="close" id="closeMealPlanModal">&times;</span>
       <h2>Enter Your Details</h2>
-      <form id="mealPlanForm">
+        <form id="mealPlanForm" method="POST" action="{{ route('profile.updateFromMacros') }}">
         @csrf
         <label>Age: <input type="number" name="age" min="13" max="80" required></label>
         <label>Gender:
@@ -203,7 +203,19 @@
 
         document.getElementById('mealPlanSummary').classList.remove('hidden');
         modal.style.display = 'none';
-
+        await fetch('{{ route("profile.updateFromMacros") }}', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            age: formData.get('age'),
+            weight: formData.get('weight'),
+            gender: formData.get('gender')
+        })
+      });
         setTimeout(() => {
           const ctx = document.getElementById('mealPlanChart').getContext('2d');
 
