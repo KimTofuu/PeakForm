@@ -49,4 +49,33 @@ class ProfileController extends Controller
             'profile' => $profile,
         ]);
     }
+
+    public function updateFromMacros(Request $request)
+    {
+        $user = Auth::user();
+
+        // This is needed for JSON requests!
+        if ($request->isJson()) {
+            $request->merge($request->json()->all());
+        }
+
+        $validated = $request->validate([
+            'age' => 'required|integer|min:13|max:80',
+            'weight' => 'required|numeric|min:30|max:200',
+            'gender' => 'required|in:male,female',
+        ]);
+
+        $profile = \App\Models\Profile::firstOrNew(['user_id' => $user->id]);
+        if (!$profile->exists) {
+            $profile->Fname = '';
+            $profile->Lname = '';
+        }
+        $profile->age = $validated['age'];
+        $profile->weight = $validated['weight'];
+        $profile->gender = $validated['gender'];
+        $profile->user_id = $user->id;
+        $profile->save();
+
+        return response()->json(['success' => true]);
+    }
 }
