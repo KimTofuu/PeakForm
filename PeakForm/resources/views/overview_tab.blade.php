@@ -47,11 +47,7 @@
               <span id="day-label" style="color:white;">Day 1</span>
               <button onclick="nextDay()"  class="next-btn">Next</button>
             </div> 
-            <div id="workout-container" class="workout-list"></div>
-            <div class="day-controls2">
-            
-            
-            </div>
+            <div id="workout-container" class="workout-list" style="overflow-y: auto;"><br></div>
           </div>
           <div class="actions">
             <div class = "actions_3">
@@ -189,7 +185,7 @@ function displayWorkout(exercises) {
 
     workoutContainer.innerHTML = exercises.map((exercise, index) => {
       // Get the exercise title
-      let exerciseTitle = exercise.title;
+      let exerciseTitle = exercise?.title?.title || '[Unknown Exercise]';
       if (typeof exerciseTitle === 'object' && exerciseTitle !== null && 'title' in exerciseTitle) {
         exerciseTitle = exerciseTitle.title;
       }
@@ -366,6 +362,8 @@ async function loadMealAndIntakeData() {
 }
 
 document.addEventListener('DOMContentLoaded', initPageData);
+
+
 
 </script>
 </html>

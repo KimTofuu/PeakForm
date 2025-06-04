@@ -39,7 +39,7 @@
       </div>
     </aside>
     <main class="main-content">
-      <div class = "cards">
+      <div class = "cards" >
       <div class="middle2">
           <div class = "progress_tab6">
             <div class = "header_content">
@@ -48,10 +48,10 @@
             <div class ="progress_contents" style="text-align: left;">
               <div class="progress_table_section">
                 <h3 style="font-family: 'Inter', sans-serif; opacity: 50%; color:white;" >Track Your Progress</h3>
-                <button id="openGoalModal" type="button" class="modal-btn">Set/Edit Goal</button>
+                
                 
                 <div id="goalModal" class="modal" style="display:none;">
-                  <div class="modal-content">
+                  <div class="modal-content" style="width: 30rem; display: flex; justify-content:center;">
                     <span class="close" id="closeGoalModal">&times;</span>
                     <form method="POST" action="{{ route('progress.goal') }}" class="progress-form">
                       @csrf
@@ -81,15 +81,52 @@
                     value="{{ \Carbon\Carbon::now()->toDateString() }}"
                     max="{{ \Carbon\Carbon::now()->toDateString() }}"
                   />
-                  <input type="number" name="weight" step="0.01" placeholder="Weight (kg)" required />
-                  <input type="number" name="body_fat_percentage" step="0.01" placeholder="Body Fat (%)" required />
-                  <input type="number" name="muscle_mass" step="0.01" placeholder="Muscle Mass (kg)" required />
+                  <div>
+                    <input type="number" name="weight" step="0.01" placeholder="Weight (kg)" required />
+                  </div>
+                  <div style="position: relative; width: 100%; ">
+                    <input
+                      type="number"
+                      name="body_fat_percentage"
+                      step="0.01"
+                      placeholder="Body Fat (%)"
+                      required
+                      style="padding-right: 0.1rem; width: 100%;"
+                    />
+                    <button
+                    type="button"
+                    id="openBodyFatModal"
+                    style="position: absolute; top: 50%; right: 5px; transform: translateY(-50%);
+                            background: none; border: none; font-weight: bold; cursor: pointer; color: #1c7ed6;"
+                    title="What is Body Fat %?"
+                    >?</button>
+                  </div>
+
+                  <div style="position: relative; width: 100%;">
+                    <input
+                      type="number"
+                      name="muscle_mass"
+                      step="0.01"
+                      placeholder="Muscle Mass (kg)"
+                      required
+                      style="padding-right: 0.1rem;  width: 100%;"
+                    />
+                    <button
+                      type="button"
+                      id="openMuscleModal"
+                      style="position: absolute; top: 50%; right: 5px; transform: translateY(-50%);
+                            background: none; border: none; font-weight: bold; cursor: pointer; color: #1c7ed6;"
+                      title="What is Muscle Mass?"
+                      >?</button>
+                  </div>
+
                   <button type="submit">Add Entry</button>
                 </form>
               </div>
             </div>
           </div>
-                <!-- Table Displaying Progress -->
+              <div class = "progress_lower" style="display:flex; flex-direction: row; justify-content: space-between;">
+              <div class="table-scroll-container" style="flex-basis: 48%;">
                 <table class="progress-table">
                   <thead>
                     <tr>
@@ -116,42 +153,68 @@
                     @endforelse
                   </tbody>
                 </table>
-              
-              {{-- <div>
-                <div id="radialChart"></div>
-              </div> --}}
+                </div>
+              <div class="runner-track-container" style = "flex-basis: 48%;">
+        <div class="progress-info" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <div style = "color:white; font-size: 1rem;">
+                <strong>Current:</strong>
+                {{ $currentProgress ?? '-' }} %
+            </div>
+            <div style = "color:white; font-size: 1rem;">
+                <strong>Goal:</strong>
+                {{ $goalValue ?? '-' }} %
+            </div>
+            <button id="openGoalModal" type="button" class="modal-btn">Set/Edit Goal</button>
+        </div>
+<div class="progress-bar-container">
+  <!-- Progress Fill -->
+  <div class="progress-bar-fill" style="width: {{ $progress }}%;"></div>
+
+  <!-- Milestones -->
+  @foreach([25, 50, 75] as $milestone)
+    <div class="milestone" style="left: {{ $milestone }}%;">
+      <div class="milestone-line"></div>
+      <span class="milestone-label">{{ $milestone }}%</span>
+    </div>
+  @endforeach
+
+  <!-- Runner -->
+  <div class="runner" style="left: {{ $progress }}%;">🏃‍♂️</div>
+
+  <!-- Finish Line -->
+  <div class="finish-line">🏁</div>
+</div>
+
+    </div>
+    </div>
             
           
         </div>
       </div>
       </div>
       {{-- Runner Progress Visualization --}}
-      <div class="runner-track-container">
-        <div class="progress-info" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-            <div>
-                <strong>Current:</strong>
-                {{ $currentProgress ?? '-' }}
-            </div>
-            <div>
-                <strong>Goal:</strong>
-                {{ $goalValue ?? '-' }}
-            </div>
-        </div>
-        {{-- Milestones --}}
-        @foreach([25, 50, 75] as $milestone)
-          <div class="milestone" style="left: {{ $milestone }}%;">
-            📍
-            <span class="milestone-label">{{ $milestone }}%</span>
-          </div>
-        @endforeach
-
-        {{-- Runner --}}
-        <div class="runner" style="left: {{ $progress }}%;">🏃‍♂️</div>
-
-        {{-- Finish Line --}}
-        <div class="finish-line">🏁</div>
-    </div>
+      
     </main>
+
+    <!-- Body Fat Modal -->
+<div id="bodyFatModal" class="modal" style="display: none;">
+  <div class="modal-content" style="width: 30rem; display: flex; flex-direction: column; align-items: flex-start;">
+    <span class="close" id="closeBodyFatModal" style="align-self: flex-end;">&times;</span>
+    <h3 style="margin-bottom: 10px;">How to get Body Fat Percentage?</h3>
+    <p><br>Body Fat % = (1.20 × BMI) + (0.23 × Age) - (10.8 × Gender) - 5.4<br><br>BMI = weight (kg) / height² (m²)<br><br>Gender: Male = 1 , Female = 0</p>
+  </div>
+</div>
+
+<!-- Muscle Mass Modal -->
+<div id="muscleModal" class="modal" style="display: none;">
+  <div class="modal-content" style="width: 30rem; display: flex; flex-direction: column; align-items: flex-start;">
+    <span class="close" id="closeMuscleModal" style="align-self: flex-end;">&times;</span>
+    <h3 style="margin-bottom: 10px;">How to get Muscle Mass?</h3>
+    <p><br>Muscle Mass (kg) ≈ 0.55 × LBM <br><br> Male: <br>LBM = 0.407 × weight(kg) + 0.267 × height(cm) - 19.2 <br><br>Female:<br>LBM = 0.252 × weight(kg) + 0.473 × height(cm) - 48.3</p>
+  </div>
+</div>
+
+
     <script src="script.js"> </script>
   
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -178,5 +241,31 @@ window.onclick = function(event) {
     document.getElementById('goalModal').style.display = 'none';
   }
 };
+
+// Body Fat Modal
+document.getElementById('openBodyFatModal').onclick = function () {
+  document.getElementById('bodyFatModal').style.display = 'block';
+};
+document.getElementById('closeBodyFatModal').onclick = function () {
+  document.getElementById('bodyFatModal').style.display = 'none';
+};
+
+// Muscle Mass Modal
+document.getElementById('openMuscleModal').onclick = function () {
+  document.getElementById('muscleModal').style.display = 'block';
+};
+document.getElementById('closeMuscleModal').onclick = function () {
+  document.getElementById('muscleModal').style.display = 'none';
+};
+
+// Close if clicking outside modal
+window.addEventListener('click', function (event) {
+  if (event.target === document.getElementById('bodyFatModal')) {
+    document.getElementById('bodyFatModal').style.display = 'none';
+  }
+  if (event.target === document.getElementById('muscleModal')) {
+    document.getElementById('muscleModal').style.display = 'none';
+  }
+});
 </script>
 </html>

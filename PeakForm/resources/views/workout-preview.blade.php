@@ -25,17 +25,22 @@
               @forelse ($exercises as $exercise)
                   <div class="workout_content_2">
                     <label style="color:#1a1a1a;">
-                      @if(is_array($exercise) && isset($exercise['title']))
-                        {{ is_array($exercise['title']) && isset($exercise['title']['title']) ? $exercise['title']['title'] : (is_string($exercise['title']) ? $exercise['title'] : '[Unknown Exercise]') }}
-                        @if(isset($exercise['sets'], $exercise['reps']) && $exercise['sets'] && $exercise['reps'])
-                          ({{ $exercise['sets'] }} sets x {{ $exercise['reps'] }} reps)
-                        @endif
-                      @elseif(is_string($exercise))
-                        {{ $exercise }}
-                      @else
-                        [Unknown Exercise]
-                      @endif
-                    </label>
+                      @php
+    // Unwrap $title until it's a string
+    $title = is_array($exercise) && isset($exercise['title']) ? $exercise['title'] : $exercise;
+    while (is_array($title) && isset($title['title'])) {
+        $title = $title['title'];
+    }
+    if (!is_string($title)) {
+        $title = '[Unknown Exercise]';
+    }
+@endphp
+<label style="color:#1a1a1a;">
+    {{ $title }}
+    @if(is_array($exercise) && isset($exercise['sets'], $exercise['reps']) && $exercise['sets'] && $exercise['reps'])
+        ({{ $exercise['sets'] }} sets x {{ $exercise['reps'] }} reps)
+    @endif
+</label>
                   </div>
               @empty
                   <p style="color:#1a1a1a;">No exercises for this day.</p>

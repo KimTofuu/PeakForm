@@ -325,3 +325,104 @@ body {
   border-color: #d6e0a3;
 }
 
+@media (max-width: 1040px) {
+  .main-cont {
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .left_space {
+    flex-basis: 50%;
+    height: 35rem;
+    padding: 1rem;
+  }
+
+  .right_space {
+    flex-basis: 50%;
+    height: 36rem;
+    padding: 1rem;
+  }
+
+  .logo-login {
+    width: 30rem;
+  }
+
+  .icon-login {
+    width: 35rem;
+    margin-top: -12.8rem;
+  }
+
+  .signup-container {
+    max-width: 22rem;
+    padding: 1rem;
+  }
+
+  .privacy-modal-content {
+    width: 90%;
+  }
+
+  .google-btn {
+    width: 90%;
+  }
+
+  .signup-btn img{
+    width: 2rem;
+  }
+  .signup-btn{
+    width: 2rem;
+  }
+  .mid_register{
+    margin: 0rem;
+  }
+  .privacy_policy{
+    margin: 0rem;
+  }
+  .signup-container{
+    height:24rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body{
+    background-size: auto;
+  }
+  .main-cont {
+    flex-direction: row;
+    align-items: center;
+    padding: 0.8rem;
+  }
+
+  .left_space, .right_space {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .left_space{
+    height: 36rem;
+  
+  }
+
+  .logo-login {
+    width: 20rem;
+  }
+
+  .icon-login {
+    width: 25rem;
+     margin-top: 0.75rem;
+  }
+
+  .signup-container {
+    max-width: 18rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .privacy-modal-content {
+    width: 95%;
+  }
+
+  .google-btn {
+    width: 100%;
+  }
+}
