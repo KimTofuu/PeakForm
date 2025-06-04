@@ -38,119 +38,113 @@
       </div>
     </aside>
 
-    <main class="main-content">
-      <div class="cards">
-    
-        <div class="left_side_1">
-          @php
-              $dayCount = 1;
-          @endphp
+   <main class="main-content">
+  <div class="cards">
 
-          @foreach ($workouts as $exercises)
-              <div class="daily_tab_2">
-                  <div class="header_content">
-                      <h2 style="font-family: 'Michroma', sans-serif; color:white;" >Day {{ $dayCount }}</h2> 
+    <div class="left_side_1">
+      @php
+          $dayCount = 1;
+      @endphp
+
+      @foreach ($workouts as $exercises)
+          <div class="daily_tab_2">
+              <div class="header_content">
+                  <h2 style="font-family: 'Michroma', sans-serif; color:white;">Day {{ $dayCount }}</h2> 
+              </div>
+
+              @forelse ($exercises as $exercise)
+                  @php
+                      $title = is_array($exercise) ? $exercise['title'] : $exercise;
+                      $titleString = $title;
+                      while (is_array($titleString) && isset($titleString['title'])) {
+                          $titleString = $titleString['title'];
+                      }
+                      if (!is_string($titleString)) {
+                          $titleString = '[Unknown Exercise]';
+                      }
+                      $sets = is_array($exercise) && isset($exercise['sets']) ? $exercise['sets'] : null;
+                      $reps = is_array($exercise) && isset($exercise['reps']) ? $exercise['reps'] : null;
+                      $normalized = strtolower(trim($titleString));
+                      $video = $videoList[$normalized] ?? null;
+                      $imageName = $titleString . '.jpg';
+                      $imagePath = asset('images/exercisePics/' . $imageName);
+                  @endphp
+                  <div class="workout_content_2" style="width: 100%; display: flex; justify-content: space-between; color:white;">
+                      <label>
+                          <img src="{{ $imagePath }}" alt="{{ $titleString }}" style="width:100px; height:70px; object-fit:cover; border-radius:0.2rem;">
+                          {{ $titleString }}
+                          @php
+                              $muscle = is_array($exercise) && isset($exercise['muscle_group']) ? $exercise['muscle_group'] : null;
+                          @endphp
+                          @if($sets && $reps)
+                              <span class="exercise-details" style = "font-size: 1.4rem;"> <br> ({{ $sets }} sets x {{ $reps }} reps)</span>
+                          @endif
+                          @if($muscle)
+                              <span class="muscle-group" style = "font-size: 1.2rem; color:#8de7ff;"><br>Target: {{ $muscle }}</span>
+                          @endif
+                          
+                          <br>
+                      </label>
+                      @php
+                          $embedUrl = '';
+                          if ($video && $video->youtube_url) {
+                              if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $video->youtube_url, $matches)) {
+                                  $embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
+                              }
+                          }
+                      @endphp
+                      @if($embedUrl)
+                          <button type="button" class="watch-btn" onclick="showVideo('{{ $embedUrl }}', '{{ $video->youtube_url }}')" style="padding:0.5rem 1rem; background-color: #00bfff; border-radius: 0.5rem; border: none; color: white;">Watch Video</button>
+                      @endif
                   </div>
-
-                  @forelse ($exercises as $exercise)
-                    @php
-                        // Unwrap $title until it's a string
-                        $title = is_array($exercise) ? $exercise['title'] : $exercise;
-                        $titleString = $title;
-                        while (is_array($titleString) && isset($titleString['title'])) {
-                            $titleString = $titleString['title'];
-                        }
-                        if (!is_string($titleString)) {
-                            $titleString = '[Unknown Exercise]';
-                        }
-                        $sets = is_array($exercise) && isset($exercise['sets']) ? $exercise['sets'] : null;
-                        $reps = is_array($exercise) && isset($exercise['reps']) ? $exercise['reps'] : null;
-                        $normalized = strtolower(trim($titleString));
-                        $video = $videoList[$normalized] ?? null;
-                        $imageName = $titleString . '.jpg';
-                        $imagePath = asset('images/exercisePics/' . $imageName);
-                    @endphp
-                    <div class="workout_content_2" style="width: 100%; display: flex; justify-content: space-between; color:white;" >
-                        <label>
-                            <img src="{{ $imagePath }}" alt="{{ $titleString }}" style="width:90px; height:60px; object-fit:cover; border-radius:0.2rem;">
-                            {{ $titleString }}
-                            @php
-                                $muscle = is_array($exercise) && isset($exercise['muscle_group']) ? $exercise['muscle_group'] : null;
-                            @endphp
-
-                            @if($muscle)
-                                <span class="muscle-group">Target: {{ $muscle }}</span>
-                            @endif
-                            @if($sets && $reps)
-                                 <span class="exercise-details">({{ $sets }} sets x {{ $reps }} reps)</span>
-                            @endif
-                            <br>
-                        </label>
-                        @php
-                            $embedUrl = '';
-                            if ($video && $video->youtube_url) {
-                                if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $video->youtube_url, $matches)) {
-                                    $embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
-                                }
-                            }
-                        @endphp
-                        @if($embedUrl)
-                            <button type="button" class="watch-btn" onclick="showVideo('{{ $embedUrl }}', '{{ $video->youtube_url }}')" style="padding:0.5rem 1rem; background-color: #00bfff; border-radius: 0.5rem; border: none; color: white;">Watch Video</button>
-                        @endif
-                    </div>
-                @empty
-                    <p style="color:white;">No exercises for this day.</p>
-                @endforelse
-              @php $dayCount++; @endphp
-          @endforeach
-        </div>
-        <div id="videoModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; z-index:1000; padding:20px; border-radius:8px;">
-          <button onclick="closeVideo()" style="float:right; padding:0.5rem 1rem; background-color: #00bfff; border: none; border-radius: 0.3rem; color: white; margin-left: 1rem;">Close</button>
-          <iframe id="videoFrame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
-          <div id="fallbackLink" style="margin-top:10px; text-align:center; display:none;">
-              <a id="originalVideoLink" href="#" target="_blank" style="color:#007bff;">Can't see the video? Click here to watch on YouTube</a>
+              @empty
+                  <p style="color:white;">No exercises for this day.</p>
+              @endforelse
           </div>
+          @php $dayCount++; @endphp
+      @endforeach
+    </div> 
+
+    <div id="videoModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; z-index:1000; padding:20px; border-radius:8px;">
+      <button onclick="closeVideo()" style="float:right; padding:0.5rem 1rem; background-color: #00bfff; border: none; border-radius: 0.3rem; color: white; margin-left: 1rem;">Close</button>
+      <iframe id="videoFrame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+      <div id="fallbackLink" style="margin-top:10px; text-align:center; display:none;">
+          <a id="originalVideoLink" href="#" target="_blank" style="color:#007bff;">Can't see the video? Click here to watch on YouTube</a>
       </div>
-        <div id="modalBackdrop" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:999;" onclick="closeVideo()"></div>
-        <div class = "right_side_2">
-          <div class="goals_plan">
-            <div class="header_content">
-              <h2 style="font-family: 'Michroma', sans-serif; color:white;">Goals / Plan</h2>
-            </div>
-            <div class="goals_contents" style="width:100%;">
-              <p>
-                Goal: {{ ucwords(str_replace('_', ' ', $input['goal'])) }}
-              </p>
-            </div>
+    </div>
 
-            <div class="goals_contents" style="width:100%;">
-              <p>
-                Setup: {{ ucwords(str_replace('_', ' ', $input['setup'])) }}
-              </p>
-            </div>
+    <div id="modalBackdrop" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:999;" onclick="closeVideo()"></div>
 
-            <div class="goals_contents" style="width:100%;">
-              <p>
-                Workout Type: {{ ucwords(str_replace('_', ' ', $input['splitType'])) }}
-              </p>
-            </div>
-
-            <div class="goals_contents" style="width:100%;">
-              <p>
-                <b>{{ $input['days'] }}</b> Days / Week Workout
-              </p>
-            </div>
-          </div>
-          <div class="actions">
-            <div class="actions_3" style="margin-top: 10px;">
-              <a href="{{ route('workout_plan_1') }}" class="btn update" onclick="confirmUpdate(event)">
-                <button>Update Workout Preferences</button>
-              </a>
-            </div>
-          </div>
+    <div class="right_side_2">
+      <div class="goals_plan">
+        <div class="header_content">
+          <h2 style="font-family: 'Michroma', sans-serif; color:white;">Goals / Plan</h2>
+        </div>
+        <div class="goals_contents" style="width:100%;">
+          <p>Goal: {{ ucwords(str_replace('_', ' ', $input['goal'])) }}</p>
+        </div>
+        <div class="goals_contents" style="width:100%;">
+          <p>Setup: {{ ucwords(str_replace('_', ' ', $input['setup'])) }}</p>
+        </div>
+        <div class="goals_contents" style="width:100%;">
+          <p>Workout Type: {{ ucwords(str_replace('_', ' ', $input['splitType'])) }}</p>
+        </div>
+        <div class="goals_contents" style="width:100%;">
+          <p><b>{{ $input['days'] }}</b> Days / Week Workout</p>
         </div>
       </div>
-    </main>
+      <div class="actions">
+        <div class="actions_3" style="margin-top: 10px;">
+          <a href="{{ route('workout_plan_1') }}" class="btn update" onclick="confirmUpdate(event)">
+            <button>Update Workout Preferences</button>
+          </a>
+        </div>
+      </div>
+    </div> 
+
+  </div> 
+</main> 
+
   </div>
   <script src="script.js"> </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

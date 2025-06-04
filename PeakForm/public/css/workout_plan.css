@@ -268,3 +268,68 @@ input {
 a{
   text-decoration: none;
 }
+
+/* For screens 1040px and below */
+@media screen and (max-width: 1040px) {
+  .form-box {
+    width: 38rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .goal-options {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .day-button {
+    width: 12rem;
+    height: 6rem;
+    font-size: 2.5rem;
+  }
+
+  .daily_tab_3 {
+    flex: 1 1 280px;
+    max-width: 320px;
+  }
+}
+
+/* For screens 768px and below */
+@media screen and (max-width: 768px) {
+  body{
+    background-size: auto;
+  }
+  html {
+    font-size: 14px;
+  }
+
+  .form-box {
+    width: 90%;
+    padding: 0.7rem 1rem;
+  }
+
+  .goal-options {
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+
+  .day-button {
+    width: 10rem;
+    height: 5rem;
+    font-size: 2rem;
+  }
+
+  .daily_tab_3 {
+    flex: 1 1 250px;
+    max-width: 300px;
+  }
+
+  .container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .icon,
+  .logo_top {
+    width: 15rem;
+  }
+}
