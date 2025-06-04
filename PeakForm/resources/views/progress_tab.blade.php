@@ -167,9 +167,10 @@
             <button id="openGoalModal" type="button" class="modal-btn">Set/Edit Goal</button>
         </div>
 <div class="progress-bar-container">
+ <div class="progress-track">
   <!-- Progress Fill -->
   <div class="progress-bar-fill" style="width: {{ $progress }}%;"></div>
-
+</div>
   <!-- Milestones -->
   @foreach([25, 50, 75] as $milestone)
     <div class="milestone" style="left: {{ $milestone }}%;">
@@ -179,10 +180,10 @@
   @endforeach
 
   <!-- Runner -->
-  <div class="runner" style="left: {{ $progress }}%;">🏃‍♂️</div>
+  <div class="runner" style="left: {{ $progress }}%;"></div>
 
   <!-- Finish Line -->
-  <div class="finish-line">🏁</div>
+  <div class="finish-line"></div>
 </div>
 
     </div>
