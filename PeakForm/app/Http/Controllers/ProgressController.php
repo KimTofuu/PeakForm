@@ -16,9 +16,9 @@ class ProgressController extends Controller
         $user = Auth::user();
         $request->validate([
             'date_recorded' => 'required|date',
-            'weight' => 'required|numeric',
-            'body_fat_percentage' => 'required|numeric',
-            'muscle_mass' => 'required|numeric',
+            'weight' => 'nullable|numeric',
+            'body_fat_percentage' => 'nullable|numeric',
+            'muscle_mass' => 'nullable|numeric',
         ]);
 
         ProgressEntry::create([
