@@ -415,6 +415,11 @@ class WorkoutVideoSeeder extends Seeder
             'muscle_group' => 'Glutes',
             'creator' => 'Bodybuilding.com',
         ],
+        ['title' => 'Back Extensions',
+            'youtube_url' => 'https://www.youtube.com/watch?v=ENXyYltB7CM',
+            'muscle_group' => 'Back',
+            'creator' => 'Rehab My Patient',
+        ],
     ];
         foreach ($exercises as $exercise) {
             DB::table('workout_videos')->insert([
