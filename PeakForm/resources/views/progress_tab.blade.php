@@ -59,11 +59,11 @@
                           $goal = strtolower(trim(str_replace('_', ' ', $userGoal ?? '')));
                       @endphp
                       @if($goal === 'gain muscle')  
-                        <input type="number" name="goal_muscle_mass" step="0.01" placeholder="Goal Muscle Mass (kg)" required />
+                        <input type="number" name="goal_muscle_mass" step="0.01" placeholder="Goal Muscle Mass (kg)"/>
                       @elseif($goal === 'lose fat')
-                        <input type="number" name="goal_body_fat_percentage" step="0.01" placeholder="Goal Body Fat (%)" required />
+                        <input type="number" name="goal_body_fat_percentage" step="0.01" placeholder="Goal Body Fat (%)"/>
                       @elseif($goal === 'maintenance')
-                        <input type="number" name="goal_body_fat_percentage" step="0.01" placeholder="Goal Body Fat (%)" required />
+                        <input type="number" name="goal_body_fat_percentage" step="0.01" placeholder="Goal Body Fat (%)"/>
                       @else
                         <p style="color: #fff;">Set your goal in your profile to enable goal input.</p>
                       @endif
@@ -90,7 +90,6 @@
                       name="body_fat_percentage"
                       step="0.01"
                       placeholder="Body Fat (%)"
-                      required
                       style="padding-right: 0.1rem; width: 100%;"
                     />
                     <button
@@ -108,7 +107,6 @@
                       name="muscle_mass"
                       step="0.01"
                       placeholder="Muscle Mass (kg)"
-                      required
                       style="padding-right: 0.1rem;  width: 100%;"
                     />
                     <button
