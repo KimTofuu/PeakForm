@@ -185,13 +185,13 @@ function displayWorkout(exercises) {
 
     workoutContainer.innerHTML = exercises.map((exercise, index) => {
       // Get the exercise title
-      let exerciseTitle = exercise?.title?.title || '[Unknown Exercise]';
-      if (typeof exerciseTitle === 'object' && exerciseTitle !== null && 'title' in exerciseTitle) {
-        exerciseTitle = exerciseTitle.title;
-      }
-      if (typeof exerciseTitle !== 'string') {
-        exerciseTitle = '[Unknown Exercise]';
-      }
+      let exerciseTitle = exercise.title;
+        while (typeof exerciseTitle === 'object' && exerciseTitle !== null && 'title' in exerciseTitle) {
+          exerciseTitle = exerciseTitle.title;
+        }
+        if (typeof exerciseTitle !== 'string') {
+          exerciseTitle = '[Unknown Exercise]';
+        }
 
       // Get sets and reps, prefer root, fallback to nested
       let sets = exercise.sets ?? (exercise.title && exercise.title.sets);

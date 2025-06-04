@@ -144,17 +144,22 @@ class WorkoutController extends Controller
 
         $wrapExercises = function($exerciseList) use ($repsSets) {
             return array_map(function($exercise) use ($repsSets) {
-                // If already an array with a 'title' key, keep as is
+                // If already an array with a 'title' key, extract the string
                 if (is_array($exercise) && isset($exercise['title'])) {
+                    $title = $exercise['title'];
+                    // Unwrap if nested
+                    while (is_array($title) && isset($title['title'])) {
+                        $title = $title['title'];
+                    }
                     return [
-                        'title' => ['title' => $exercise['title']],
+                        'title' => $title,
                         'sets' => $repsSets['sets'],
                         'reps' => $repsSets['reps'],
                     ];
                 }
-                // Otherwise, wrap as usual
+                // Otherwise, use as string
                 return [
-                    'title' => ['title' => $exercise],
+                    'title' => $exercise,
                     'sets' => $repsSets['sets'],
                     'reps' => $repsSets['reps'],
                 ];
