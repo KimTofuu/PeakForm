@@ -123,8 +123,8 @@
               </div>
             </div>
           </div>
-              <div class = "progress_lower" style="display:flex; flex-direction: row; justify-content: space-between;">
-              <div class="table-scroll-container" style="flex-basis: 48%;">
+              <div class = "progress_lower" style="display:flex;">
+              <div class="table-scroll-container">
                 <table class="progress-table">
                   <thead>
                     <tr>
@@ -152,8 +152,8 @@
                   </tbody>
                 </table>
                 </div>
-              <div class="runner-track-container" style = "flex-basis: 48%;">
-        <div class="progress-info" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+              <div class="runner-track-container" >
+        <div class="progress-info" style="display: flex; justify-content: space-between;">
             <div style = "color:white; font-size: 1rem;">
                 <strong>Current:</strong>
                 {{ $currentProgress ?? '-' }} %
