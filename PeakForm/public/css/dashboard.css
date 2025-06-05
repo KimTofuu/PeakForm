@@ -20,7 +20,7 @@ body {
   font-size: 1rem;
   min-height: 100vh;
   display: flex;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .container {
@@ -974,7 +974,6 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 30%;
   background-color: rgba(60, 60, 60, 0.7);
-  margin-top: 2rem;
   overflow: hidden;
   border-radius: 0.5rem;
   padding: 2rem;
@@ -1077,24 +1076,26 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
 
 .progress-track {
   position: absolute;
-  top: 0rem; /* adjust this depending on your bar height */
+  top: 0; /* adjust this depending on your bar height */
   left: 0;
   width: 100%;
-  height: 6rem; /* <== this controls the height of the green bar */
+  height: 5rem; /* <== this controls the height of the green bar */
   background-color: #274e2f; /* moved from container */
-  border-radius: 5rem;
+  border-radius: 10rem;
   z-index: 0;
 }
-
+.progress-info{
+  margin-bottom: -2rem;
+}
 
 /* Progress fill bar */
 .progress-bar-fill {
   position: absolute;
   top: 0rem;
   left: 0;
-  height: 100%;
+  height: 5rem;
   background-color: #4df56f; /* Tailwind blue-500 */
-  border-radius: 5rem;
+  border-radius: 10rem;
   transition: width 0.5s ease-in-out;
   z-index: 1;
 }
@@ -1142,11 +1143,17 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
 }
 
 .table-scroll-container {
-  max-height: 65%;/* set your desired height */
+  max-height: 15rem;/* set your desired height */
+  margin: 1rem 0;
   overflow-y: auto;
    /* match your table radius */
 }
 
+.progress_lower{
+  display: flex;
+  flex-direction: column !important;
+  height: 30rem;
+}
 /* For screens up to 1040px */
 @media (max-width: 1024px) {
   body{
@@ -1242,7 +1249,7 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
   }
 
   .table-scroll-container {
-    max-height: 55%;
+    max-height: 20%;
   }
 
   .daily_tab h2 {
@@ -1278,6 +1285,9 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
   }
   .progress-form input{
     width: 100% !important;
+  }
+  .table-scroll-container{
+    max-height: 30rem;
   }
   
 }
@@ -1345,7 +1355,6 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
   }
 
   .progress-form input {
-    min-width: 10rem;
     font-size: 0.9rem;
   }
 
@@ -1362,11 +1371,6 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
 
   .progress-bar-container {
     height: 20rem;
-    border-radius: 1.5rem;
-  }
-
-  .progress-bar-fill {
-    border-radius: 1.5rem;
   }
 
   .runner,
@@ -1374,8 +1378,8 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
     font-size: 20px;
   }
 
-  .table-scroll-container {
-    max-height: 50%;
+  .table-scroll-container{
+    max-height: 30rem;
   }
 
   .daily_tab h2 {
@@ -1397,5 +1401,11 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
 
   #comparisonChart {
     max-width: 80%;
+  }
+  
+  .progress_tab2,
+  .first-side,
+  .second-side{
+    width: 36rem; !important;
   }
 }
