@@ -13,7 +13,7 @@
 
     <form action="{{ route('workout_plan_2') }}" method="POST">
       @csrf
-      <div class="form-box" style = "width: 35rem;">
+      <div class="form-box_2" style = "width: 35rem;">
         <p class="question">What best describes your workout setup? <br><span>(Select one)</span></p>
         <div class="goal-options">
           <button type="button" class="goal-button" data-goal="Full Gym Setup" > <img src="images/fullGym.png"> </button>

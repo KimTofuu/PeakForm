@@ -54,7 +54,7 @@ h2 {
   width: 20rem; /* 70px / 16px */
   margin-top: -2rem; 
 }
-.form-box {
+.form-box, .form-box_2 {
   background-color: rgba(60, 60, 60, 0.7);
   padding: 0.7rem 1.875rem; /* 30px / 16px */
   border-radius: 0.625rem; /* 10px / 16px */
@@ -271,7 +271,7 @@ a{
 
 /* For screens 1040px and below */
 @media screen and (max-width: 1040px) {
-  .form-box {
+  .form-box, .form-box_2 {
     width: 38rem;
     padding: 1rem 1.5rem;
   }
@@ -302,7 +302,7 @@ a{
     font-size: 14px;
   }
 
-  .form-box {
+  .form-box, .form-box_2 {
     width: 90%;
     padding: 0.7rem 1rem;
   }
@@ -332,4 +332,27 @@ a{
   .logo_top {
     width: 15rem;
   }
+}
+
+@media screen and (max-width: 320px) {
+   .goal-options {
+    flex-direction: column;
+   }
+
+   .goal-options img{
+    width: 15rem;
+    margin: 0rem;
+   }
+
+   .logo_top{
+    margin-top: 0.5rem;
+   }
+
+   .form-box_2{
+    width: 18rem !important;
+   }
+
+   .workouts-card{
+    width: 10rem !important;
+   }
 }
