@@ -23,7 +23,9 @@
     <img src="{{ asset('images/logo_6.png') }}" alt="Loading..." class="dumbbell-loader" style="width:150px;height:150px;">
   </div>
   <div class="container">
-    <aside class="sidebar">
+    <div class="burger-menu" onclick="toggleSidebar()"></div>
+<aside class="sidebar">
+  <div class="close-btn" onclick="toggleSidebar()"></div>
       <div class="profile-section">
         <img src="images/logo_8.png" class="avatar">
         <p class="name"  style="font-family: 'Michroma', sans-serif; color:#fafafa;" >{{$user->Fname}} {{$user->Lname}}</p>
@@ -711,5 +713,19 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => loader.style.display = 'none', 500);
     }, 300); // Adjust delay if needed
 });
+
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const closeBtn = document.querySelector('.close-btn');
+
+  if (sidebar.style.left === '-250px') {
+    sidebar.style.left = '0';
+    closeBtn.style.display = 'block'; // Show close button when sidebar is visible
+  } else {
+    sidebar.style.left = '-250px';
+    closeBtn.style.display = 'none'; // Hide close button when sidebar is hidden
+  }
+}
+
 </script>
 </html>
