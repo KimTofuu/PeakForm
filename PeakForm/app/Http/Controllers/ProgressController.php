@@ -66,13 +66,13 @@ class ProgressController extends Controller
         $userProgress = UserProgress::where('user_id', $user->id)->first();
         $goal_weight = $userProgress ? $userProgress->goal_weight : 0; // fallback to 0 if not set
 
-        // Update user_progress table
+        // Only set starting if not already set
         UserProgress::updateOrCreate(
             ['user_id' => $user->id],
             [
                 'current' => $current,
-                'starting' => $starting,
-                'goal_weight' => $goal_weight, // always provide this!
+                'goal_weight' => $goal_weight,
+                'starting' => $userProgress && $userProgress->starting !== null ? $userProgress->starting : $starting,
             ]
         );
 

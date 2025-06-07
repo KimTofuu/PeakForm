@@ -1425,7 +1425,7 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
   .progress_tab2,
   .first-side,
   .second-side{
-    width: 36rem; !important;
+    width: 36rem;
   }
 
   .progress_table_section{
