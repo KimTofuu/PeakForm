@@ -343,6 +343,7 @@ async function loadMealAndIntakeData() {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false, // <-- Add this line
           plugins: {
             title: {
               display: true,
