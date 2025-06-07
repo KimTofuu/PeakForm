@@ -1600,3 +1600,16 @@ box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
 }
 
 }
+
+.progress_tab4 {
+  position: relative;
+  width: 100%;
+  min-height: 250px;
+  height: 40vw; /* Responsive height, adjust as needed */
+  max-height: 400px;
+}
+#comparisonChart {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
