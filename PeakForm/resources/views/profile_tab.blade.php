@@ -46,7 +46,7 @@
       <div class="cards">
     
         <div class="first-side">
-          <div class = "daily_tab" style="align-items: start; text-align: left;">
+          <div class = "daily_tab_prof" style="align-items: start; text-align: left;">
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" > Account </h2>
             </div>
@@ -73,7 +73,7 @@
         </div>
 
         <div class="second-side">
-          <div class = "daily_tab" style="align-items: start; text-align: left;">
+          <div class = "daily_tab_prof" style="align-items: start; text-align: left;">
             <div class = "header_content">
               <h2 style="font-family: 'Michroma', sans-serif;" > Profile </h2>
             </div>
