@@ -68,7 +68,7 @@
             <div class ="progress_contents">
               
               <div class="intake-summary">
-                <h4 style="font-family: 'inter', sans-serif;  opacity: 50%; font-weight:100; margin-top: 0.5rem; margin-bottom: 0.5rem;">Macros Target</h4>
+                <h4 style="font-family: 'inter', sans-serif;  opacity: 50%; font-weight:100; margin-top: 0.5rem; margin-bottom: 0.5rem;">Macros Target<br></h4>
                 <p>Protein: <span id="protein">0</span> g</p>
                 <p>Carbs: <span id="carbs">0</span> g</p>
                 <p>Fat: <span id="fat">0</span> g</p>
